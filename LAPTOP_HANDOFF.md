@@ -29,9 +29,29 @@ That branch contains **everything** from the mobile session — nothing is lost 
 ## 3. Calendar reality check
 
 - **Today:** 2026-04-24
-- **Deadline:** 2026-05-08, 8:00 PM EDT
+- **Deadline:** Friday **2026-05-08, 8:00 PM EDT** (= 2026-05-09 02:00 CEST) per Luma event page
 - **Remaining:** ~14 days
-- Confirm bi-weekly prize structure on `hackathons.liquid.ai` — if there's an interim judging checkpoint you might want to aim at it with a minimum-viable submission and iterate.
+- Single judging round. **No bi-weekly interim checkpoint** (I assumed wrongly earlier — the event Luma page confirms this is a four-week single-round hackathon).
+- 469 registered participants as of 2026-04-24. This is a serious competition.
+
+## 3b. Track selection and judging — confirmed from the Luma page
+
+**Two tracks. We should enter the Liquid Track.**
+
+| Track | Prize | Constraint |
+|-------|-------|------------|
+| **Liquid Track** (recommended) | ~$15K space-server credits + **$5K cash** | Must use LFM2-VL or LFM2.5-VL. **Fine-tuning on domain-specific satellite data is strongly encouraged.** |
+| General AI Track | ~$15K space-server credits | Any AI approach. Preference for solutions designed for space-compute realities (limited downlink, continuous streams, on-board inference). |
+
+Liquid Track fits SatDiff directly and adds $5K cash. Fine-tuning becomes a concrete new deliverable (see §4 and §5).
+
+**Four judging criteria (treat as the rubric):**
+1. **Use of satellite imagery from the DPhi API** (= SimSat) — explicit. Our pipeline's imagery input path **must** go through SimSat's API for the submission to score on criterion 1. We cannot just hit Element 84 STAC directly in the final submission.
+2. **Innovation and problem-solution fit** — SatDiff's contract-framed VLM interpretation layer is our innovation. The Jagersfontein counterfactual is the fit.
+3. **Technical implementation — "your app must run without debugging"** — Docker-compose-up or equivalent must Just Work for the judges. No local paths, no API keys they don't have, no manual fix-up steps.
+4. **Demo walk-through end-to-end.** Video + live walkthrough both carry weight.
+
+We should fetch the "Judging Criteria and Prizes document" from the Discord server and log it to `research/` when you're on laptop — it likely has weightings.
 
 ## 4. The two spikes — do these FIRST, before any Phase 1 build
 
@@ -60,22 +80,37 @@ Both are small and gating. If either fails, Path A needs reassessment.
 
 Budget for this spike: **half a day, max.** If it takes longer, something is wrong with the stack setup.
 
-### Spike 2 — Sentinel-2 archive data pull
+### Spike 2 — DPhi/SimSat API data pull
 
-**Goal:** confirm we can pull the Jagersfontein archive at the scale needed for the backtest.
+**Goal:** confirm we can pull the Jagersfontein archive **through the DPhi/SimSat API** (criterion 1 of the rubric) at the cadence needed for the backtest.
+
+**Why SimSat specifically:** judging criterion 1 is *"Use of satellite imagery from the DPhi API."* Our submission's imagery ingress must route through `GET /data/image/sentinel?lon=&lat=&timestamp=&spectral_bands=&size_km=` (see `research/simsat-scout.md`). Hitting Element 84 STAC directly is fine for scratch / side-by-side debugging, but the final pipeline must consume through SimSat.
 
 **How to run:**
-1. Pick one of these STAC endpoints:
-   - `https://earth-search.aws.element84.com/v1` (what SimSat uses)
-   - `https://planetarycomputer.microsoft.com/api/stac/v1` (Microsoft, often faster, requires SAS token signing via `planetary-computer` Python package)
-2. Pull all Sentinel-2 L2A scenes for the Jagersfontein bbox, 2016-01-01 → 2022-10-01, with `eo:cloud_cover < 60`.
-3. Expected count: hundreds of scenes after cloud filter. If you get <50 or >5000, something is wrong.
-4. For a sanity check, load three scenes (known-clean 2016, pre-failure 2021, post-failure 2022-09-15) and render RGB + NDWI composites. Confirm visually that:
+1. `git clone https://github.com/DPhi-Space/SimSat.git && cd SimSat && docker compose up` — verify dashboard at `http://localhost:8000` and sim API at `http://localhost:9005`.
+2. Run `python scripts/api_test.py sentinel_multispectral` to confirm multiband fetch works.
+3. Script a loop calling `GET /data/image/sentinel` for the Jagersfontein bbox at e.g. monthly cadence 2016-01 → 2022-10, with `spectral_bands=red,green,blue,nir,swir16`. This exercises the exact path the final pipeline uses.
+4. Expected: most months return data; some return `image_available=False` (cloud or gap). Log the hit rate.
+5. Load three known-signal scenes (2016 clean, 2021 pond-at-wall, 2022-09 post-failure) and render RGB + NDWI composites via SimSat. Confirm visually:
    - The impoundment is visible
    - The 2021 pond-at-wall is visible
    - The 2022-09 post-failure scar is visible
+6. **Caveat from SimSat README:** "The Sentinel-2 API is quite slow." Expect seconds per fetch. That's fine for the backtest if we checkpoint; but for the demo video, consider pre-caching to speed playback.
 
 Budget: **a couple of hours** including a first-pass co-registration check.
+
+### Spike 3 (new, Liquid-track specific) — LFM2-VL fine-tuning feasibility
+
+**Goal:** determine whether we can realistically fine-tune LFM2-VL-450M (or the 1.6B) on a tiny curated tailings-dam image set within the remaining time, because the Liquid Track "strongly encourages" fine-tuning on domain-specific satellite data.
+
+**How to run:**
+1. Check LEAP docs for the fine-tuning path. LFM2 is described as supporting LoRA-style adaptation; confirm this for the VL variant.
+2. Curate a tiny labelled set (say 20–50 examples) of Sentinel-2 patches labelled with free-form descriptions like *"impoundment with pond against retaining wall; erosion gullies visible on northern wall"* — use the Torres-Cruz paper's findings as the label style. Jagersfontein over 2018–2022 plus 2–3 other TSFs from public imagery gives us diversity.
+3. Run a short LoRA fine-tune. If wall-clock + compute cost is tolerable on laptop (i.e., a few hours not days), fine-tuning is a viable deliverable.
+
+**Decision:** if LFM2-VL fine-tuning is feasible in a day or two, **do it** — it is a scoring differentiator for the Liquid Track. If infeasible (too slow, doesn't converge, breaks structured output), drop it and lean harder on prompt engineering; the submission writeup should acknowledge that we left fine-tuning as future work with the dataset curated.
+
+Budget: **half a day** for the feasibility check; **one extra day** later for a real fine-tune if feasible.
 
 ### Spike outputs
 
@@ -83,15 +118,16 @@ Suggested: commit a notebook or short Python script to `spikes/leap-vlm-check.ip
 
 ## 5. If the spikes pass: Phase 1 execution plan
 
-Budget the remaining ~12 days roughly as:
+Budget the remaining ~14 days roughly as:
 
-- **Days 1–2 (spike days):** above.
-- **Days 3–5:** Phase 1 build — data loader, mask definition (impoundment / retaining_wall / downstream / pond polygons for Jagersfontein), physical-diff module, gate. Sanity-check signals match Torres-Cruz findings.
-- **Days 6–7:** Phase 2 build — LFM2 prompt pipeline, first backtest pass over the Jagersfontein archive. Save structured JSON per pass.
-- **Days 8–9:** Phase 3 — supervisory loop (Claude or GPT on the ground reviewing rolling windows). Phase 4 — counterfactual write-up with real dates. Add Brumadinho as secondary case using published Grebby ISBAS time series as SAR sidecar.
-- **Days 10–11:** Phase 5 — demo video. Wire SimSat for the aesthetic (plan §363). Script + voiceover.
-- **Days 12–13:** submission assembly. README, assumptions section, limits section, PDF-report-from-JSON template for the "workflow integration" last mile.
-- **Day 14 (May 8):** buffer. Submit before 8:00 PM EDT.
+- **Days 1–2 (spike days):** Spike 1 (LEAP/LFM2-VL on EO imagery), Spike 2 (SimSat API loop), Spike 3 (fine-tuning feasibility).
+- **Days 3–5:** Phase 1 build — data loader consuming the **SimSat API**, mask definition (impoundment / retaining_wall / downstream / pond polygons for Jagersfontein), physical-diff module, gate. Sanity-check signals match Torres-Cruz findings.
+- **Day 6:** if Spike 3 said fine-tuning is feasible — run the LoRA fine-tune on the curated Jagersfontein + adjacent TSF label set. Otherwise skip and go straight to Day 7.
+- **Days 7–8:** Phase 2 build — LFM2 prompt pipeline (using fine-tuned weights if available), first backtest pass over the Jagersfontein archive via SimSat. Save structured JSON per pass.
+- **Days 9–10:** Phase 3 — supervisory loop (Claude or GPT on the ground reviewing rolling windows). Phase 4 — counterfactual write-up with real dates. Add Brumadinho as secondary case using published Grebby ISBAS time series as SAR sidecar.
+- **Days 11–12:** Phase 5 — demo video. Wire SimSat for the aesthetic (plan §363) — this is also criterion 1 of the rubric, so it doubles as scoring. Script + voiceover. Make sure the submission zip runs docker-compose-up clean on a fresh machine (criterion 3).
+- **Day 13:** submission assembly. README, assumptions section, limits section, PDF-report-from-JSON template for the "workflow integration" last mile. **Fresh-clone test of the zip** — judge perspective.
+- **Day 14 (May 8):** buffer. Submit before 8:00 PM EDT (= 2026-05-09 02:00 CEST).
 
 Keep `research/open-questions.md` open in a tab and reference the "underweighted aspects" section when writing the submission — those three framings (Torres-Cruz as validation, audit-trail over monitoring, GISTM as wedge) materially strengthen the pitch.
 
@@ -122,10 +158,13 @@ docker compose up
 ## 7. What NOT to do
 
 - **Don't start Phase 1 build before the LEAP spike succeeds.** The sleeper risk is real.
+- **Don't bypass SimSat in the final pipeline.** Criterion 1 of the rubric is "use of satellite imagery from the DPhi API." Scratch debugging against Element 84 STAC is fine, but the submission's pipeline must consume via SimSat's API.
+- **Don't enter the General Track.** Liquid Track has +$5K cash for the same core work, and LFM2-VL is already our VLM.
 - **Don't try to run a full InSAR processing chain from scratch.** Use published Grebby ISBAS time series as structured SAR input for Brumadinho. If you can't find the paper's data, a hand-transcribed version of their published time-series figure is acceptable for a hackathon — document the source in the writeup.
 - **Don't reframe Brumadinho as the primary case.** Jagersfontein is the multispectral-load-bearing case. Keep Brumadinho as secondary/contrast.
 - **Don't claim "we detect Brumadinho from Sentinel-2 alone."** It's false per the peer-reviewed record.
 - **Don't create documentation files the submission doesn't need.** The submission wants a video, source zip, and a tight README with assumptions + limits. Everything else is internal.
+- **Don't forget the fresh-clone run test.** Criterion 3 is "must run without debugging." On Day 13 (or earlier), clone the submission zip into a fresh directory on a clean machine profile and verify `docker compose up` (or equivalent) produces a working demo with no manual fix-ups.
 - **Don't push to main.** All work continues on `claude/hackathon-planning-yOI79` until submission.
 
 ## 8. Key coordinates and dates (for quick reference)
@@ -149,3 +188,7 @@ If you want Claude Code to continue this work on laptop, point it at the repo an
 > I'm continuing the SatDiff hackathon work from a mobile session. Read LAPTOP_HANDOFF.md and research/phase-0-go-no-go.md first, then help me run Spike 1 (the LEAP/LFM2-VL spike). I've got LEAP SDK access set up already.
 
 That drops the session into the right context with minimal re-orientation.
+
+## 10. One action to do on mobile before laptop
+
+Join the **Liquid AI Discord** (`#ai-in-space-hackathon` channel) if you haven't already. The "Judging Criteria and Prizes document" referenced on the Luma page lives there. Download it, save it somewhere, and when you're on laptop copy it into `research/hackathon-rubric.md` so we can check our submission against the exact weightings. Also keep an eye for announcements / rule clarifications during the hackathon — judges sometimes post crucial details there that aren't on the Luma page.

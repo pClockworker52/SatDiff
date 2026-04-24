@@ -12,14 +12,17 @@ TL;DR: modern Earth-observation satellites run **Linux on AMD Ryzen / Zynq Ultra
 
 | Platform | Compute | Notable missions | Notes |
 |----------|---------|------------------|-------|
-| **Unibap SpaceCloud iX10** | AMD Ryzen V1000 + 8× Radeon GPU + Myriad X (iX10-101) or Hailo-8 (iX10-102); 24 GB DDR4 ECC; 2× 4 TB NVMe; <40 W | D-Orbit, Loft Orbital, Dragonfly | Commercial edge-AI flight computer. Runs Linux. Closest existing product to what SatDiff would deploy on. |
+| **NVIDIA Jetson Orin NX 16GB** ← **hackathon prize platform** | 100 TOPS sparse / ~50 TOPS dense INT8; 1024-core Ampere GPU + 32 Tensor Cores; 8-core Arm Cortex-A78AE; 16 GB LPDDR5; ~15–25 W | DPhi Space flight platform (hackathon prize offers 5 GPU-hours); also Loft Orbital YAM-9 class | **This is the actual target hardware for the hackathon prize deployment.** More headroom than iX10/Leopard for VLM inference. |
+| **Unibap SpaceCloud iX10** | AMD Ryzen V1000 + 8× Radeon GPU + Myriad X (iX10-101) or Hailo-8 (iX10-102); 24 GB DDR4 ECC; 2× 4 TB NVMe; <40 W | D-Orbit, Loft Orbital, Dragonfly | Commercial edge-AI flight computer. Runs Linux. Peer to Orin for EO smallsats. |
 | **KP Labs Leopard DPU** | Zynq UltraScale+ ZU9EG (FPGA + ARM); 16 GB DDR4; 2× 240 GB SSD; ~3 TOPS; cold-redundant nodes + TMR radiation-hard supervisor | Intuition-1 (launched Nov 2023, operating) | First commercial AI DPU with flight heritage for hyperspectral; 192-band sensor onboard. Does CNN cloud detection + segmentation on-orbit. |
 | **Intel Movidius Myriad 2 VPU** | Eyes-of-Things (EoT) board; ~1 TFLOPS; watts-level | Φ-sat-1 (2020), Φ-sat-2 (2024) | First on-board DNN inference in orbit (cloud detection, saved ~30% bandwidth). Used for Φ-sat-2's four AI apps. |
 | **Loft Orbital "Ultimate Edge" / Virtual Missions** | CPU + GPU compute nodes (specific SKUs not public); software-defined payload bus | YAM-6, YAM-9 (in orbit) | Customer-iterable AI models in orbit. Most production-realistic analogue to SatDiff's "supervisory-loop prompt updates". |
 | **OPS-SAT (ESA, 2019–2024)** | ARM Cortex-A9 based, Linux; 1 GB RAM | Reentered May 2024; hosted SaaSy ML, anomaly detection, super-resolution | Flying laboratory for ML experimentation — pattern SatDiff follows. |
 | **Legacy radiation-hardened** | BAE RAD750 (PowerPC, 200 MHz, ~400 MIPS, ~10 W) | Mars 2020 Perseverance, JWST, Curiosity | **This is the "Pentium III" stereotype**, and it is real for deep-space missions. Not representative of modern Earth-observation smallsats. |
 
-**Takeaway:** for Earth-observation smallsats in 2024–2026, the relevant hardware is **Unibap iX10, KP Labs Leopard, or equivalent**. These provide 1–5 TOPS in a 30–50 W envelope, running Linux, with 16–24 GB RAM and multi-TB storage. This is an order of magnitude more capable than common perception of "space-grade compute" and is the realistic assumption for SatDiff.
+**Takeaway for SatDiff:** the hackathon prize explicitly deploys on **NVIDIA Orin 16GB** (100 TOPS sparse, 16 GB LPDDR5, ~25 W). LFM2-VL-450M runs sub-250ms on edge hardware; LFM2-VL-1.6B comfortably fits; LFM2-VL-3B is plausible. The submission writeup should target Orin as the production hardware spec while keeping Unibap iX10 / Leopard as peer alternatives for non-DPhi flight platforms. Orin is also confirmed by Loft Orbital's YAM-9 as a deployed space-edge platform, so the claim is not DPhi-specific.
+
+The hackathon's prize package also allocates **5 MB upload / 10 MB download** per winner month on the satellite. A 2 KB per-pass JSON report scales to 1000 passes in 2 MB, well inside the 10 MB download budget — this **exactly validates the compact-report framing** §4 below. Use these numbers verbatim in the submission writeup.
 
 ### 1.2 What "radiation tolerant" actually means at this class
 
@@ -56,11 +59,12 @@ The implication for SatDiff's architecture: inference need not be deterministic 
 
 | Hardware | Realistic LFM2-VL variant | Latency budget |
 |----------|---------------------------|----------------|
+| **NVIDIA Orin 16GB (hackathon prize platform)** | **LFM2-VL-1.6B comfortably; 3B plausible** | **<250 ms per pass (matching published LFM2.5-VL-450M benchmarks; 1.6B within sub-second)** |
 | Unibap iX10-102 (Hailo-8 + Ryzen) | LFM2-VL-1.6B comfortably; 3B plausible | <1 s per pass |
 | KP Labs Leopard (Zynq UltraScale+, 3 TOPS) | LFM2-VL-450M likely; 1.6B needs careful quantization | 1–3 s per pass |
 | Myriad X / Myriad 2 (Φ-sat class) | LFM2-VL-450M only, quantized | Several seconds |
 
-SatDiff's assumption: **target LFM2-VL-450M or LFM2-VL-1.6B on iX10-class hardware**, with LFM2-VL-450M as the minimum-viable spec. This is a defensible near-future claim: the model exists today (April 2026), the hardware exists today, they have not been flown together yet — which is exactly what a hackathon submission argues *should* be flown.
+SatDiff's assumption: **target LFM2-VL-1.6B on Orin 16GB** (the hackathon's actual in-orbit deployment target) as the primary, with LFM2-VL-450M as the fallback for more constrained platforms (Leopard, Myriad). The model exists today (April 2026), the hardware is flying today (Loft Orbital YAM-9, DPhi Space), they have not been flown together — which is exactly what a hackathon submission argues *should* be flown.
 
 ### 3.3 Implications for the prompt design
 - 512×512 native resolution is generous for our use case — Sentinel-2 10-m imagery of the Jagersfontein TSF fits in a ~500×500 patch at ~5 km ground swath.
@@ -84,12 +88,13 @@ The bandwidth argument for on-satellite VLM inference is real and defensible —
 
 For the submission writeup's "assumptions" section, we commit to the following as defensible-under-scrutiny:
 
-1. **Target platform class:** Unibap iX10 / KP Labs Leopard class. AMD Ryzen or Zynq UltraScale+ SoC, 1–5 TOPS AI accelerator (Myriad X / Hailo-8 / FPGA), 16–24 GB RAM, multi-TB storage, Linux, <50 W.
-2. **Model class:** LFM2-VL-450M minimum, LFM2-VL-1.6B preferred, via LEAP runtime. Sub-1-second per-pass inference budget.
-3. **Sensor fusion:** Sentinel-2 multispectral + Sentinel-1 SAR deformation sidecar. The deformation sidecar is either (a) pre-computed on ground and up-linked as part of the baseline package, or (b) for production, run on-satellite as a separate lightweight process. SatDiff v0 does (a).
-4. **Downlink envelope:** <10 KB per pass per asset for structured reports; downlinked as part of routine low-bandwidth telemetry, not requiring dedicated imagery pass. Raw imagery downlink remains optional and on-demand (e.g., when supervisory loop requests full frame for a specific flagged asset).
-5. **Update cadence:** baseline + contract prompt updated only via supervisory-loop upload (ground-initiated). On-board state is read-write for inference outputs and prior-report history; read-only for baseline and contract. This is the security model.
-6. **Radiation tolerance:** assumed at COTS-with-mitigation level. Single-event-upset recovery via watchdog + checkpoint; we do not claim full rad-hard silicon.
+1. **Primary target platform:** **NVIDIA Jetson Orin NX 16GB** (= the DPhi Space hackathon prize platform; also flight-proven on Loft Orbital YAM-9). 100 TOPS sparse INT8, 1024 Ampere CUDA cores + 32 Tensor Cores, 8-core Cortex-A78AE, 16 GB LPDDR5, ~15–25 W. Runs Docker-based workloads. Peer platforms: Unibap iX10, KP Labs Leopard.
+2. **Model:** LFM2-VL-1.6B primary, LFM2-VL-450M fallback. Runtime is deployment-flexible (llama.cpp, MLX, ONNX, LEAP native) per rubric allowance. Sub-250ms per-pass latency target (matching published LFM2.5-VL-450M benchmarks).
+3. **Sensor note:** the hackathon's actual prize satellite carries a fisheye camera, not a Sentinel-2 multispectral imager. SatDiff's demo uses Sentinel-2 via the DPhi API (the hackathon's dataset). The contract-prompt architecture is sensor-agnostic, which means a production deployment targets whatever sensor the flight platform carries. The submission writeup names this explicitly in the production-roadmap section.
+4. **Sensor fusion for tailings cases:** Sentinel-2 multispectral + Sentinel-1 SAR deformation sidecar. The deformation sidecar is (a) pre-computed on ground and uplinked as part of the baseline package for v0, or (b) for production, run on-satellite as a separate lightweight process.
+5. **Downlink envelope:** <10 KB per pass per asset for structured reports. Validated against the hackathon's 10 MB/month download budget — a 2 KB report × 1000 passes = 2 MB, well within budget. Raw imagery downlink remains optional and on-demand (e.g., when supervisory loop requests full frame for a specific flagged asset).
+6. **Update cadence:** baseline + contract prompt updated only via supervisory-loop upload (ground-initiated). On-board state is read-write for inference outputs and prior-report history; read-only for baseline and contract. This is the security model.
+7. **Radiation tolerance:** assumed at COTS-with-mitigation level. Single-event-upset recovery via watchdog + checkpoint; we do not claim full rad-hard silicon.
 
 **What we do not claim:**
 - We are not flying anything. The submission is a ground-based emulation of the pattern.

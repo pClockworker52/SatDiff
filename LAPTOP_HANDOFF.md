@@ -34,24 +34,33 @@ That branch contains **everything** from the mobile session — nothing is lost 
 - Single judging round. **No bi-weekly interim checkpoint** (I assumed wrongly earlier — the event Luma page confirms this is a four-week single-round hackathon).
 - 469 registered participants as of 2026-04-24. This is a serious competition.
 
-## 3b. Track selection and judging — confirmed from the Luma page
+## 3b. Track selection and the rubric — verbatim criteria received 2026-04-24
 
-**Two tracks. We should enter the Liquid Track.**
+Full rubric is saved at `research/hackathon-rubric.md`. Headline weights:
 
-| Track | Prize | Constraint |
-|-------|-------|------------|
-| **Liquid Track** (recommended) | ~$15K space-server credits + **$5K cash** | Must use LFM2-VL or LFM2.5-VL. **Fine-tuning on domain-specific satellite data is strongly encouraged.** |
-| General AI Track | ~$15K space-server credits | Any AI approach. Preference for solutions designed for space-compute realities (limited downlink, continuous streams, on-board inference). |
+**Liquid Track (our track) — weights:**
 
-Liquid Track fits SatDiff directly and adds $5K cash. Fine-tuning becomes a concrete new deliverable (see §4 and §5).
+| Criterion | Weight | The ask |
+|-----------|--------|---------|
+| Use of Satellite Imagery (DPhi API) | **10%** | Imagery from SimSat, applied to a real-world domain. |
+| Innovation and Problem-Solution Fit | **35%** | Problem is specific and real. LFM2-VL + imagery unlocks something neither could alone. **"A believable path to a product developers would pay to build on."** |
+| Technical Implementation | **35%** | App runs without debugging — or it's disqualified. **Fine-tuning LFM2-VL is strongly encouraged and rewarded** with documented methodology, measurable improvement over base, and publicly shared weights + training code. |
+| Demo and Communication | **20%** | End-to-end demo of **you (the participant) explaining the whole thing on camera.** "Writing code is easy in 2026; clearly articulating the problem and architecture is not." |
 
-**Four judging criteria (treat as the rubric):**
-1. **Use of satellite imagery from the DPhi API** (= SimSat) — explicit. Our pipeline's imagery input path **must** go through SimSat's API for the submission to score on criterion 1. We cannot just hit Element 84 STAC directly in the final submission.
-2. **Innovation and problem-solution fit** — SatDiff's contract-framed VLM interpretation layer is our innovation. The Jagersfontein counterfactual is the fit.
-3. **Technical implementation — "your app must run without debugging"** — Docker-compose-up or equivalent must Just Work for the judges. No local paths, no API keys they don't have, no manual fix-up steps.
-4. **Demo walk-through end-to-end.** Video + live walkthrough both carry weight.
+**Liquid Track prize:** $5K cash + space-credits package (see below).
+**General Track prize:** space-credits package only (no cash).
 
-We should fetch the "Judging Criteria and Prizes document" from the Discord server and log it to `research/` when you're on laptop — it likely has weightings.
+**Space-credits package (both tracks):** 5 GPU hours on **NVIDIA Orin 16GB** in orbit, 5 MB upload / 10 MB download, 1 GB in-space storage for 1 month, fisheye-camera historic images, preloaded Docker images + LLMs on the satellite, 7 days of ground-server testing.
+
+**Three things the rubric changes about the plan:**
+
+1. **Innovation (35%) >> Imagery routing (10%).** Get the architectural pitch tight. The Torres-Cruz validation, audit-trail framing over monitoring framing, and GISTM-auditor-as-first-customer thesis (all in `research/open-questions.md`) are now proportionally the most valuable investment.
+
+2. **"Product developers would pay to build on"** is product-market-fit language. The submission writeup must name the buyer (GISTM auditor primary; reinsurer adjacent), the line-item (Principle 7 compliance; retrospective claim defence), and the developer-API angle. Favour framing SatDiff as a per-asset monitoring API, not just a reinsurer report.
+
+3. **Fine-tuning is not optional for scoring.** Required deliverables: documented methodology, measurable improvement vs base, **public HuggingFace weights**, public training code. This is part of the 35% Technical score. Budget 2 days for it.
+
+**The actual prize satellite has a fisheye camera** — not a Sentinel-2 multispectral imager. Our demo uses Sentinel-2 via the DPhi API (which is the hackathon's data, not the prize platform's native sensor). The submission writeup's "production roadmap" section should acknowledge this and argue that SatDiff's contract-prompt architecture is **sensor-agnostic** — a feature, not a bug.
 
 ## 4. The two spikes — do these FIRST, before any Phase 1 build
 
@@ -99,18 +108,30 @@ Budget for this spike: **half a day, max.** If it takes longer, something is wro
 
 Budget: **a couple of hours** including a first-pass co-registration check.
 
-### Spike 3 (new, Liquid-track specific) — LFM2-VL fine-tuning feasibility
+### Spike 3 — LFM2-VL fine-tuning feasibility (scoring-critical)
 
-**Goal:** determine whether we can realistically fine-tune LFM2-VL-450M (or the 1.6B) on a tiny curated tailings-dam image set within the remaining time, because the Liquid Track "strongly encourages" fine-tuning on domain-specific satellite data.
+**Why this matters:** the Liquid Track rubric says fine-tuning "**will be rewarded**" with three concrete deliverables: documented methodology, measurable improvement over base, publicly shared weights and training code. This is part of the 35% Technical Implementation score, plausibly ~10–15% of total. Skip at your peril.
+
+**Goal of the spike:** confirm the tooling chain works end-to-end and we can realistically fine-tune LFM2-VL-450M (fallback) or LFM2-VL-1.6B (preferred) within ~1 day of actual training time.
 
 **How to run:**
-1. Check LEAP docs for the fine-tuning path. LFM2 is described as supporting LoRA-style adaptation; confirm this for the VL variant.
-2. Curate a tiny labelled set (say 20–50 examples) of Sentinel-2 patches labelled with free-form descriptions like *"impoundment with pond against retaining wall; erosion gullies visible on northern wall"* — use the Torres-Cruz paper's findings as the label style. Jagersfontein over 2018–2022 plus 2–3 other TSFs from public imagery gives us diversity.
-3. Run a short LoRA fine-tune. If wall-clock + compute cost is tolerable on laptop (i.e., a few hours not days), fine-tuning is a viable deliverable.
+1. Check LEAP / HuggingFace docs for LFM2-VL LoRA / QLoRA support. The LFM2 Technical Report (arXiv 2511.23404) describes adaptation; confirm LFM2-VL variant has equivalent path. llama.cpp, MLX, ONNX are all rubric-acceptable runtimes.
+2. Curate a tiny labelled set (say 30–100 examples) of Sentinel-2 patches with free-form descriptions in the style *"impoundment with pond against retaining wall; erosion gullies visible on northern wall; asymmetric deposition from north-east"*. Label style should match the Torres-Cruz paper's language. Source images:
+   - Jagersfontein 2018–2022 (positive class: visible anomalies)
+   - Jagersfontein 2014–2017 (negative class: stable baseline)
+   - 2–3 other TSFs from public imagery for diversity (e.g., Mount Polley pre-2014, Samarco pre-2015, other GISTM-listed extremes)
+3. Run a short LoRA fine-tune. Time it. Evaluate on held-out set with a simple metric (e.g., JSON-schema compliance rate + a few specific claim-assessment correctness checks).
+4. Plan the HuggingFace model-card template: methodology, dataset description, eval numbers, licence.
 
-**Decision:** if LFM2-VL fine-tuning is feasible in a day or two, **do it** — it is a scoring differentiator for the Liquid Track. If infeasible (too slow, doesn't converge, breaks structured output), drop it and lean harder on prompt engineering; the submission writeup should acknowledge that we left fine-tuning as future work with the dataset curated.
+**Decision:** if one LoRA epoch on 30–100 examples completes in a few hours with improved JSON-schema compliance over base, fine-tuning is a viable deliverable — reserve Day 6 for the real run. If training takes >1 day per run or outputs break structure, downgrade to "documented attempt" in the writeup and lean on prompt engineering for the main demo.
 
-Budget: **half a day** for the feasibility check; **one extra day** later for a real fine-tune if feasible.
+**Fine-tuning non-negotiables for the submission:**
+- Model card on HuggingFace with clear licence
+- Training code checked into the submission repo at `training/` or similar
+- Eval script that reproduces the "base vs fine-tuned" comparison
+- Short write-up in the README explaining what improved and by how much
+
+Budget: **half a day for the spike; up to 1.5 days for the real fine-tune + evaluation + HF upload if Spike 3 passes.**
 
 ### Spike outputs
 
@@ -125,8 +146,8 @@ Budget the remaining ~14 days roughly as:
 - **Day 6:** if Spike 3 said fine-tuning is feasible — run the LoRA fine-tune on the curated Jagersfontein + adjacent TSF label set. Otherwise skip and go straight to Day 7.
 - **Days 7–8:** Phase 2 build — LFM2 prompt pipeline (using fine-tuned weights if available), first backtest pass over the Jagersfontein archive via SimSat. Save structured JSON per pass.
 - **Days 9–10:** Phase 3 — supervisory loop (Claude or GPT on the ground reviewing rolling windows). Phase 4 — counterfactual write-up with real dates. Add Brumadinho as secondary case using published Grebby ISBAS time series as SAR sidecar.
-- **Days 11–12:** Phase 5 — demo video. Wire SimSat for the aesthetic (plan §363) — this is also criterion 1 of the rubric, so it doubles as scoring. Script + voiceover. Make sure the submission zip runs docker-compose-up clean on a fresh machine (criterion 3).
-- **Day 13:** submission assembly. README, assumptions section, limits section, PDF-report-from-JSON template for the "workflow integration" last mile. **Fresh-clone test of the zip** — judge perspective.
+- **Days 11–12:** Phase 5 — demo video with **you on camera** (Demo/Communication 20% — rubric literally says "end-to-end demo of you explaining the whole thing"). Script the pitch around Torres-Cruz-validated signal / audit-trail framing / GISTM-auditor first-customer. Intercut with architecture diagram and live pipeline output. Use SimSat for the satellite-passing-overhead shot. Target 3–5 minutes unless Discord announces a hard cap.
+- **Day 13:** submission assembly. README (assumptions, limits, buyer/line-item, fine-tuning results), PDF-report-from-JSON template, HuggingFace model card. **Fresh-clone test: `git clone <zip> /tmp/judge-sim && cd /tmp/judge-sim && docker compose up`** on a laptop profile with only Docker + standard tools installed. If any step fails, fix before submitting.
 - **Day 14 (May 8):** buffer. Submit before 8:00 PM EDT (= 2026-05-09 02:00 CEST).
 
 Keep `research/open-questions.md` open in a tab and reference the "underweighted aspects" section when writing the submission — those three framings (Torres-Cruz as validation, audit-trail over monitoring, GISTM as wedge) materially strengthen the pitch.
@@ -136,13 +157,16 @@ Keep `research/open-questions.md` open in a tab and reference the "underweighted
 Before the spikes, confirm on laptop:
 
 - [ ] Python 3.11+ with a fresh virtualenv or conda env
-- [ ] Docker + Docker Compose (for SimSat; optional for spike 1)
-- [ ] LEAP SDK installed and `from leap import ...` importable (or whatever the actual API is — check `liquid.ai` docs)
-- [ ] Either `planetary-computer` + `pystac-client` + `odc-stac` (Microsoft PC route) or just `pystac-client` + `odc-stac` + AWS creds disabled (Element 84 is public)
-- [ ] `rasterio`, `numpy`, `matplotlib` / `rioxarray` for quick visualisation
-- [ ] Optional: `arosics` for co-registration if your initial check fails
-- [ ] Claude API or OpenAI API key for the supervisory-loop role (Phase 3)
-- [ ] Mapbox token only if you want the demo-visual high-res overlays; not required for the backtest
+- [ ] Docker + Docker Compose (for SimSat; also how the submission will ship per criterion 3)
+- [ ] LFM2-VL access: HuggingFace (`LiquidAI/LFM2-VL-450M`, `LFM2-VL-1.6B`) and a runtime of your choice — llama.cpp / MLX / ONNX all rubric-acceptable. LEAP SDK is recommended by the hackathon but not mandated.
+- [ ] HuggingFace write-enabled account (for publishing fine-tuned weights — fine-tune deliverables require **public** weights).
+- [ ] A LoRA / QLoRA training framework (e.g., `peft` + `transformers`, or LEAP's native training path if it offers one).
+- [ ] `pystac-client` + `odc-stac` for scratch debugging outside SimSat (Element 84 or Microsoft Planetary Computer). **Not for the final pipeline** — final pipeline goes through SimSat.
+- [ ] `rasterio`, `numpy`, `matplotlib` / `rioxarray` for quick visualisation.
+- [ ] Optional: `arosics` for co-registration if your initial check fails.
+- [ ] Claude or OpenAI API key for the supervisory-loop role (Phase 3).
+- [ ] Webcam + decent mic for the demo video (Day 11–12). Quiet room.
+- [ ] Mapbox token only if you want demo-visual high-res overlays; not required.
 
 SimSat bootstrap (when you want it):
 

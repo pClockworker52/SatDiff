@@ -21,20 +21,45 @@ For a Liquid Track submission, **this is the path of least resistance and lowest
 
 ## What this changes about our plan
 
-### 1. Use Modal, not local GPU. Skip the flash-attn pain entirely.
+### 1. Local primary on WSL2 + RTX 4080; Modal as registered fallback.
 
-The Discord poster's CUDA / `flash_attn` issue is **platform-specific** (DGX Spark = ARM64 + Blackwell, a brand-new combination with patchy wheel availability). Two implications:
+User's laptop: Alienware m18 R2, i9-14900HX, 32 GB RAM, **RTX 4080 mobile 12 GB**, Windows 11 + WSL2 Ubuntu. This is genuinely capable for 450M LoRA (~4–6 GB VRAM at batch 4) and feasible for 1.6B LoRA with QLoRA (~5 GB VRAM at batch 1).
 
-- **For our laptop session:** local fine-tuning is risky regardless of hardware. flash-attn requires matching CUDA + nvcc + Python build tools, and `pip install flash-attn` frequently fails on first try. On Mac it's impossible (no CUDA).
-- **The official recipe runs on Modal.** The Modal container is pre-built with all dependencies including flash-attn already resolved. We never touch flash-attn ourselves.
+The Discord poster's flash-attn issue does **not** apply: they were on DGX Spark (ARM64 + Blackwell, brand-new platform with patchy wheel availability). User is on x86_64 + Ada Lovelace, which flash-attn ships prebuilt wheels for.
 
-**Decision: use Modal.** Sign up, claim the $30 credit, run training in the cloud. Saves a half-day of debugging at minimum.
+**Recommended split:**
 
-### 2. Use the official `leap-finetune` framework. Not raw `transformers + peft`.
+| Phase | Where | Why |
+|-------|-------|-----|
+| Spike 3 smoke test | Local WSL2 | Fast iteration, no Modal setup blocks progress |
+| Prompt engineering / eval design | Local WSL2 | CPU/lightweight; Modal would be overkill |
+| Stage 1 VRSBench fine-tune (first runs) | Local WSL2 | Iterate hyperparameters fast |
+| Final published training run (weights uploaded to HF) | Either — Modal if we want a maximally reproducible artefact, local otherwise | Reproducibility vs convenience tradeoff |
+| Stage 2 SatDiff custom | Local WSL2 | Tiny dataset; lower LR; continues from Stage 1 |
+| Optional 1.6B experiment | Modal H100 | More VRAM headroom; only if Stage 1 went well |
+
+**Plan: register Modal anyway.** $30 free credit costs nothing to claim. Lives as insurance + as the published-final-run option. Don't gate Day 6 on being signed up — register now, in calm weather.
+
+### 2. WSL2 setup gotchas to anticipate (Day 1)
+
+Common failure modes and the order that minimises pain:
+
+1. `wsl --update` from PowerShell — get latest WSL2.
+2. `wsl --install -d Ubuntu-24.04` — fresh Ubuntu.
+3. **Update NVIDIA driver on Windows host** (Game Ready or Studio, late-April-2026 release). CUDA-on-WSL2 uses the Windows driver — do **not** install an `nvidia-*` driver inside WSL2 (will break passthrough).
+4. Verify inside WSL2: `nvidia-smi` lists the RTX 4080. If not → driver issue on Windows host.
+5. Install CUDA *toolkit* inside WSL2 (need `nvcc` for flash-attn from source). Pick the version matching PyTorch's bundled CUDA (likely 12.4 or 12.6).
+6. Install Python 3.11, `uv`, `uv sync` the leap-finetune repo.
+7. `pip install flash-attn --no-build-isolation`. Prebuilt wheel = instant. Source build = ~30–60 min compile, ~16 GB RAM peak.
+8. If flash-attn refuses after a reasonable attempt: set `attn_implementation="eager"` (slower but works) **or** switch that run to Modal.
+
+Most likely failure: PyTorch ↔ CUDA toolkit version mismatch. Symptom: `torch.cuda.is_available()` returns `False` despite `nvidia-smi` working. Diagnosis: compare `python -c "import torch; print(torch.version.cuda)"` against `nvcc --version`. Should match within a minor version.
+
+### 3. Use the official `leap-finetune` framework. Not raw `transformers + peft`.
 
 The framework is what Liquid AI judges expect to see in a Liquid Track submission. The submission writeup explicitly references `leap-finetune` and the `vrsbench_multitask_modal.yaml` config (or our extended version) and gains credibility for using the supported tooling.
 
-### 3. Switch primary target from LFM2-VL-1.6B to LFM2.5-VL-450M.
+### 4. Switch primary target from LFM2-VL-1.6B to LFM2.5-VL-450M.
 
 Two reasons:
 - The official tutorial targets 450M. Path-of-least-resistance.
@@ -43,7 +68,7 @@ Two reasons:
 
 LFM2-VL-1.6B remains a fallback / "if there's time on Day 6 try the bigger one" option.
 
-### 4. Use VRSBench as the foundation dataset.
+### 5. Use VRSBench as the foundation dataset.
 
 VRSBench gives us 200K+ examples of satellite-VLM data. We don't curate 30 examples from scratch.
 
@@ -53,7 +78,7 @@ VRSBench gives us 200K+ examples of satellite-VLM data. We don't curate 30 examp
 
 If Day 6 time runs short, we ship Stage 1 only. Stage 1 alone is a defensible "measurable improvement over base" deliverable backed by VRSBench benchmarks.
 
-### 5. The framework's built-in evals are our submission's measurable-improvement metrics.
+### 6. The framework's built-in evals are our submission's measurable-improvement metrics.
 
 Decision A from the fine-tuning primer (designing a metric) is essentially **solved by adopting the framework's evals**:
 - VQA short_answer accuracy on VRSBench-VQA test split
@@ -64,42 +89,35 @@ These are recognized benchmarks. Reporting "base LFM2.5-VL-450M scored X / Y / Z
 
 We can additionally publish a **SatDiff-specific eval** (the held-out tailings-dam custom set) for the community-pool eval-sharing thread on Discord. Two metrics: domain-recognized + domain-specific.
 
-### 6. The Discord poster's flash-attn problem is not our problem if we use Modal.
+### 7. The Discord poster's flash-attn problem isn't ours.
 
-If we use Modal, flash-attn is irrelevant — it's pre-installed in the container. The only flash-attn risk we'd face is if we tried to do everything locally on the user's laptop.
+DGX Spark (ARM64 + Blackwell) has patchy wheel availability. WSL2 + RTX 4080 (x86_64 + Ada Lovelace) is a mainstream, well-supported combination. flash-attn ships prebuilt wheels for it.
 
-If for some reason we end up needing local development (e.g., to iterate on prompts without paying Modal per run):
-- **Linux + NVIDIA GPU:** prefer `pip install flash-attn --no-build-isolation` after PyTorch is correctly matched to CUDA version
-- **Mac (Apple Silicon):** flash-attn is not available; use eager-attention fallback (slower, but works) — set `attn_implementation="eager"` in the model loading config
-- **Windows:** WSL2 + Linux instructions
-- **In all cases:** if local fails, fallback to Modal
+Fallback if local flash-attn refuses: `attn_implementation="eager"` (slower, works) or switch the run to Modal.
 
-## Updated Spike 3 procedure
+## Updated Spike 3 procedure (local primary, Modal fallback)
 
-Replacing the old Spike 3 procedure with the official-recipe-aligned version:
+1. **Sign up for HuggingFace** with write access (we'll publish weights). ~5 min.
+2. **Sign up for Modal** and claim $30 credit. Don't run anything yet — this is insurance. ~5 min.
+3. **WSL2 setup** per §2 above (driver, WSL2 update, Ubuntu 24.04, CUDA toolkit, Python 3.11, `uv`). ~30–60 min depending on driver state.
+4. **`huggingface-cli login`** so credentials are available.
+5. **Clone `leap-finetune`:** `git clone https://github.com/Liquid4All/leap-finetune.git && cd leap-finetune && uv sync`. ~5 min.
+6. **Verify CUDA in PyTorch:** `uv run python -c "import torch; print(torch.cuda.is_available(), torch.cuda.get_device_name(0))"`. Should print `True`, `NVIDIA GeForce RTX 4080 Laptop GPU`.
+7. **Install flash-attn:** `uv pip install flash-attn --no-build-isolation` (or whatever the leap-finetune config requires). If a wheel exists, instant. If source build, 30–60 min in the background while you prep data.
+8. **Run a tiny smoke-test config** locally — same as the official VRSBench config but with `limit: 50` on training and eval datasets so it finishes in 10–15 min. Confirms end-to-end pipeline works.
+9. **If smoke test passes locally:** Day 6 runs locally. Reserve Modal as the published-final-run option for reproducibility.
+10. **If smoke test fails after reasonable debugging (~2 hours):** switch the smoke test to Modal: `uv run leap-finetune job_configs/vrsbench_multitask_modal.yaml`. Modal container has flash-attn pre-installed.
 
-1. **Sign up for Modal** (`modal setup`); claim $30 free credit. ~10 min.
-2. **Sign up for HuggingFace** with write access (we need to publish weights). ~5 min.
-3. **`huggingface-cli login`** locally so Modal can pass credentials.
-4. **Clone `leap-finetune`:** `git clone https://github.com/Liquid4All/leap-finetune.git && cd leap-finetune && uv sync`. ~5 min.
-5. **Run the official VRSBench config on Modal:** `uv run leap-finetune job_configs/vrsbench_multitask_modal.yaml` (or whatever the exact path is — verify in repo). Container build ~5 min first time, then training. ~15-30 min for a small sub-set; ~few hours for full.
-6. **Pull the checkpoint:** `modal volume get <volume> <path>`.
-7. **Run benchmarks** on base vs fine-tuned using the framework's built-in eval. The numbers are our measurable improvement.
+After smoke test: run benchmarks (built into the framework) on base vs the smoke-test fine-tuned to confirm the eval pipeline produces sensible numbers.
 
 Expected Spike 3 outcome: **a fine-tuned LFM2.5-VL-450M with documented VRSBench improvement, published to HuggingFace, with reproducible training code in the submission repo.** That alone hits most of the rubric's fine-tuning requirements.
 
 If we have remaining time on Day 6: continue with Stage 2 (SatDiff-specific) custom training on top.
 
-## Decision points for the laptop session
+## Decision: confirmed
 
-The user needs to confirm one thing before Spike 3:
-
-- **What hardware is the laptop?** Mac / Linux + NVIDIA / Windows?
-   - Mac → Modal is mandatory (which is fine).
-   - Linux + NVIDIA → Modal preferred for reproducibility; local possible if NVIDIA + CUDA + matching PyTorch is already configured.
-   - Windows → Modal preferred; WSL2 if local.
-
-In all cases, **Modal is the recommended path** because (a) it sidesteps flash-attn, (b) it's the published recipe, (c) judges will trust the result more, (d) the $30 free credit covers our needs.
+**User hardware:** Alienware m18 R2, i9-14900HX, 32 GB RAM, RTX 4080 12 GB, Win11 + WSL2.
+**Plan:** local primary, Modal as registered fallback. Sign up for Modal to claim $30 credit; don't run anything there yet.
 
 ## Risks remaining
 

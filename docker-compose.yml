@@ -1,0 +1,112 @@
+# SatDiff — top-level orchestration for the rubric's fresh-clone test:
+#
+#   git clone <repo> judge && cd judge && docker compose up -d
+#
+# Four services on a shared bridge network:
+#   - fakesat-dashboard   : SimSat dashboard, port 8000  (pre-req for sim)
+#   - fakesat-sim         : SimSat API,       port 9005  (Sentinel imagery endpoint)
+#   - llama-server        : llama.cpp HTTP,   port 8080  (Stage 1 GGUF Q8_0 + F16 mmproj baked in)
+#   - satdiff             : Python pipeline   (no host port; exec in to run passes)
+#
+# CPU-only by design — the Docker run is the rubric's correctness verification
+# path. The demo video shows the local CUDA path (2.38 s/pass on RTX 4080).
+# CPU latency: ~20 s/pass — acceptable for a one-pass smoke test on judge HW.
+
+name: satdiff
+
+services:
+  fakesat-dashboard:
+    build:
+      context: ./vendor/SimSat
+      dockerfile: Dockerfile.dashboard
+    container_name: fakesat-dashboard
+    ports:
+      - "8000:8000"
+    environment:
+      - DJANGO_DEBUG=1
+      - DJANGO_SECRET_KEY=dev-secret-key-change-me-in-production
+    volumes:
+      - dashboard_db:/app
+    networks:
+      - satdiff-network
+    healthcheck:
+      test: ["CMD-SHELL", "python -c 'import urllib.request; urllib.request.urlopen(\"http://localhost:8000/api/telemetry/recent/\")'"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  fakesat-sim:
+    build:
+      context: ./vendor/SimSat
+      dockerfile: Dockerfile.sim
+    container_name: fakesat-sim
+    ports:
+      - "9005:8000"
+    environment:
+      - DASHBOARD_URL=http://fakesat-dashboard:8000
+      - MAPBOX_ACCESS_TOKEN=${MAPBOX_ACCESS_TOKEN:-judge-dummy-not-used}
+    depends_on:
+      fakesat-dashboard:
+        condition: service_healthy
+    networks:
+      - satdiff-network
+    shm_size: '256mb'
+    # Cheap TCP probe — confirms FastAPI is bound on :8000. The actual Sentinel
+    # endpoint takes 5+ s per call (imagery fetch), too heavy for a healthcheck.
+    healthcheck:
+      test: ["CMD-SHELL", "python -c 'import socket; s=socket.socket(); s.settimeout(3); s.connect((\"127.0.0.1\",8000)); s.close()'"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 30s
+
+  llama-server:
+    build:
+      context: .
+      dockerfile: Dockerfile.llama-server
+    container_name: satdiff-llama-server
+    ports:
+      - "8080:8080"
+    networks:
+      - satdiff-network
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8080/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 60s
+
+  satdiff:
+    build:
+      context: .
+      dockerfile: Dockerfile.satdiff
+    container_name: satdiff
+    environment:
+      - SIMSAT_URL=http://fakesat-sim:8000
+      - LLAMA_SERVER_URL=http://llama-server:8080
+      - SATDIFF_INFERENCE=llama_server
+      - SATDIFF_REPO_ROOT=/app
+    volumes:
+      # Persist tile cache + per-pass outputs across runs; speeds up demos
+      # and keeps the fresh-clone test idempotent.
+      - satdiff-phase1-data:/app/phase1/data
+      - satdiff-phase2-out:/app/phase2/out
+      - satdiff-phase3-out:/app/phase3/out
+    depends_on:
+      fakesat-sim:
+        condition: service_healthy
+      llama-server:
+        condition: service_healthy
+    networks:
+      - satdiff-network
+
+networks:
+  satdiff-network:
+    driver: bridge
+
+volumes:
+  dashboard_db:
+  satdiff-phase1-data:
+  satdiff-phase2-out:
+  satdiff-phase3-out:

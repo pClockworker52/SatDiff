@@ -1,0 +1,77 @@
+# CPU-only llama.cpp server image with the SatDiff Stage 1 GGUF pair pulled
+# from Hugging Face at build time.
+#
+# Self-contained: builds llama-server from a pinned upstream SHA + downloads
+# the public GGUF pair from Hugging Face. The fresh-clone test pulls a small
+# repo (no LFS) and lets the Docker build resolve the 544 MB GGUF on its own.
+#
+# Final image: ~700 MB (~150 MB OS + libs + binary, ~544 MB GGUF pair).
+
+# ---------- builder ----------
+FROM ubuntu:24.04 AS builder
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        git \
+        cmake \
+        build-essential \
+        curl \
+        ca-certificates \
+        libcurl4-openssl-dev \
+        libssl-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Pin to the same SHA used in inference/llama.cpp/ during local development.
+ARG LLAMA_CPP_SHA=5d56effdeea49413da226d4815db58f515832ead
+RUN git clone https://github.com/ggerganov/llama.cpp /src/llama.cpp \
+    && cd /src/llama.cpp \
+    && git checkout ${LLAMA_CPP_SHA}
+
+WORKDIR /src/llama.cpp
+RUN cmake -B build -DCMAKE_BUILD_TYPE=Release \
+    && cmake --build build --config Release -t llama-server -j "$(nproc)"
+
+# ---------- runtime ----------
+FROM ubuntu:24.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        libgomp1 \
+        libcurl4 \
+        libssl3 \
+        ca-certificates \
+        curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy the built binary + its shared libs.
+COPY --from=builder /src/llama.cpp/build/bin/llama-server /usr/local/bin/llama-server
+COPY --from=builder /src/llama.cpp/build/bin/lib*.so* /usr/local/lib/
+RUN ldconfig
+
+# Pull the SatDiff Stage 1 GGUF pair from Hugging Face into /models.
+# Repo: https://huggingface.co/WobblyDopamine/SatDiff-LFM2.5-VL-450M-stage1
+ARG HF_REPO=WobblyDopamine/SatDiff-LFM2.5-VL-450M-stage1
+ARG HF_REVISION=main
+RUN mkdir -p /models \
+    && curl -fL --retry 3 --retry-delay 5 \
+        "https://huggingface.co/${HF_REPO}/resolve/${HF_REVISION}/gguf/LFM2.5-VL-450M-stage1-Q8_0.gguf" \
+        -o /models/LFM2.5-VL-450M-stage1-Q8_0.gguf \
+    && curl -fL --retry 3 --retry-delay 5 \
+        "https://huggingface.co/${HF_REPO}/resolve/${HF_REVISION}/gguf/mmproj-LFM2.5-VL-450M-stage1-Q8_0.gguf" \
+        -o /models/mmproj-LFM2.5-VL-450M-stage1-Q8_0.gguf
+
+EXPOSE 8080
+
+# Healthcheck — llama-server's /health endpoint flips to 200 once the model is loaded.
+HEALTHCHECK --interval=15s --timeout=5s --start-period=60s --retries=10 \
+    CMD curl -fsS http://localhost:8080/health || exit 1
+
+CMD ["llama-server", \
+     "--model", "/models/LFM2.5-VL-450M-stage1-Q8_0.gguf", \
+     "--mmproj", "/models/mmproj-LFM2.5-VL-450M-stage1-Q8_0.gguf", \
+     "--host", "0.0.0.0", \
+     "--port", "8080", \
+     "--ctx-size", "8192", \
+     "--threads", "4"]

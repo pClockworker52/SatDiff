@@ -1,0 +1,77 @@
+# SatDiff Python pipeline service.
+#
+# Runs phase1 (data + physical-diff + gate), phase2 (VLM contract pipeline),
+# phase3 (PDF renderer). Talks to fakesat-sim (port 8000 inside the docker
+# network) and llama-server (port 8080).
+#
+# No model weights in this image — those live in the llama-server image.
+# Python 3.11 (matches SimSat + Plan v2's committed Python version).
+
+FROM python:3.11-slim
+
+ENV DEBIAN_FRONTEND=noninteractive \
+    PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    SATDIFF_REPO_ROOT=/app \
+    SATDIFF_INFERENCE=llama_server
+
+# WeasyPrint runtime libs (for phase3 PDF rendering — Cairo/Pango/GDK-Pixbuf
+# stack). Numpy/scipy/shapely/rasterio/h5netcdf bring their deps via
+# manylinux wheels, so no GDAL/GEOS/HDF5 system libs needed.
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        libcairo2 \
+        libpango-1.0-0 \
+        libpangoft2-1.0-0 \
+        libgdk-pixbuf-2.0-0 \
+        libffi8 \
+        shared-mime-info \
+        fonts-liberation \
+        fontconfig \
+        curl \
+        ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+# Install Python deps first so the layer caches across code edits.
+COPY Dockerfile.satdiff.requirements.txt /tmp/requirements.txt
+RUN pip install --no-cache-dir --upgrade pip \
+    && pip install --no-cache-dir -r /tmp/requirements.txt
+
+# Copy pipeline source. Outputs (phase{1,2,3}/out, phase1/data) are gitignored
+# and excluded by the top-level .dockerignore — this keeps the image small.
+COPY phase1/  /app/phase1/
+COPY phase2/  /app/phase2/
+COPY phase3/  /app/phase3/
+COPY spikes/schema.json  /app/spikes/schema.json
+
+# The named volume satdiff-phase1-data mounts at /app/phase1/data and shadows
+# whatever was copied there. Stash the baseline.json files outside the mount
+# point under data-seed/, then have the entrypoint seed the volume on first run.
+RUN if [ -d /app/phase1/data ]; then \
+        mv /app/phase1/data /app/phase1/data-seed && mkdir -p /app/phase1/data; \
+    else \
+        mkdir -p /app/phase1/data-seed /app/phase1/data; \
+    fi
+
+COPY <<'EOF' /usr/local/bin/satdiff-entrypoint.sh
+#!/bin/sh
+set -e
+for src in /app/phase1/data-seed/*/baseline.json; do
+    [ -f "$src" ] || continue
+    asset=$(basename "$(dirname "$src")")
+    target="/app/phase1/data/$asset/baseline.json"
+    if [ ! -f "$target" ]; then
+        mkdir -p "/app/phase1/data/$asset"
+        cp "$src" "$target"
+        echo "[entrypoint] seeded baseline: $target"
+    fi
+done
+exec "$@"
+EOF
+RUN chmod +x /usr/local/bin/satdiff-entrypoint.sh
+
+# Default CMD keeps the container alive so the judge can `docker compose exec
+# satdiff python -m phase2.cli ...`. Once we have a demo-ui, swap to it.
+ENTRYPOINT ["/usr/local/bin/satdiff-entrypoint.sh"]
+CMD ["sh", "-c", "echo 'satdiff ready — exec into me. Try: python -m phase2.cli --asset jagersfontein --date 2022-01-15' && tail -f /dev/null"]

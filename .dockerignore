@@ -1,0 +1,54 @@
+# Top-level .dockerignore — keeps `docker build` contexts lean.
+# Dockerfile.llama-server and Dockerfile.satdiff both build from `.` (repo root)
+# so this single file gates both. (vendor/SimSat/.dockerignore handles the
+# SimSat builds — see the spike-2 BuildKit symlink fix in vendor/SimSat/NOTICE.md.)
+
+# Heavy / regeneratable
+inference/llama.cpp/
+research/
+training/out/
+spikes/data/
+spikes/out/
+phase1/data/
+# But keep the small baseline.json files — they seed the runtime volume so a
+# cold container doesn't have to re-derive a 2017 baseline image.
+!phase1/data/*/baseline.json
+
+phase2/out/
+phase3/out/
+
+# GGUF pair is fetched from Hugging Face inside Dockerfile.llama-server (no
+# longer needed in the build context). Local copies stay on disk for direct
+# llama-server runs but are excluded from the docker build context.
+inference/gguf/
+
+# Local dev environment leftovers
+.venv/
+.uv/
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Git + IDE
+.git/
+.github/
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Documentation drafts (not needed at runtime)
+LAPTOP_HANDOFF.md
+CLAUDE.md
+
+# Heavy fine-tune dataset prep scripts + outputs (only run on the dev box)
+training/
+
+# Misc large files that shouldn't end up in the build context
+*.pdf

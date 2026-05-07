@@ -1,0 +1,8 @@
+# Added during Spike 2 to fix BuildKit symlink-mode error on node_modules/.bin/acorn.
+# The Dockerfile already runs `npm ci` inside the container, so local node_modules
+# are dead weight in the build context (and block the build via a tar checksum bug).
+src/dashboard/frontend/node_modules
+**/__pycache__
+*.pyc
+.git
+db.sqlite3

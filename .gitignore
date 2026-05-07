@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# uv
+.uv/
+
+# Phase outputs / runtime artefacts
+phase1/data/
+phase2/out/
+phase3/out/
+spikes/data/
+spikes/out/
+training/out/
+
+# Inference artefacts (large, regeneratable from scripts/HF)
+inference/gguf/*.gguf
+inference/llama.cpp/
+
+# Demo video raw captures + final export (large; checked-in scripts regenerate
+# the deterministic pieces — time-lapse, Forggensee Stage A — on demand).
+demo/captures/
+demo/_frames/
+demo/jagersfontein_timelapse.mp4
+demo/forggensee_*.png
+demo/satdiff_demo_final.mp4
+
+# Forggensee opener source clip + cut (~64 MB each).
+PXL_*.mp4
+forggensee_open.mp4
+
+# OS
+.DS_Store
+Thumbs.db

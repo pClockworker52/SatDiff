@@ -1,0 +1,1296 @@
+--- page 1 ---
+This article has been accepted for inclusion in a future issue of this journal. Content is final as presented, with the exception of pagination.
+IEEE JOURNAL OF SELECTED TOPICS IN APPLIED EARTH OBSERVATIONS AND REMOTE SENSING
+1
+Integrating Landsat Imageries and Digital Elevation
+Models to Infer Water Level Change in Hoover Dam
+Kuo-Hsin Tseng, C. K. Shum, Jin-Woo Kim, Xianwei Wang, Kefeng Zhu, and Xiao Cheng
+Abstract—The Thematic Mapper onboard Landsat 4, 5, and
+Enhanced Thematic Mapper Plus (TM/ETM+) onboard Landsat
+7 have frequency bands (green and SWIR) to effectively mea-
+sure water body extents and their changes via the Modiﬁed
+Normalized Difference Water Index (MNDWI). Here, we devel-
+oped a technique, called the thematic imagery-altimetry system
+(TIAS), to infer the vertical water changes from MNDWI hori-
+zontal water extent changes by integrating long-term TM/ETM+
+imageries with available digital elevation models (DEMs). The
+result is a technique to quantify water level changes of natu-
+ral or artiﬁcial water bodies over two decades. Several DEMs
+were used to compute intersects with TM/ETM+ water extent
+time series to evaluate the robustness of the technique. These
+DEMs include: the Advanced Spaceborne Thermal Emission and
+Reﬂection Radiometer Global Digital Elevation Map version 2
+(ASTER-GDEM2, at 1 arcsec resolution), the Shuttle Radar
+Topography Mission version 2 (SRTM C-band at 1 arcsec), and
+the Global Multiresolution Terrain Elevation Data (GMTED2010
+at 7.5 arcsec). We demonstrated our technique near Hoover Dam
+(HD) in Lake Mead to quantify its respective decadal water level
+changes. The dammed water had experienced extraordinary level
+Manuscript received July 28, 2015; revised October 07, 2015; accepted
+November 4, 2015. This work was supported in part by the Ministry of
+Science and Technology (MOST), Taiwan, under project 104-2119-M-008-
+005-MY2 and 104-2221-E-008-099-MY3, in part by the National Central
+University New Faculty Research Award. The U.S. component of the research
+is supported in part by the National Geospatial-Intelligence Agency under
+NGA/NURI HM1582-10-1-0019, and by NASA’s Geodetic Imaging Program
+(NNX12AQ07G). The ICESat component was supported in part by the China’s
+National Key Science Program for Global Change Research under Grant
+2012CB957704, in part by the Fundamental Research Fund for the Central
+University, the Center for Global Sea Level Change (CSLC) of NYU Abu Dhabi
+under Grant G1204, and in part by the Open Fund of State Key Laboratory of
+Remote Sensing Science under Grant OFSLRSS201414.
+K.-H. Tseng is with the Center for Space and Remote Sensing Research,
+National Central University, Taoyuan 32001, Taiwan, and also with the Institute
+of Hydrological and Oceanic Sciences, National Central University, Taoyuan
+32001, Taiwan (e-mail: khtseng@csrsr.ncu.edu.tw).
+C. K. Shum is with the State Key Laboratory of Geodesy and Earth’s
+Dynamics, Institute of Geodesy and Geophysics, Chinese Academy of
+Sciences, Wuhan 430077, China, and also with the Division of Geodetic
+Science, School of Earth Sciences, Ohio State University, Columbus, OH
+43210 USA (e-mail: ckshum@osu.edu).
+K. Zhu is with the Division of Geodetic Science, School of Earth Sciences,
+Ohio State University, Columbus, OH 43210 USA (e-mail: zhu.218@osu.edu).
+J.-W. Kim is with the School of Earth Sciences, Southern Methodist
+University, Dallas, TX 75275 USA (e-mail: jinwook@smu.edu).
+X. Wang is with the State Key Laboratory of Remote Sensing Science,
+Institute of Remote Sensing Applications, Chinese Academy of Sciences, and
+Beijing Normal University, Beijing 100875, China, and also with the Center
+for Global Sea Level Change, New York University Abu Dhabi, Abu Dhabi
+129188, UAE (e-mail: wangxianwei0304@163.com).
+X. Cheng is with the College of Global Change and Earth System
+Science, Beijing Normal University, Beijing 100875, China (e-mail: xcheng@
+bnu.edu.cn).
+Color versions of one or more of the ﬁgures in this paper are available online
+at http://ieeexplore.ieee.org.
+Digital Object Identiﬁer 10.1109/JSTARS.2015.2500599
+variation in the past 20 years due to natural decline from intake
+or artiﬁcial impoundments. The discrepancy of the HD water
+level changes from an analysis of 32-year (1984–2015) time series,
+including 584 Landsat scenes, using the GMTED2010 DEM, has
+a RMSE reached 0.85 ± 0.63 m (91% of data) as compared with
+in situ stage record.
+Index Terms—Inland water altimetry, lake level, remote sens-
+ing, shoreline detection.
+I. INTRODUCTION
+C
+HANGES in water surface height (WSH) over time for
+inland water bodies are critical information for fresh-
+water studies and water resource management. Spaceborne
+observation has thus become a promising tool for large-scale
+observation that supports locally incomplete infrastructure,
+such as gauge stations [1]–[3]. Owing to the advance in satellite
+altimetry and postprocessing techniques such as radar wave-
+form retracking [4]–[6], monitoring large (>100 km2) inland
+water bodies has been made possible in the past two decades by
+data from multiple satellite radar altimetry missions [7] or data
+from laser altimetry mission, such as ICESat [8].
+In principle, the distance between satellite and its nadir point
+on the Earth could be determined by measuring the two-way
+travel time between emission and reception of radar pulses (or
+photons in laser pulses), assuming that they travel in the speed
+of light in vacuum. After several corrections for distance due to
+inhomogeneous media (e.g., troposphere and ionosphere) and
+tidal effects, the ellipsoidal height of the nadir point can thus
+be approximated by subtracting the satellite-surface distance
+from the height of satellite itself. Following to these correc-
+tions, the radar waveform retracking ﬁne-tunes the telemetered
+range from radar echoes sampled in time, or equivalent in dis-
+tance. Tracing the shape of a waveform, especially the position
+and slope of leading/trailing edge with respect to a nominal
+location in waveform gates, provides information about surface
+roughness and tilt of the plane within the radar footprint.
+However, these measurements obtained from repeat-orbiting
+satellites are strictly conﬁned to a predeﬁned ground-track grid
+and a periodical sampling based on orbit characteristics. For
+example, the Environmental Satellite (Envisat) launched by the
+European Space Agency (ESA) in 2002 had a cross-track inter-
+val ∼80 km at the Equator and 35-day revisit period, which
+shared the same orbital elements with preceding ERS-1/-2 mis-
+sions back to the 1990s. Another example is NASA/CNES’s
+TOPEX/Poseidon (T/P), Jason-1, and OSTM/Jason-2 series
+that has a coarser along-track spacing at the Equator (∼315 km)
+and a shortened revisit period of ∼10 days [9], [10]. In addi-
+tion, the ICESat laser altimetry working in campaign mode
+1939-1404 © 2015 IEEE. Personal use is permitted, but republication/redistribution requires IEEE permission.
+See http://www.ieee.org/publications_standards/publications/rights/index.html for more information.
+
+--- page 2 ---
+This article has been accepted for inclusion in a future issue of this journal. Content is final as presented, with the exception of pagination.
+2
+IEEE JOURNAL OF SELECTED TOPICS IN APPLIED EARTH OBSERVATIONS AND REMOTE SENSING
+in a period of 2003–2010 had only 2–3 revisits per year
+[11], despite its dense ground-track separation of about 7 km.
+Although the altimetry satellite such as T/P and Jason-1 was
+built intentionally for open-ocean or sea ice studies, along
+with some following missions, for instance, Jason-2, Envisat,
+ICESat, and SARAL/AltiKa, they have contributed enormously
+to the terrestrial hydrology [8], [12]–[20] and many other con-
+tinental freshwater applications [5], [12], [21]–[23]. However,
+the demand at some particular locations is sometimes totally
+unattainable while the target area falls between parallel ground-
+tracks without any possible ﬂy-bys. Meanwhile, the footprint
+of the conventional pulse-limited radar altimeter usually varies
+between 3 and 7 km in radius depending on the surface
+roughness for terrestrial measurements. The footprint partially
+covering land may encounter a serious land contamination
+in echoes and usually needs further waveform editing [24]–
+[26], especially for water surface less than 1 km wide [27].
+Therefore, an alternative method using swath imaging is con-
+sidered to complement spatial/temporal gaps bypassed by these
+pulse-limited radar or laser altimetry satellites. To a greater
+extent, this alternative method is expected to have a broader
+coverage of terrestrial area and seamless mission time span,
+which supports operational and long-term observations of WSH
+variations.
+Considering the altimetric satellite that is scheduled for
+launch, the Surface Water Ocean Topography (SWOT) mission
+[1], [28] carrying the Ka-band radar interferometer (KaRIn)
+may be the only candidate to fulﬁll this anticipation. For
+example, Frappart et al. [29] presents the signature on sur-
+face water of the extreme drought that affected the Amazon
+basin in 2005 in a SWOT perspective. Other missions, such
+as SARAL/AltiKa (launched in February 2013), Sentinel-
+3 (scheduled for launch in late 2015), Jason-3 (2015), and
+Jason-CS (Continuity of Service, 2017) will perhaps fol-
+low similar orbits and equip nadir-looking radar or delay-
+Doppler [30] altimeters as their predecessors. Hence, before
+the expected launch of SWOT in 2020, an alternative method
+is needed to study the inland waters variation from histori-
+cal satellite records. Previous works have demonstrated the
+potential of combining nadir altimetry measurements with
+various types of satellites images to quantify water volume
+stored in lakes, ﬂoodplains and large river basins, such as
+using SAR [31], multispectral [32], [33], and multisatellite
+observations [29].
+In the last few years, numerous studies have been dedicated
+to the computation of water surface area (WSA) using remote
+sensing (RS) imagery and compared the results to various water
+level measurements [34]–[38], such as in situ gauge data. In
+fact, the WSH of water body itself can be approximated by
+monitoring the WSA expansion moving along the contour of
+an accurate reference elevation, as long as the side slope of
+a lake is not vertical. And the WSH can be directly validated
+by the gauge or altimetry measurements, if they were existed.
+However, the possibility of conversion between WSA and WSH
+had been poorly investigated in the literatures, due primarily
+to the high cost of very high-resolution optical imagery and
+unavailability of good topography references. Pietroniro et al.
+[39] demonstrated this concept using Landsat Multispectral
+Scanner (MSS) and Thematic Mapper (TM) images, cou-
+pled with GPS-derived digital elevation model (DEM) at the
+Peace-Athabasca Delta (PAD) in Canada. They included 8
+Landsat snapshots in 16 years and obtained water level in
+<20 cm accuracy compared with hydraulic model over the very
+low-relief PAD ﬂoodplain. Xu et al. [40] used QuickBird-2
+submeter resolution imagery to estimate river discharge along
+Yangtze River. However, they only used 5 images in multiple
+locations and relied on a look-up table for river width-stage
+conversion. Andreoli et al. [41] showed an integration of
+Envisat ASAR/MERIS images with SRTM-C at Poyang Lake,
+China. In their study, the monitor of lake level in the ﬂat Poyang
+Lake had an average error at 1.26 ± 1.83 m. Cai et al. [42] ana-
+lyzed MODIS imageries and construct a area-level relationship
+also in Poyang Lake. They obtained high correlation between
+water area and water level at R2 equal 0.61–0.98 by multiple
+regression models.
+Due to the rising accessibility of several high resolution
+DEMs released in the last couple of years, the operational and
+global-covering virtue of this approach becomes feasible as we
+could employ high quality DEMs as a reference to recover
+the WSH more accurately for practical usage. Therefore, we
+intend to build such an algorithm namely the thematic imagery-
+altimetry system (TIAS) that aims to recover WSH by using
+a conceptually different principle than conventional nadir-
+looking radar or laser altimetry instruments. An introduction
+of study area will be given in Section II. A general work-
+ﬂow of the TIAS will be given in Section III, followed by a
+detailed description of data products and computational meth-
+ods in Section IV. Statistics and error sources of the TIAS
+measurements in Lake Mead are tabulated and discussed in
+Section V. Finally, Section VI concludes the major contribution
+and prospective works from this study.
+II. STUDY SITE
+To demonstrate the feasibility of this proposed approach, we
+applied the TIAS and examined its WSH estimate capability
+at Hoover Dam (HD) in Lake Mead. The HD located 40 km
+southeast of Las Vegas formed Lake Mead across Nevada and
+Arizona, USA, which is the largest reservoir in the USA since
+1930s. During 2000–2010, the water level of Lake Mead at
+HD fell nearly 40 m due to the shortage of its intake [33].
+The lake level dropped to 329.78 m above mean sea level,
+because of a reduction of ﬂow along Colorado River from
+another giant reservoir upstream, the Glen Canyon Dam. After a
+short rebound during 2010–2013, the water level in Lake Mead
+kept hitting lowest level in all-time record since 2013, while the
+record in May 2015 is 328.14 m. The HD also incurred serious
+decrease in water volumes that are arguably subject to a secu-
+lar trend in climate change [43], [44] and groundwater depletion
+[45]. In this study, the Boulder Basin, which is a part of western
+Lake Mead, was taken for investigation as speciﬁed in Fig. 1.
+The water area in the Boulder Basin is about 280 km2, with a
+shoreline length in some 450 km.
+The HD in Lake Mead is not only socioeconomically impor-
+tant concerning its regional water storage/supply but also pre-
+dominant in hydropower generation. However, relatively large
+
+--- page 3 ---
+This article has been accepted for inclusion in a future issue of this journal. Content is final as presented, with the exception of pagination.
+TSENG et al.: INTEGRATING LANDSAT IMAGERIES AND DEMs TO INFER WATER LEVEL CHANGE
+3
+Fig. 1. Left panel denotes the geographical location of Lake Mead in the USA (blue dot in the inset) and the Boulder Basin aimed in this study (red box). Envisat
+pass #406 ﬂying over the northern Overton Arm is denoted by yellow line. ICESat actual ground track near the Boulder Basin is denoted by green dashed line.
+The closest Jason-2 ground track falling east of the lake is not shown here. Right panel demonstrates a birdview of nearby terrain exempliﬁed by ASTER GDEM2
+in 30 m. The Boulder Basin covers a distance within ∼17 km from HD and a WSA stretches about 12 km in E–W and 10 km in N–S direction. We used addition
+masks to ensure WSA only covering upstream of the dam.
+water areas of Lake Mead were infrequently monitored by radar
+altimeters, due primarily to the shape, terrain, and geographical
+locations that lack of ground tracks from a series of altime-
+try satellites. Although the surface area of entire lake is larger
+than 600 km2, it has only covered by two Envisat passes with
+three crossovers ranging from 1.9 to 3.5 km. T/P and Jason-1/-2
+series have no pass near this location (except for short-term
+extended/interlaced tracks). Therefore, an examination of the
+TIAS at this site is appropriate to demonstrate its comparable
+role in altimetric services. We perform an analysis of 32-year
+(1984–2015) water level study by collecting available Landsat
+imageries and in situ record, and compared with Envisat and
+ICESat data therein. The SARAL/AltiKa that follows Envisat
+is not included in current study.
+III. WORKFLOW OF THE TIAS
+The TIAS has a three-tier architecture generally categorized
+in terms of data maturity levels, which include: 1) data col-
+lection; 2) preliminary estimate; and 3) Cal/Val sections as
+shown in Fig. 2. The steps from gathering data to converting
+WSA into WSH are also illustrated in Fig. 3 for visualization.
+In the beginning, the data collection part ﬁrst gathers RS data
+and DEMs, and applies a preceding coregistration on both
+data sets. For DEM collection part, we utilized three popular
+products with spatial resolution ranging from 30 to 250 m,
+namely the Advanced Spaceborne Thermal Emission and
+Reﬂection Radiometer Global Digital Elevation Map version 2
+(ASTER-GDEM2), Shuttle Radar Topography Mission C-band
+version 2 (SRTM-C), and Global Multiresolution Terrain
+Elevation Data (GMTED2010) (see details in Section IV-A).
+For RS imagery part, the TIAS algorithm employs both the
+TM carried by Landsat 4 and 5 and the Enhanced Thematic
+Mapper Plus (ETM+) onboard Landsat 7 to compute WSA.
+The Landsat series has nominally 30 m spatial resolution and
+16-day revisit period. Since the grid size varies in each data
+Fig. 2. Flowchart of the TIAS showing the process to estimate and verify WSH
+using RS imagery, DEMs, and other independent measurements. Two diamond
+boxes indicate technical processes required in the computation. (a) To ﬁll the
+DEM water mask by a projection from nearby terrain. (b) To ﬁt the distribu-
+tion of height estimates by using the GEV ﬁtting function. Step 6) is optional
+depending on the availability of in situ data or extra measurements.
+source, it is necessary to align each pair of RS imagery and
+DEM to the same grid size via double-linear interpolation.
+We coregistered all datasets into 30 m grid and assume the
+geolocation error is ignorable.
+After that, a modiﬁcation for the DEM is needed because the
+raw data in these models cannot be directly used as their orig-
+inal forms—these DEMs have a constant elevation over lake
+area on the basis of a predeﬁned water mask and the timing of
+composition [46]. Hence, a technical process denoted as dia-
+mond a in Figs. 2 and 3 is developed to replace the constant
+
+--- page 4 ---
+This article has been accepted for inclusion in a future issue of this journal. Content is final as presented, with the exception of pagination.
+4
+IEEE JOURNAL OF SELECTED TOPICS IN APPLIED EARTH OBSERVATIONS AND REMOTE SENSING
+Fig. 3. Visualization of Steps 1–4) and technical processes a and b as marked in Fig. 2. Panel 1 is a 3-D elevation proﬁle of Lake Mead near Boulder Basin. Panel
+2 is the false-color composite image of a typical ETM+ scene (RGB: B5, B4, and B3). Panel 3 is a visualization of DEM modiﬁcation process that extends the
+terrain inward of lake area to simulate the bathymetry near shore. Panel 4, a two color-coded plot, is an example of binarized MNDWI image that has been applied
+thresholding operation at a ratio equal 0.2. The bottom two panels are the scatter plot (left) and histogram of height distribution (right) for a typical ETM+ scene.
+value in DEM over lake surface by a projection from the encom-
+passing terrain. In other words, we assume that the side slope
+of a lake remains unchanged and can be extended toward the
+inundated area. As an example given in Fig. 3, a cross-section
+of lake bathymetry shown in panel 3 is proﬁled along the red
+dashed line in panel 1. The slope information from terrain in
+radial direction is gathered and extended downward to the lake
+bottom as denoted by a in panel 3. Although this projection
+of terrain may generate unreliable bathymetry close to the lake
+center since we assume that the depth of lake bottom is unlim-
+ited, based on our analysis, this approach remains effective as
+long as the WSH varies within few tens of meters at selected
+study site.
+The Step 4) in the second part of TIAS consists of computing
+the Modiﬁed Normalized Difference Water Index (MNDWI)
+using Landsat TM/ETM+ imagery. The area whose MNDWI
+exceeding a certain threshold is marked as water and its
+boundary is then overlaid onto DEMs. If we assume that the
+equipotential surface of a particular water body has no surface
+gradient (i.e., geoid anomaly) or the anomaly is well known and
+can be corrected, the outline of such water body in steady state
+would match the contour of a DEM with respect to a vertical
+datum, such as the World Geodetic System 1984 (WGS84).
+The number of WSH “samples” is thus equal to the number
+of pixels along the shoreline, i.e., the total length of shoreline
+divided by the grid size of RS imagery (e.g., 30 m for Landsat).
+Ideally, there are a huge amount of samples with values center-
+ing to an exact ellipsoidal height, if we assume that the vertical
+and horizontal accuracy of the DEM is arbitrarily high and
+the grid size of RS imagery grid is inﬁnite small. However,
+since the DEMs have various horizontal resolution (30–250 m)
+and vertical accuracy (7–30 m), while Landsat imagery also
+has limited spatial resolution (30 m) and inaccuracy in water
+mask determination, the collection of height estimates around
+the water body will practically form a probability distribution
+that allows us to compute the most likely WSH from ﬁtting
+functions.
+The second technical component denoted as diamond b in the
+ﬂowchart is thus needed to ﬁnd the best height estimate along
+the water body’s outline. Each grid of shoreline has its corre-
+sponding height value from DEM after coregistration, and the
+value is considered to be the WSH at that pixel. The height
+samples gathered along the shoreline thus forms a histogram
+as also demonstrated in the bottom right of Fig. 3, panel b.
+
+--- page 5 ---
+This article has been accepted for inclusion in a future issue of this journal. Content is final as presented, with the exception of pagination.
+TSENG et al.: INTEGRATING LANDSAT IMAGERIES AND DEMs TO INFER WATER LEVEL CHANGE
+5
+Since the WSH estimates collected along the shoreline may
+not be perfectly centering at just one value; instead, it has a
+spread across few meters depending on the quality of DEM
+and accuracy of shoreline determination. Therefore, ﬁnding the
+maximum likelihood estimate of WSH is a key component in
+this algorithm. In panel b, the histogram of WSH estimates
+is slightly different from a normal distribution consisting of
+unknown random noises. This probability distribution with a
+distinguishable peak may have uneven spread of shoulders (not
+shown here). For example, an inadvertent distortion of contour
+in DEM w.r.t. a vertical datum may cause a longer leg in either
+side of the distribution. Hence, we estimated the WSH by ﬁtting
+the probability distribution of height estimates with the gener-
+alized extreme value (GEV) distribution that was developed to
+model the local maxima in a ﬁnite sequence [47]. Because the
+actual height of water surface is outstanding in the probability
+density function (pdf) and appears to be the outlying observa-
+tion, regular normal distribution is poor in ﬁtting the extreme
+value in pdf. Therefore, the GEV distribution that has been well
+known for modeling extreme events [48] corresponds well with
+requirement in this study.
+The third part of the workﬂow includes the calibra-
+tion/validation (Cal/Val) with other independent measurements
+having better accuracy that serve as groundtruth. In addition to
+the comparison with raw TIAS time series, we also provide a
+“de-outlier” version of time series for comparison. We used the
+moving average of TIAS time series itself to remove potential
+outliers in the measurements. More speciﬁcally, the difference
+between the TIAS WSH and three-point average was ﬁrst com-
+puted, and then the outlying TIAS WSHs that exceeded 2-σ of
+the difference were discarded. The performance of using entire
+data set and after de-outlier process is both given in Section V.
+To validate the accuracy of TIAS results, we used monthly
+in situ measurements to validate TIAS WSH estimates, and
+also compared with ICESat GLAS laser altimetry and Envisat
+radar altimetry results. The quality indicators of WSH esti-
+mates include assessments of RMSE, correlation (R2), and
+number of temporal points between measuring techniques. We
+also demonstrate an optional feedback mechanism showing a
+dynamic selection of MNDWI threshold by iterating a setting
+of 0.15, 0.2, and 0.25, in order to ﬁnd the optimal threshold set-
+ting for certain image/DEM combination. The calibration step
+is only for lake that has other reference data and can be utilized
+to help TIAS accuracy.
+IV. DATA AND PROCESSING TECHNIQUE IN TIAS
+A. Data Collection
+1) Landsat
+TM/ETM+: The
+TM
+carried
+by
+Landsat
+4 (1982–1993), Landsat 5 (1984–2012), and the ETM+
+onboard Landsat 7 (1999–present) has provided a contin-
+uous services as land monitoring system from both pho-
+togrammetric
+and
+radiometric
+aspects.
+Both
+TM/ETM+
+images can be browsed and downloaded via the U.S.
+Geological Survey (USGS) EarthExplorer interface (Available:
+http://earthexplorer.usgs.gov). After downloading the Level 1
+product with separated bands in GeoTIFF format, the digital
+numbers (DNs) were then converted into the top-of-atmosphere
+(TOA)
+reﬂectance
+by
+means
+of
+appropriate
+calibration
+coefﬁcients, including band-dependent rescaling factor, Sun
+azimuth, Earth–Sun distance, mean exoatmospheric solar irra-
+diance (ESUN λ), and the gain strength [49]. Moreover, fol-
+lowing to the failure of the Scan Line Corrector (SLC), an
+instrument used to parallel each cross-track swath during the
+forward motion, in May 2003, the uncorrected scanning had
+resulted in a zigzag pattern of swath composite and caused
+stripe voids in each Landsat 7 ETM+ scene. Hence, approx-
+imately 22% of pixels in any given ETM+ scene remain
+unﬁlled. To address this problem, we applied a simple linear
+interpolation to ﬁll void stripes in the computed MNDWI with
+binarized color-code, e.g., to set pixel whose MNDWI greater
+than 0.2 equal 1 and set pixel value equal 0 otherwise. On aver-
+age, the SLC-off gaps at an interval approximately ∼1 km on
+the ground normally have 2–3 pixels in width at study site,
+which corresponds to a total <50 pixels at coastal region in one
+scene. Therefore, comparing to a great number of RS pixels
+along the shoreline, which is mostly >14 000 pixels for HD
+(with a variation about 1500 pixels between high and low water
+level), the error due to the simpliﬁed manner of SLC-off cor-
+rection is negligible. However, it should be emphasized that
+Boulder Basin lies in the center of the SLC-off Landsat scene
+(WRS Path: 39 Row: 35); therefore, the loss of pixels is min-
+imal comparing with other lakes globally. For small lakes or
+lakes lying near the edge of a SLC-off scene, the treatment
+of data gaps should be more careful and a more sophisti-
+cated gap ﬁlling method should be applied. For this study, we
+ﬁrst collected all TM/ETM+ images available over this region
+(1984–2015), and then rejected the ones with partial or full
+cloud-cover at study area by visual inspection. Finally, a num-
+ber of 584 TM/ETM+ images (174 SLC-off mode) were used
+as an input in the TIAS computation.
+2) Digital Elevation Models: Three DEMs exploited in this
+study are summarized in Table I. The higher resolution is
+SRTM-C and ASTER GDEM2 in 30 m [50], while the coarser
+one is GMTED2010 in ∼250 m [51]. Although GMTED2010,
+which uses SRTM digital terrain elevation data (void-ﬁlled)
+30 m DEM as a major input at approximately 70% of its terres-
+trial coverage, the ﬁnest resolution of GMTED2010 has been
+reduced to ∼250 m to accommodate many other data sources
+in its global dataset [52]. For SRTM-C, we used SRTM1 V2
+(30 m) in HD [53]. The SRTM X-SAR DEM had also been pro-
+posed and tested in the beginning of this study. However, since
+its meshed coverage only supports a fraction of lake surface in
+HD, it is thus excluded in the evaluation.
+In addition, the last row of Table I remarks the elevation
+of water mask as the lower bound of WSH estimate while
+using raw DEM as an input. As mentioned before, the water
+mask in each DEM is identiﬁed while there is a polygon with
+constant value near the known location of water bodies. The
+GMTED2010 has the same water mask elevations as SRTM-
+C in HD, despite a 7-year transition between released dates.
+Also, the ASTER GDEM2 compiled after 2000 and released
+in 2009 has exclusively unveiled the WSH drop in HD dur-
+ing late 2000s, with a water mask elevation 22 m lower than
+others.
+
+--- page 6 ---
+This article has been accepted for inclusion in a future issue of this journal. Content is final as presented, with the exception of pagination.
+6
+IEEE JOURNAL OF SELECTED TOPICS IN APPLIED EARTH OBSERVATIONS AND REMOTE SENSING
+TABLE I
+OVERVIEW OF DEM PRODUCTS USED IN THIS STUDY
+∗Except for bathymetry under waterbody.
+3) Radar and Laser Altimetry: Launched in March 2002,
+Envisat operated by ESA was a near-polar-orbiting opera-
+tional satellite with an inclination approximately 98.5◦. Its
+sun-synchronous and exact-repeat orbital elements allowed the
+dual frequency radar altimeter (RA2) to measure the nadir sur-
+face height along a predeﬁned ground-track every 35 days.
+In October 2010, it accomplished an orbit lowering maneu-
+ver to extend mission life and entered a new “drifting phase”
+[54] of the mission: the orbit no longer followed exact ascend-
+ing/descending nodes and a repeat cycle shortened to 30 days.
+Toward the end of April 2012, there was a sudden loss in com-
+munication that caused Envisat to be announced the end in cycle
+113. The RA2 sensor data record (RA2_MWS_2P) and RA2
+geophysical data record (RA2_GDR_2P) were archived for reg-
+istered users via the ESA Earth Online data portal (Available:
+https://earth.esa.int/). Here, we used the latest version of repro-
+cessed Envisat GDR (V2.1) provided by CNES Archiving,
+Validation, and Interpretation of Satellite Oceanographic data
+(AVISO) service in regular operation mode spanning 2002–
+2010, corresponding to cycle 6–93. We picked pass #406 near
+the Overton Arm of northern Lake Mead (Fig. 1), which had
+∼3.5 km water crossover along track, or about ten 18 Hz
+footprints. The ICE-1 altimetry range retracker, performed by
+AVISO that had been proved adequate for inland water research
+[5], [18], was then used with several extra corrections, includ-
+ing geophysical (solid Earth tide and pole tide), atmospheric
+(dry/wet troposphere), ionospheric (path delay proportional to
+the total election content), and hardware (ultra stable oscil-
+lator) terms [55]. A random drift of ground track in ±1 km
+was ignored. Finally, the height of water level, with respect
+to the WGS84 reference ellipsoid, at each 18 Hz Ku band
+measurement can be estimated at the overpass in Lake Mead.
+For ICESat laser altimetry, the Global Land Surface
+Altimetry product number 14 (GLA14, release-33) was
+taken as the primary data to calculate water level changes.
+It
+is
+known
+that
+the
+ICESat
+only
+worked
+in
+cam-
+paign mode, mostly in February–March/May–June/October–
+November, 2003–2009, due to the failure in a pump diode array
+soon after launch. The ICESat data had been made available
+at the NASA’s earth observing system clearing house (ECHO)
+online portal (Available: http://reverb.echo.nasa.gov). The data
+preprocessing, including saturation correction and cloud exclu-
+sion, was conducted by our algorithm identical to the method
+introduced in Wang et al. [8], [19]. After that, to calculate
+the precise water level changes, we chose the footprints with
+only one peak in the received waveform for further calculation
+because the footprint covering purely water surface normally
+forms a single peak pattern [19]. Lake margin was determined
+from Landsat ETM+ via a similar water index mask as intro-
+duced later in Section IV-B. For HD, we compared several
+images in wet season in 2003–2008, and chose Landsat 7 scene
+LE50390352003284LGS01 to extract water boundary, as its
+timing corresponding to the larger lake width that ensures more
+footprints coming into the ﬁnal calculation. Since the river
+
+--- page 7 ---
+This article has been accepted for inclusion in a future issue of this journal. Content is final as presented, with the exception of pagination.
+TSENG et al.: INTEGRATING LANDSAT IMAGERIES AND DEMs TO INFER WATER LEVEL CHANGE
+7
+width at this ICESat crossover is less than 1 km and the slope
+of shore is steep, the seasonality of river width is thus negligi-
+ble in this case. A buffer region with ∼100 m as buffer radius
+was then generated to clip footprints covering the waters. In the
+end, the height based on its speciﬁc ellipsoid in a mean-tide
+system (similar to T/P and Jason-1) was then converted into
+WGS84 standard, and the averaged water levels and their stan-
+dard deviations were calculated from along-track observations.
+Regarding to the quantity and quality of observations, the data
+obtained from ICESat campaigns were useful and stable over
+the water surface. The track covering lake surface was about
+2.5 km, approximate 15 footprints on average.
+4) In Situ Data: The WSH of Lake Mead at HD has been
+measured by the Bureau of Reclamation, U.S. Department
+of the Interior (Available: http://www.usbr.gov). The monthly
+average data published online were collected since 1935 based
+on an uncharted local datum. A long-term historical record with
+monthly WSH data allowed us to compare with TIAS estimates
+back to 1980s. Since the variation of water level is smooth in
+HD, without notable change excepting seasonal signal, we sim-
+ply interpolated monthly record to the date when Landsat image
+was taken during the time span. Finally, the mismatch in vertical
+datum between gauge data and the TIAS was removed from the
+estimate of bias in the time series after entire TIAS operation.
+B. Data Processing
+1) MNDWI: The determination of shoreline in Landsat
+TM/ETM+ imagery can be accomplished by a couple of meth-
+ods, e.g., the regular NDWI extraction or the single band (band
+4, 750–900 nm) analysis. The MNDWI was ﬁrst presented in
+Gao [56] to map the vegetation liquid water. McFeeters [57]
+later reﬁned the model to extract water features by using green
+and near-infrared (NIR) bands, known as the modiﬁed NDWI
+(MNDWI). The form we adopted here is an improved MNDWI
+with bands selected by Xu [58], which used the shortwave-
+infrared (SWIR) instead of NIR in Ji et al. [59], to enhance the
+separation of built-up features in water area. Upon the computa-
+tion of the MNDWI, we are able to differentiate water features
+from other landscape by using bands 2 and 5 in TM/ETM+.
+The MNDWI for Landsat is thus formulated as [58]
+MNDWILandsat = Green −SWIR
+Green + SWIR
+(1)
+where green is the Landsat TM/ETM+ band 2 at 520–600 nm
+and SWIR is the lower reﬂectance band 5 at 1550–1750 nm.
+The principle behind this index is by revealing the difference
+between the strong and weak reﬂectance from water surface,
+with a normalization to avoid solar zenith angle alteration, to
+distinguish the high-contrast pattern in spectrum that matches
+the behavior of water molecules. The area of water surface is
+then discriminated from other surface types where the MNDWI
+of such pixel is higher than certain threshold. Since the thresh-
+old of MNDWI is an empirical number depending on the local
+mixture of landscape [59], we ﬁrst selected 0.2 as threshold to
+compute and then tested between 0.15–0.25 to ﬁnd the better
+setting. This iteration acting as a calibration purpose was used
+to ﬁnd a threshold setting for certain DEM that results in lower
+RMSE compared with in situ data.
+2) DEM Bathymetry Projection: To extend the terrain
+downward into water surface boundary existing in the origi-
+nal DEM, we linearly extrapolate the terrain surface from the
+nearby grids and assume that the slope remains constant. The
+pixelwise computation of bathymetry over water area is thus
+expressed as
+Hi = Hj −Sj × Dij
+(2)
+where
+i
+pixel over lake to be extrapolated,
+j
+is the pixel closest to i with valid elevation in DEM,
+Hi is the height of bathymetry at pixel i,
+Hj is the height of land at pixel j,
+Dij is the geometric distance between pixel i and j,
+Sj
+is the averaged slope computed from a 3 × 3 window
+centered at pixel j.
+While there are multiple land points with the same closest
+distance to point i, we took an average of slope from these
+points and follow the same computation. As mentioned before,
+this method would probably underestimate the WSH when the
+lake level falls near the actual lake bottom since the lower
+bound of lake bottom had not been limited. However, this
+coarse approximation is sufﬁcient to serve as a reference for
+few tens of meters movement in vertical, as the behavior of
+Lake Mead. As shown in Fig. 4, a comparison between original,
+modiﬁed, and real bathymetry is demonstrated. In this ﬁgure,
+the top and middle panels show the change of water surface
+mask and projected bathymetry exempliﬁed by GMTED2010.
+The bottom panel is an actual survey provided by USGS
+(Available: http://pubs.usgs.gov/of/2003/of03-320/index.htm).
+It is observed that although some of the coastal areas have inac-
+curate bathymetry (e.g., near lon: 245.30 lat: 36.12 and lon:
+245.36 lat: 36.14), and some islands that have been intention-
+ally masked out, the slope of projected bathymetry matches
+mostly well with the USGS reference. Another example shown
+in Fig. 5 demonstrates the TIAS with ASTER GDEM2 before
+and after the bathymetry projection. The estimate of WSH using
+original DEM meets a lower bound at 350 m w.r.t. WGS84
+ellipsoid while WSA shrinks to a smaller extent than the pre-
+deﬁned water area (green square). Once we extend the terrain
+toward the lake center for hundreds of meters, the improved
+WSH estimates (blue cross) are allowed to access deeper
+contours based upon the modiﬁed DEM.
+C. Water Level Extraction
+1) WSH Histogram: After gathering all DEM values along
+the shoreline, we ﬁrst eliminated outliers obviously out
+of bounds (e.g., deviation greater than ± 100 m) and then
+applied a standard 2σ data editing for initial ﬁltering. The
+estimates would form a distribution with a spread of a few
+more than ten meters and centralizing within a few meters, as
+shown in Fig. 3 panel b. The histogram is then used to ﬁnd the
+best estimate of WSH at certain scene by the following ﬁtting
+function.
+
+--- page 8 ---
+This article has been accepted for inclusion in a future issue of this journal. Content is final as presented, with the exception of pagination.
+8
+IEEE JOURNAL OF SELECTED TOPICS IN APPLIED EARTH OBSERVATIONS AND REMOTE SENSING
+Fig. 4. Visual comparison of original (top), modiﬁed (middle), and real (bottom) bathymetry from the projection method. The original and modiﬁed DEM is
+GMTED2010 and the actual bathymetry is from USGS 1999 sidescan-sonar and chirp seismic-reﬂection survey. The color code covering the variation of water
+level during study time span is in meter.
+2) Generalized Extreme Value (GEV) Fitting Function:
+Considering the DEM with internal vertical accuracy varying
+up to few tens of meters, in addition to the grid size of MNDWI
+that contains a horizontal ambiguity of at least 30 m, the his-
+togram of WSH samples thus has extreme values centered at
+a few meters where the tail of the pdf is relatively prolonged.
+Therefore, we chose the GEV distribution to model the peak
+value among a collection of samples. The density function of
+the GEV distribution is expressed as [47], [60]–[61]
+y = f(x|μ, σ, ξ) =
+ 1
+σ
+
+× exp
+
+−
+
+1 + ξ (x −μ)
+σ
+−1
+ξ  
+1 + ξ (x −μ)
+σ
+−1−1
+ξ
+(3)
+for
+1 + ξ (x −μ)
+σ
+> 0
+(4)
+where μ, σ, and ζ are the location, scale, and shape parameters,
+respectively.
+We exploit the GEV ﬁtting function namely gevﬁt compiled
+by the MATLAB Statistics Toolbox to resolve the ﬁtting param-
+eters. The gevﬁt function ﬁts the histogram by the maximum
+log-likelihood estimation. It ﬁrst obtains initial parameters from
+the P–P (probability–probability) plot of input data (i.e., WSH)
+over the shape parameter, and then iterates to maximize the log-
+likelihood with respect to the parameters until convergence. The
+ﬁtting procedure is applied to each of the 584 scenes and a typi-
+cal example of ﬁtting result is also shown as green line in Fig. 3
+panel b.
+V. RESULTS AND DISCUSSION
+A. TIAS Versus In Situ
+The temporal comparison of WSH anomaly estimated by
+the TIAS with MNDWI threshold equal 0.2, radar altimetry,
+and gauge data in HD is shown in Fig. 6. Fig. 6(a) displays
+that the TIAS estimates using a paired Landsat images and
+ASTER GDEM2 (blue dot) yield a fairly good agreement with
+in situ data (red line) during the comparing time span. Although
+the Envisat ICE-1 retracked results (green circle) provide bet-
+ter quality measurements at this location, we could see the
+
+--- page 9 ---
+This article has been accepted for inclusion in a future issue of this journal. Content is final as presented, with the exception of pagination.
+TSENG et al.: INTEGRATING LANDSAT IMAGERIES AND DEMs TO INFER WATER LEVEL CHANGE
+9
+Fig. 5. Temporal comparison of TIAS WSH estimates using raw ASTER GDEM2 (green square) and modiﬁed DEM (blue cross), and compared with in situ
+gauge data (red line). The TIAS is unable to yield correct results below ∼350 m while using the original DEM. Instead, the modiﬁed DEM with simulated
+bathymetry successfully allow TIAS to recover the WSH below a predeﬁned water mask. Two TIAS time series shown here have been applied a regular 2σ data
+editing against the three-point moving average itself for visual clariﬁcation. A datum offset at 6.44 m is removed for in situ data.
+Fig. 6. Panel (a, left): the TIAS time series using ASTER GDEM2 (blue dot) and compared with gauge data (red line) and Envisat altimetry (green circle). Panel
+(a, right): a zoom-in of left panel in 2002–2011 during Envisat time span. Panel (b), (c), and (d) is to compare gauge record (x-axis) with TIAS WSH (y-axis)
+using ASTER GDEM2, SRTM-C, and GMTED2010, respectively.
+temporal restriction for Envisat, in terms of a shorter mission
+span and a coarser 35-day repeat period.
+The lower panel of Fig. 6 performs the intercomparison
+between three DEMs while using identical RS images as input,
+and is validated with gauge data. It is observed that all of
+these three DEMs are capable to yield excellent agreement
+with gauge data, with R2 values equal to 0.99 for all, while
+GMTED2010 seems the best among them without any speciﬁc
+deﬁciency in any altitude. In contrast, the ASTER GDEM2 has
+a slight unmatched height near 350 m w.r.t. WGS84, which
+
+--- page 10 ---
+This article has been accepted for inclusion in a future issue of this journal. Content is final as presented, with the exception of pagination.
+10
+IEEE JOURNAL OF SELECTED TOPICS IN APPLIED EARTH OBSERVATIONS AND REMOTE SENSING
+TABLE II
+STATISTICAL RESULTS OF THE TIAS AND ALTIMETRY SATELLITES MEASURED WSH COMPARED WITH INTERPOLATED
+IN SITU DATA IN VARIOUS TIME SPANS
+The ﬁrst column name “Before de-outlier” numerates the RMSE ± 95% conﬁdence interval of the TIAS estimates (entire Landsat dataset) compared with in situ
+data. The second column name “After de-outlier” numerates the RMSE ± 95% conﬁdence interval of the TIAS estimates after 2σ de-outlier from the moving
+average itself and compared with in situ data. R2 is square of the Pearson correlation coefﬁcient. The preservation rate (Pres. Rate) indicates the percentage of
+height measurements preserved after calibration, where N is the correspondent number of preserved Landsat images. By using different MNDWI threshold, N will
+change accordingly due to the inclusion or discard of TIAS points from certain Landsat scenes.
+corresponds to the same interval in the top panel. The disagree-
+ment, due to the inaccuracy of raw or modiﬁed DEM at that
+elevation and the slope change, degrade the correlation with
+gauge data. A systematic offset between gauge measurement
+and TIAS WSH is also noticed in this panel. It is basically due
+to the difference in absolute height.
+In Table II, we examined the effectiveness among DEMs in
+TIAS and compared the results with altimetry data. Moreover,
+we tested different MNDWI threshold to reveal its role in the
+TIAS computation. The left part (before de-outlier) of Table II
+is the comparison between entire RS imagery dataset and gauge
+data, without any data selection, where the right part (after de-
+outlier) is the comparison using de-outlier time series based
+on the moving average itself. As shown in the TIAS part of
+Table II, a de-outlier process that removes anomalous estimates
+generally improves the accuracy at 3–30 cm, which effectively
+discards 6–13% of data during self-check. The best result is
+0.85 ± 0.63 m while using GMTED2010 with MNDWI thresh-
+old set to 0.25, and the worst one is 1.90 ± 0.45 m while using
+ASTER GDEM2 with MNDWI threshold set to 0.25, after
+de-outlier. Although GMTED2010 has the coarser resolution
+in this comparison, it gives the best results compared with
+others. The reason is because it took SRTM as its core data,
+especially in the study area (as shown in Table I); hence, the
+TIAS result varies similarly with SRTM C-band solutions. The
+extra improvement it has made is because of its smoothness,
+which seems to be a shortcoming intuitively, actually yields
+a less variable bathymetry, compared with SRTM C-band.
+For 30 m SRTM C-band and ASTER GDEM2, the extrapo-
+lated bathymetry is more ﬂuctuating and some of the grids are
+treated as noise in the ﬁtting procedure. For ASTER GDEM2,
+the actual vertical accuracy may be a bit worse than SRTM,
+especially over mountain region [46].
+In addition, the optimal threshold setting differs case by case
+and depends mainly on the DEM in use. Overall, the refer-
+ence value at 0.2 remains the best or second in the midst of
+three options, and a change in threshold just marginally alters
+the result. This is because the DEM accuracy over mountain
+area and the effect of slope change has larger uncertainty that
+overrides the difference between these three thresholds. The
+ﬁne-adjustment between 0.15 and 0.25 may not be signiﬁcant
+for the determination of TIAS WSH estimates unless we have
+a higher resolution DEM. Nevertheless, the selection of thresh-
+old can be considered once there is in situ data available and
+this calibration step is executable at study site.
+In the lower part of Table II, radar/laser altimetry measure-
+ments are also listed for a qualitative comparison, although the
+sampling time was different from Landsat imagery. The statisti-
+cal results maintaining high accuracy at 0.38–0.39 m in RMSE
+are similar to the results reported in other studies [62], despite
+the narrow water surface width that only allows few points of
+measurements in Lake Mead. In contrast, based on the limited
+resolution of tested DEMs and Landsat imagery used in this
+study, which are 30 m at highest for both, the best result of
+the TIAS is 0.85 ± 0.63 m. This fact implies that the current
+form of TIAS can only be used to monitor water level change
+larger than meter level. It needs further improvement to achieve
+higher accuracy, e.g., using higher resolution RS imagery and
+local DEM.
+Another point worthwhile to mention is the temporal sam-
+pling rate of each radar, laser, or the TIAS approach. The
+common revisit period for current radar altimetry satellites, e.g.,
+Jason-2 and SARAL/AltiKa, is 10 and 35-day, respectively, if
+they had a ﬂy-by at these locations. For the not fully operated
+ICESat-1, the repeat cycle, by design, would be 91-day. The
+TIAS has repeat observation at least every 16-day along with
+the revisit of multiple Landsat satellites. However, the temporal
+sampling of the TIAS is not regular and heavily depends on the
+regional climate, such as pertaining cloud cover in rainy season.
+Therefore, at HD there is a sampling rate of ∼20-day if we take
+584 usable scenes as a benchmark in its 32-years period. The
+temporal resolution can be potentially improved in later years
+and in the near future since there are many other optical sensors
+operating in space.
+
+--- page 11 ---
+This article has been accepted for inclusion in a future issue of this journal. Content is final as presented, with the exception of pagination.
+TSENG et al.: INTEGRATING LANDSAT IMAGERIES AND DEMs TO INFER WATER LEVEL CHANGE
+11
+Fig. 7. Error analysis and sensitivity test for several error components, namely, shoreline positioning uncertainty (K), vertical random error in DEM (σDEM),
+terrain slope (ϑ), and RS imagery/DEM resolution (Rrs). The blue line used for all panels as a reference is speciﬁed as: K = 5, σDEM = 20 m, ϑ = 40◦, and
+Rrs = 30 m. (a) A simulation of error budget (in meter) as a function of the number of pixel along shoreline, i.e., dividing the shoreline length by pixel size.
+Error of the TIAS estimates associated with three DEMs is given by different symbols at corresponding abscissa locations. (b) Error associated with horizontal
+uncertainty. The error reduced from meter level to <50 cm when the value of K in (6) reduces to 1 or 2. (c) Error change as a function of varying DEM relative
+vertical accuracy. In this case, the change among 1–50 m slightly altered the error budget in just few centimeters due to an abundance of n. (d) The change of error
+budget together with terrain slope change, which is the most dominant factor in this analysis. The value of ϑ varying from 80◦–1◦altered the error from about
+10 m to 0.2 m level when n is about 15 000. (e) A simulation of error while using other RS imagery and DEM sources with smaller pixel size. The error could be
+reduced to 0.2 m level with pixel size in 1 m.
+B. Error Budget and Sensitivity Analysis
+To understand error sources and to explore potential
+improvement of the TIAS, we analyze the error propagation and
+test the sensitivity of several components. The errors propagat-
+ing to the computation of ﬁnal RMSE (compared with in situ
+data) are complicated, at least involving the horizontal/vertical
+accuracy of DEM, resolution, and quality of RS imagery, rela-
+tive error due to coregistration, terrain slope, number of obser-
+vations, and uncertainty of the MNDWI classiﬁcation. Here, we
+simplify the problem and analyze a couple of dominating fac-
+tors to check the sensitivity of each component contributing to
+the ﬁnal result. A major part of total error as compared with
+
+--- page 12 ---
+This article has been accepted for inclusion in a future issue of this journal. Content is final as presented, with the exception of pagination.
+12
+IEEE JOURNAL OF SELECTED TOPICS IN APPLIED EARTH OBSERVATIONS AND REMOTE SENSING
+in situ data at each snapshot, as denoted by σT in the follow-
+ing equation (5), is associated with the random error in DEM
+σDEM, the terrain slope σSlope that renders the ratio of water
+level change along with extent change, and the number of shore-
+line pixels n within one Landsat image that efﬁciently reduce
+random errors in DEM.
+σT =
+
+σ2DEM + σ2Slope
+n
+.
+(5)
+In (5), the vertical uncertainty associated with terrain slope
+has a range deﬁned as
+σSlope = K × Rrs tan θ
+(6)
+where Rrs is the pixel size (i.e., 30 m for Landsat) in meter,
+ϑ is the terrain slope in degree, and K is the general scal-
+ing factor indicating horizontal accuracy of DEM and MNDWI
+classiﬁcation error.
+By simulating the total error from above-mentioned vari-
+ables, we gave a set of sample inputs to generate a ﬁgure as
+shown in Fig. 7, where the ordinate of panel a, b, d, and e is in
+log scale. In Fig. 7(a), σDEM equal 20 m and K equal 5 were
+selected as a starting point to match the predicted errors with
+our results. The number of pixel is set to 14 000 for TIAS results
+and a variation of ±1500 may occur in this case. Here, the ref-
+erence of vertical error at 20 m is reasonable since the accuracy
+of DEMs used here is usually less reliable in mountain area,
+where the RMSE is higher than the original speciﬁcation, i.e.,
+10–20 m [63]. In Fig. 7(a), the slope of terrain [ϑ in (6)] is set
+40◦for HD, corresponding to the average slope plus 2σ com-
+puted from SRTM-C within the water variation interval (i.e.,
+320–375 m in HD). In this panel, we observe that the error
+drops signiﬁcantly as the number of pixels along the shoreline
+increases. The TIAS error is about the same level as analysis
+from (5) at HD (blue symbols), except for the slightly higher
+error computed by ASTER GDEM2 (+symbol).
+In Fig. 7(b)–(e), we took the setting of Fig. 7(a) as the refer-
+ence to test the sensitivity of error component one at a time. In
+Fig. 7(b), the error decreases along with the descending value of
+K, from 5 to 1, meaning the combined error of shoreline delin-
+eation and DEM horizontal accuracy decrease from 5 to 1 pixel
+can effectively reduces the error to submeter level. It implies
+that our current method may consist of a notable uncertainty in
+water outline determination. A more sophisticated decision tree
+may be needed to reduce the horizontal error and to achieve
+a better shoreline positioning. However, it is emphasized that
+the ﬁnal RMSE is a combined error with other components,
+such as the slope shown later in Fig. 7(d), hence the initial
+value of K picked here may be exaggerated. Next, in Fig. 7(c),
+while switching the relative vertical error in DEM, from 20 m to
+1 m and 50 m, the corresponding error varies only within about
+10 cm at the study site. Hence, the random error in DEM is less
+critical in the computation of water level while dealing with
+a water body at similar size. In Fig. 7(d), we tested the error
+budget associated with the change of terrain slope, including
+1◦, 20◦, 40◦(HD case), 60◦, and 80◦, to examine the potential
+error changes accordingly. In this panel, we observe the error
+increases signiﬁcantly as the slope elevates, from 0.2 m (at 1◦
+slope) to 6 m (at 80◦slope), if we kept other settings in HD
+case ﬁxed as reference. It is known that in HD, a part of lake-
+side terrain has a slope greater than 40◦, which contribute to a
+great portion of error in the ﬁnal RMSE. For other lakes in the
+world, the application of TIAS should consider avoiding steep
+part of terrain and use only ﬂatter area while the pixel number
+(shoreline length) allows.
+Finally, the errors associated with the pixel size of both RS
+imagery and DEM are shown in Fig. 7(e). In Fig. 7(e), the
+prospective application of the TIAS is revealed as we see the
+error budget decreases signiﬁcantly when the pixel size shrinks
+to 5 or 1 m level. It is noted that the equivalent lake size
+has become smaller accordingly in this ﬁgure, while the num-
+ber of pixels along the shoreline remains and the size of each
+pixel downscales. For example, in the simulation of 1 m res-
+olution the x-axis at 10 000 corresponding to a total length
+of shoreline equal 10 km, and the errors remaining perhaps
+reach 20 cm level. Therefore, use of ultrahigh-resolution opti-
+cal or radar images will boost the applicability of this method
+prominently.
+VI. CONCLUSION
+In this study, we demonstrated a possibility to recover the
+inland WSH via the TIAS, an indirect measure that incorpo-
+rates a horizontal swath of satellite imaging sensors/instruments
+and a referenced DEM. In order to obtain a promising
+result, several assumptions are needed to uphold the proposed
+technique: 1) the shore should be less steep for detection of
+WSA changes as WSH varies; 2) the WSH variation must
+exceed current limitation in accuracy, say >1 m; and 3) the
+bathymetry, if not available in a DEM, will be assumed a
+constant slope. Here are also some uncertainties need to be con-
+sidered: 1) the accuracy depends on the DEM and RS imagery
+in use; 2) extra uncertainty introduced by aligning RS imagery
+and DEM and the following double-linear interpolation has not
+been considered; and 3) regional variability of bathymetry slope
+may lead to a decreased accuracy once the water level drop
+into the simulated DEM section, and the uncertainty increases
+as the WSH approaches lake bottom. Nevertheless, the TIAS
+at presented study site, HD in Lake Mead, yields an accuracy
+of WSH estimate up to 0.85 m and an excellent correlation
+with groundtruth data. It satisﬁes the needs in a broad range of
+hydrological and limnological studies elsewhere in the world,
+especially for lakes that are experiencing extreme variations in
+height and are isolated without sufﬁcient in situ data, or whose
+location is out of the ﬂight path of current radar/laser altime-
+try satellites. Although a lot of concerns may have placed to
+the data availably in this study: the Landsat 4 was decommis-
+sioned in 2001, Landsat 5 stopped working in November 2011,
+and Landsat 7 suffers a long-term degradation in gains. The
+TIAS will incorporate the newly launched Landsat 8 as well
+as other optical instruments in the community, to conduct a
+prospective/retrospective analysis and operational observation.
+More importantly, the higher resolution (<30 cm) is achiev-
+able by using high or ultra high-resolution commercial RS
+imagery, based on the error analysis. In the future, we will also
+
+--- page 13 ---
+This article has been accepted for inclusion in a future issue of this journal. Content is final as presented, with the exception of pagination.
+TSENG et al.: INTEGRATING LANDSAT IMAGERIES AND DEMs TO INFER WATER LEVEL CHANGE
+13
+use other altimetry satellite data, such as reprocessed Jason-
+1/-2, TOPEX/Poseidon and SARAL/AltiKa, to elongate the
+altimetry time series for validation of this technique in other
+major lakes
+REFERENCES
+[1] D. E. Alsdorf, E. Rodriguez, and D. P. Lettenmaier, “Measuring surface
+water from space,” Rev. Geophys., vol. 45, no. 2, pp. 1–24, May 2007.
+[2] M. Durand, L. L. Fu, D. P. Lettenmaier, D. E. Alsdorf, E. Rodriguez,
+and D. Esteban-Fernandez, “The surface water and ocean topography
+mission: Observing terrestrial surface water and oceanic submesoscale
+eddies,” Proc. IEEE, vol. 98, no. 5, pp. 766–779, May 2010.
+[3] S. Biancamaria, F. Hossain, and D. P. Lettenmaier, “Forecasting trans-
+boundary river water elevations from space,” Geophys. Res. Lett., vol. 38,
+L11401, pp. 1–5, 2011.
+[4] P. A. M. Berry, H. Bracke, and A. Jasper, Retracking ERS-1 Altimeter
+Waveforms Over Land for Topographic Height Determination: An Expert
+Systems Approach. Eur. Space Agency Spec. Publ., ESA SP-414, 1997,
+pp. 403–408.
+[5] F. Frappart, S. Calmant, M. Cauhope, F. Seyler, and A. Cazenave,
+“Preliminary results of ENVISAT RA-2-derived water levels valida-
+tion over the Amazon basin,” Remote Sens. Environ., vol. 100, no. 2,
+pp. 252–264, 2006.
+[6] S. Calmant, F. Seyler, and J. F. Cretaux, “Monitoring continental sur-
+face waters by satellite altimetry,” Surveys Geophys., vol. 29, nos. 4–5,
+pp. 247–269, Oct. 2008.
+[7] C. M. Birkett and B. Beckley, “Investigating the performance of the
+Jason-2/OSTM radar altimeter over lakes and reservoirs,” Mar. Geod.,
+vol. 33, pp. 204–238, 2010.
+[8] X. W. Wang et al., “Water-level changes in China’s large lake deter-
+mined from ICESat/ GLAS data,” Remote Sens. Environ., vol. 132, no. C,
+pp. 131–144, 2013.
+[9] OSTM/Jason-2 Products Handbook, JPL Standard OSTM-29-1237,
+2009.
+[10] J. Lambin et al., “The OSTM/Jason-2 mission,” Mar. Geod., vol. 33,
+pp. 4–25, Oct. 2010.
+[11] W. Abdalati et al., “The ICESat-2 laser altimetry mission,” Proc. IEEE,
+vol. 98, no. 5, pp. 735–751, May 2010.
+[12] R. D. Koster, P. R. Houser, E. T. Engman, and W. P. Kustas, “Remote
+sensing may provide unprecedented hydrological data,” Eos Trans. Amer.
+Geophys. Union, vol. 80, no. 14, p. 156, Apr. 1999.
+[13] C. K. Shum et al., “Calibration of JASON-1 altimeter over lake erie spe-
+cial issue: Jason-1 calibration/validation,” Mar. Geod., vol. 26, nos. 3–4,
+pp. 335–354, 2003.
+[14] P. A. M. Berry, J. D. Garlick, J. A. Freeman, and E. L. Mathers, “Global
+inland water monitoring from multi-mission altimetry,” Geophys. Res.
+Lett., vol. 32, no. 16, p. L16401, Aug. 2005.
+[15] C. Hwang, Y.-C. Kao, and N. Tangdamrongsub, “A preliminary analysis
+of lake level and water storage changes over lakes Baikal and Balkhash
+from satellite altimetry and gravimetry,” Terr. Atmos. Ocean. Sci., vol. 22,
+pp. 97–108, 2011.
+[16] J.-W. Kim et al., “Integrated analysis of PALSAR/Radarsat-1 InSAR and
+ENVISAT altimeter data for mapping of absolute water level changes in
+Louisiana wetlands,” Remote Sens. Environ., vol. 113, pp. 2356–2365,
+2009.
+[17] M. Zhang et al., “Application of retracked satellite altimetry for inland
+hydrologic studies,” Int. J. Remote Sens., vol. 31, pp. 3913–3929,
+2010.
+[18] H. Lee, C. Shum, K.-H. Tseng, J.-Y. Guo, and C.-Y. Kuo, “Present-day
+lake level variation from Envisat altimetry over the Northeastern Qinghai-
+Tibetan plateau: Links with precipitation and temperature,” Terr. Atmos.
+Ocean. Sci., vol. 22, pp. 169–175, 2011.
+[19] X. Wang et al., “Lake water footprint identiﬁcation from time-series
+ICESat/GLAS data,” IEEE Geosci. Remote Sens. Lett., vol. 9, no. 3,
+pp. 333–337, May 2012.
+[20] K. Tseng et al., “Envisat altimetry radar waveform retracking of quasi-
+specular echoes over ice-covered Qinghai lake,” Terr. Atmos. Ocean. Sci.,
+vol. 24, no. 4, pp. 615–627, 2013.
+[21] C. Birkett, “The contribution of TOPEX/POSEIDON to the global moni-
+toring of climatically sensitive lakes,” J. Geophys. Res. Oceans, vol. 100,
+pp. 25179–25204, 1995.
+[22] S. Calmant and F. Seyler, “Continental surface waters from satellite
+altimetry,” Comptes Rendus Geosci., vol. 338, pp. 1113–1122, 2006.
+[23] H. Lee, C. Shum, K.-H. Tseng, Z. Huang, and H.-G. Sohn, “Elevation
+changes of bering glacier system, Alaska, from 1992 to 2010, observed
+by satellite radar altimetry,” Remote Sens. Environ., vol. 132, pp. 40–48,
+2013.
+[24] X. Deng, W. Featherstone, C. Hwang, and P. Berry, “Estimation of
+contamination of ERS-2 and POSEIDON satellite radar altimetry close
+to the coasts of Australia,” Mar. Geod., vol. 25, no. 4, pp. 249–271,
+2002.
+[25] L. Yang, M. Lin, Q. Liu, and D. Pan, “Retracking strategy based on
+waveform classiﬁcation and sub-waveform extraction for coastal altime-
+try along China coastal seas,” in Proc. IEEE Int. Geosci. Remote Sens.
+Symp. (IGARSS), 2010, pp. 632–635.
+[26] K.-H. Tseng et al., “The improved retrieval of coastal sea surface heights
+by retracking modiﬁed radar altimetry waveforms,” IEEE Trans. Geosci.
+Remote Sens., vol. 52, no. 2, pp. 991–1001, Feb. 2014.
+[27] C.-Y. Kuo and H.-C. Kao, “Retracked Jason-2 altimetry over small water
+bodies: Case study of Bajhang River, Taiwan,” Mar. Geod., vol. 34, no. 3–
+4, pp. 382–392, 2011.
+[28] H. Lee, M. Durand, H. C. Jung, D. Alsdorf, C. Shum, and Y. Sheng,
+“Characterization of surface water storage changes in Arctic lakes using
+simulated SWOT measurements,” Int. J. Remote Sens., vol. 31, no. 14,
+pp. 3931–3953, 2010.
+[29] F. Frappart et al., “Surface freshwater storage and dynamics in the
+Amazon basin during the 2005 exceptional drought,” Environ. Res. Lett.,
+vol. 7, no. 4, p. 044010, 2012.
+[30] R. K. Raney, “The delay/Doppler radar altimeter,” IEEE Trans. Geosci.
+Remote Sens., vol. 36, no. 5, pp. 1578–1588, Sep. 1998.
+[31] F. Frappart, F. Seyler, J.-M. Martinez, J. G. Leon, and A. Cazenave,
+“Floodplain water storage in the Negro River basin estimated from
+microwave remote sensing of inundation area and water levels,” Remote
+Sens. Environ., vol. 99, pp. 387–399, 2005.
+[32] F. Frappart et al., “Water volume change in the lower Mekong from satel-
+lite altimetry and imagery data,” Geophys. J. Int., vol. 167, pp. 570–584,
+2006.
+[33] Z. Duan and W. Bastiaanssen, “Estimating water volume variations in
+lakes and reservoirs from four operational satellite altimetry databases
+and satellite imagery data,” Remote Sens. Environ., vol. 134, pp. 403–416,
+2013.
+[34] L. C. Smith and T. M. Pavelsky, “Remote sensing of volumetric stor-
+age changes in lakes,” Earth Surf. Processes Landforms, vol. 34, p. 1353,
+2009.
+[35] B. Marti-Cardona, C. Lopez-Martinez, J. Dolz-Ripolles, and E. Bladè-
+Castellet, “ASAR polarimetric, multi-incidence angle and multitemporal
+characterization of Doñana wetlands for ﬂood extent monitoring,” Remote
+Sens. Environ., vol. 114, pp. 2802–2815, 2010.
+[36] R.
+Abarca-Del-Rio,
+J.-F.
+CrÉtaux,
+M.
+Berge-Nguyen,
+and
+P. Maisongrande, “Does Lake Titicaca still control the Lake Poopó
+system water levels? An investigation using satellite altimetry and
+MODIS data (2000–2009),” Remote Sens. Lett., vol. 3, pp. 707–714,
+2012.
+[37] K. W. Forsythe, B. Schatz, S. J. Swales, L.-J. Ferrato, and D. M. Atkinson,
+“Visualization of lake mead surface area changes from 1972 to 2009,”
+ISPRS Int. J. GeoInf., vol. 1, pp. 108–119, 2012.
+[38] H. Gao, C. Birkett, and D. P. Lettenmaier, “Global monitoring of large
+reservoir storage from satellite remote sensing,” Water Resour. Res.,
+vol. 48, W09504, pp. 1–12, 2012.
+[39] A. Pietroniro, T. Prowse, and D. Peters, “Hydrologic assessment of an
+inland freshwater delta using multi-temporal satellite remote sensing,”
+Hydrol. Processes, vol. 13, pp. 2483–2498, 1999.
+[40] K. Xu, J. Zhang, M. Watanabe, and C. Sun, “Estimating river discharge
+from very high-resolution satellite data: A case study in the Yangtze
+River, China,” Hydrol. Processes, vol. 18, pp. 1927–1939, 2004.
+[41] R. Andreoli, J. Li, and H. Yesou, “Flood extent prediction from
+lake heights and water level estimation from ﬂood extents using river
+gauges, elevation models and ENVISAT data,” in Proc. ENVISAT
+Symp., Montreux, Switzerland, Apr. 23–27, 2007, (ESA SP-636, Jul.
+2007).
+[42] X. Cai, W. Gan, W. Ji, X. Zhao, X. Wang, and X. Chen, “Optimizing
+remote sensing-based level—Area modeling of large lake wetlands: Case
+study of Poyang Lake,” IEEE J. Sel. Topics Appl. Earth Observ. Remote
+Sens., vol. 8, no. 2, pp. 471–479, Feb. 2015.
+[43] R. Q. Grafton et al., “Global insights into water resources, climate change
+and governance,” Nat. Clim. Change, vol. 3, pp. 315–321, 2013.
+[44] A. Serrat-Capdevila, J. B. Valdes, F. Dominguez, and S. Rajagopal,
+“Characterizing the water extremes of the new century in the US South-
+west: A comprehensive assessment from state-of-the-art climate model
+projections,” Int. J. Water Resour. Dev., vol. 29, pp. 152–171, 2013.
+
+--- page 14 ---
+This article has been accepted for inclusion in a future issue of this journal. Content is final as presented, with the exception of pagination.
+14
+IEEE JOURNAL OF SELECTED TOPICS IN APPLIED EARTH OBSERVATIONS AND REMOTE SENSING
+[45] S. L. Castle, B. F. Thomas, J. T. Reager, M. Rodell, S. C. Swenson, and
+J. S. Famiglietti, “Groundwater depletion during drought threatens future
+water security of the Colorado River Basin,” Geophys. Res. Lett., vol. 41,
+pp. 5904–5911, 2014.
+[46] E. Suwandana, K. Kawamura, Y. Sakuno, E. Kustiyanto, and B. Raharjo,
+“Evaluation of ASTER GDEM2 in comparison with GDEM1, SRTM
+DEM and topographic-map-derived DEM using inundation area analysis
+and RTK-dGPS data,” Remote Sens., vol. 4, pp. 2419–2431, 2012.
+[47] S. Kotz and S. Nadarajah, Extreme Value Distributions. Singapore: World
+Scientiﬁc, 2000, vol. 31.
+[48] J. E. Morrison and J. A. Smith, “Stochastic modeling of ﬂood peaks using
+the generalized extreme value distribution,” Water Resour. Res., vol. 38,
+pp. 41-1–41-12, 2002.
+[49] G. Chander, B. L. Markham, and D. L. Helder, “Summary of current
+radiometric calibration coefﬁcients for Landsat MSS, TM, ETM+, and
+EO-1 ALI sensors,” Remote Sens. Environ., vol. 113, pp. 893–903, 2009.
+[50] T.
+Tachikawa
+et
+al.
+(2011).
+ASTER
+Global
+Digital
+Elevation
+Model Version 2—Summary of Validation Results, ASTER GDEM
+Validation
+Team
+[Online].
+Available:
+http://www.jspacesystems.or.
+jp/ersdac/GDEM/ver2Validation/Summary_GDEM2_validation_report_
+ﬁnal.pdf
+[51] J. Danielson and D. Gesch, “Global multi-resolution terrain elevation
+data 2010,” US Department of the Interior and US Geological Survey,
+2011.
+[52] C. C. Carabajal, D. J. Harding, J.-P. Boy, J. J. Danielson, D. B. Gesch, and
+V. P. Suchdeo, “Evaluation of the global multi-resolution terrain elevation
+data 2010(GMTED2010) using ICESat geodetic control,” in Proc. Int.
+Symp. Lidar Radar Mapping Technol., 2011, pp. 82861Y–82861Y-13.
+[53] T. G. Farr and M. Kobrick, “Shuttle radar topography mission produces a
+wealth of data,” Eos Trans. Amer. Geophys. Union, vol. 81, pp. 583–585,
+2000.
+[54] P. Schaeffer, Y. Faugere, J. Legeais, A. Ollivier, T. Guinle, and N. Picot,
+“The CNES_CLS11 global mean sea surface computed from 16 years of
+satellite altimeter data,” Mar. Geod., vol. 35, pp. 3–19, 2012.
+[55] K. H. Tseng et al., “Regional validation of Jason-2 dual-frequency
+ionosphere delays,” Mar. Geod., vol. 33, pp. 272–284, 2010.
+[56] B. C. Gao, “NDWI—A normalized difference water index for remote
+sensing of vegetation liquid water from space,” Remote Sens. Environ.,
+vol. 58, pp. 257–266, 1996.
+[57] S. McFeeters, “The use of the normalized difference water index (NDWI)
+in the delineation of open water features,” Int. J. Remote Sens., vol. 17,
+pp. 1425–1432, 1996.
+[58] H. Xu, “Modiﬁcation of normalised difference water index (NDWI) to
+enhance open water features in remotely sensed imagery,” Int. J. Remote
+Sens., vol. 27, pp. 3025–3033, 2006.
+[59] L. Ji, L. Zhang, and B. Wylie, “Analysis of dynamic thresholds for the
+normalized difference water index,” Photogramm. Eng. Remote Sens.,
+vol. 75, pp. 1307–1317, 2009.
+[60] A. F. Jenkinson, “The frequency distribution of the annual maximum (or
+minimum) values of meteorological elements,” Quart. J. Roy. Meteorol.
+Soc., vol. 81, pp. 158–171, 1955.
+[61] P. Embrechts, C. Klüppelberg, and T. Mikosch, Modelling Extremal
+Events. New York, NY, USA: Springer, 1997, vol. 33.
+[62] A. C. Hall, G. J. P. Schumann, J. L. Bamber, P. D. Bates, and M. A. Trigg,
+“Geodetic corrections to Amazon river water level gauges using ICESat
+altimetry,” Water Resour. Res., vol. 48, W06602, pp. 1–6, 2012.
+[63] J. Thomas, S. Joseph, K. Thrivikramji, and K. Arunkumar, “Sensitivity of
+digital elevation models: The scenario from two tropical mountain river
+basins of the Western Ghats, India,” Geosci. Front., vol. 5, pp. 893–909,
+2014.
+Kuo-Hsin Tseng received the B.S. degree in civil
+engineering from National Chiao-Tung University,
+Taiwan, in 2005 and the Ph.D. degree in geodetic sci-
+ence from the Ohio State University, OH, USA, in
+2012.
+He is currently an Assistant Professor in the
+Center for Space and Remote Sensing Research,
+National Central University, Taiwan. He is also
+with the Institute of Hydrological and Oceanic
+Sciences (IHOS) and with the Department of Civil
+Engineering, NCU. His researches are focused on
+satellite radar/laser altimetry, GNSS, and various applications by using satellite
+remote sensing.
+C.K. Shum received the Ph.D. degree in aerospace
+engineering from University of Texas at Austin,
+Austin, TX USA, in 1982.
+He is currently a Professor and Distinguished
+University Scholar, Division of Geodetic Science,
+School of Earth Sciences, Ohio State University, OH,
+USA. His research interests include the accurate mea-
+surements and the improved understanding of the
+geophysical causes of the 20th century and present-
+day sea-level rise, and cross-disciplinary Earth sci-
+ences, using a variety of space geodetic and in situ
+measurements, including satellite altimetry, gravimetry, GNSS, and synthetic
+aperture radar interferometry.
+He is a Fellow of the International Association of Geodesy, and the American
+Association for the Advancement of Science.
+Jin-Woo Kim received the Ph.D. degree from the
+Division of Geodetic Science of the Ohio State
+University, OH, USA, in 2013.
+He has been with Roy M. Hufﬁngton Department
+of
+Earth
+Sciences
+at
+the
+Southern
+Methodist
+University, TX USA, since 2014, where he works
+as the research scientist for the radar laboratory.
+His research interests include the applications of
+spaceborne synthetic aperture radar data processing
+and interferometry toward wetland and geohazard
+monitoring.
+Xianwei Wang received the B.S. degree in engi-
+neering of surveying and mapping from College
+of GeoExploration Science and Technology, Jilin
+University, Jilin, China, in 2007 and the Ph.D. degree
+from the Institute of Remote Sensing Applications,
+Chinese Academy of Sciences, Beijing, China, in
+2012.
+In October 2013, he was working as a postdoctoral
+associate at the New York University Abu Dhabi,
+UAE. Currently, he is a research scientist in Center
+for Global Sea Level Change in New York University
+Abu Dhabi, UAE. His research interests include the snow and ice changes in
+cryosphere and lake level changes under the background of global change by
+using remote sensing and altimetry data.
+Kefeng Zhu received the Ph.D. degree in geodetic
+science from the Ohio State University, OH, USA, in
+2015.
+His research interests include detection of glacier
+and water body changes by using polarimetric SAR
+and optical remote sensing technologies.
+Xiao Cheng received the Ph.D. degree in cartogra-
+phy and geography information system from Chinese
+Academy of Science, Beijing, China, in 2004.
+He is currently an associate dean of the College
+of Global Change and Earth System Science, Beijing
+Normal University, China. His research interests
+include icecap, sea ice, and Antarctica ice sheet by
+using InSAR and ground observation.

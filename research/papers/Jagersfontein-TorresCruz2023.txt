@@ -1,0 +1,484 @@
+--- page 1 ---
+1
+Vol.:(0123456789)
+Scientific Reports |         (2023) 13:4953  
+| https://doi.org/10.1038/s41598-023-31633-5
+www.nature.com/scientificreports
+Public remotely sensed data raise 
+concerns about history of failed 
+Jagersfontein dam
+Luis Alberto Torres‑Cruz * & Christopher O’Donovan 
+A mine waste deposit known as a tailings dam recently failed in the town of Jagersfontein, South 
+Africa. The failure occurred amidst global concern about the safety record of these structures. Herein 
+we use public remotely sensed data to gain insights into the construction history of the dam. The 
+data suggest a construction sequence that is inconsistent with sound tailings management practices: 
+asymmetric deposition, erosion gullies, large ponds and absence of beaches. These observations 
+highlight the criticality of adhering to good construction practices and the potential of public data to 
+monitor such adherence. Additionally, we present commercially available very high resolution satellite 
+images to illustrate some of the immediate consequences of the failure.
+On Sunday 11 September, 2022 a diamond mine waste storage facility, known as a tailings dam, failed in the 
+town of Jagersfontein, South ­Africa1. The failure released a mudflow that killed at least one person and destroyed 
+multiple houses. Figure 1 presents the immediate surroundings of the tailings dam prior to failure and highlights 
+the proximity of residential areas to the dam. The tragic failure occurred at a time of heightened global concern 
+around the safety of tailings dams, especially after a failure in Brumadinho, Brazil killed 270 people in ­20192–4. 
+The Brumadinho failure prompted the creation of the Global Industry Standard for Tailings Management which 
+strives to achieve "zero harm to people and the environment"5. The Jagersfontein failure was a reminder that 
+there is still much work to do to achieve this objective. Herein we use the power of optical remotely sensed data 
+to gain insights into the construction history of the Jagersfontein dam, precursors of failure and the immediate 
+failure consequences.
+Mining activities in Jagersfontein date back to the 1870s. The mine was initially operated as an open pit and 
+changed to underground mining in 1913. The De Beers Group acquired the mine in 1931 and operated it until 
+1971 when underground ore extraction ceased. The De Beers Group sold the mine in 2010 and subsequent 
+owners reprocessed the legacy mine waste already on surface without further ore extraction. At least two more 
+ownership changes happened after 2010 including one that took place only months before the failure of the 
+dam. At the time of the failure, and during most of the post-2010 period, the mine was owned by the subsidiary 
+company Jagersfontein ­Developments6–8.
+Unlike conventional water retention dams, tailings dams are often constructed progressively over their entire 
+operational life which can easily span ­decades9,10. This poses the double challenge of ensuring that high con-
+struction quality standards are maintained over a long period of time and that the construction process is duly 
+­documented11. Optical remotely sensed data are valuable for monitoring certain aspects of the operation and 
+to investigate the construction ­history12–14. For instance, investigations into the failure of the Fundão and Bru-
+madinho tailings dams in Brazil used public and commercial optical satellite images to investigate their con-
+struction and operation ­histories13,14. Herein we use optical satellite imagery in a similar manner to investigate 
+the history of the Jagersfontein dam and some of the immediate consequences of the failure. Importantly, our 
+investigation into the pre-failure history of the dam relies exclusively on open access data. As such, our work 
+contributes to empower a wide variety of stakeholders interested in proactively monitoring the safety of tail-
+ings dams. We also employed commercial satellite imagery although only to assess the consequences of failure.
+Because we have not accessed the site, our observations have not been validated by ground truth. However, 
+they illustrate situations that should trigger site inspections by those tasked with ensuring the stability of these 
+structures. Our analysis also informs hypotheses that can be further explored during an in situ investigation 
+into the causes of ­failure15.
+OPEN
+School of Civil and Environmental Engineering, University of the Witwatersrand, Johannesburg, South Africa. *email: 
+LuisAlberto.TorresCruz@wits.ac.za
+
+--- page 2 ---
+2
+Vol:.(1234567890)
+Scientific Reports |         (2023) 13:4953  | 
+https://doi.org/10.1038/s41598-023-31633-5
+www.nature.com/scientificreports/
+Results
+Construction and operation history of the Jagersfontein dam after 2010. 
+Aerial and satellite 
+images suggest that the Jagersfontein tailings dam and nearby mine waste stockpiles did not undergo signifi-
+cant changes between mine closure in 1971 and the onset of surface mine waste reprocessing in 2010 (Fig. S1). 
+Accordingly, the focus herein is on the post-2010 development of the dam (Fig. 2). Hereafter we use the phrase 
+’original dam’ to refer to the 2010 configuration of the dam prior to the deposition of tailings resulting from waste 
+reprocessing (Fig. 2a). The images show that by April 2013, the original dam had almost doubled its footprint 
+due to an expansion built on its west side (Fig. 2b). By August 2015, all tailings were being deposited in the west 
+expansion while parts of the original dam were being reworked and activity in the area that would become an 
+east expansion was also underway (Fig. 2c). By July 2017, tailings were being initially deposited into the west 
+expansion and subsequently transported to the original dam and east expansion via two furrows connected to 
+a gap in the internal wall (Figs. 2d, 3a,b). By February 2019, erosion gullies 4 to 5 m wide had developed on the 
+internal face of the northern wall and on the external face of the portion of the southeastern wall that eventu-
+ally failed (Figs. 2e, 3c,d). By May 2019, the furrows were almost entirely buried but eastward migration of 
+tailings deposited in the west expansion continued through the gap in the internal wall (Fig. 2f). The increased 
+width of the southeastern wall, which eventually failed, may indicate that buttressing efforts were underway. The 
+southeastern corner of the dam exhibited an irregular geometry which may have been due to erosion or slope 
+­instability16. Eastward migration of tailings continued during 2020 (Fig. 2g) and by February 2021, the internal 
+wall had been almost entirely covered and the southeastern wall remained significantly wider (potentially but-
+tressed) than the remainder of the perimeter wall (Fig. 2h). A segment of the perimeter wall appeared wet and 
+the slope directly underneath it exhibited erosion gullies (Figs. 2h and 3e). A preliminary stereoscopic analysis 
+of satellite images indicates that the dam grew by ~ 18 million ­m3 to accommodate the tailings that resulted from 
+the post-2010 reprocessing of legacy mine ­waste17.
+The natural colour and normalised difference water index (NDWI)18 images in Fig. 4 indicate several instances 
+in which significant amounts of supernatant water accumulated atop the dam, especially over the east expansion 
+and original dam (see details in figure caption). Interestingly, Fig. 4h, captured only 5 days before the failure, 
+suggests that there was no significant pond of supernatant water atop the dam. In fact, although Sentinel-2 images 
+are captured every five ­days23 and clouds did not often compromise the images, one has to go as far back as 24 
+May 2022 (more than three months before failure) to find an image in which an extensive pond can be identified 
+(Fig. 4g). This suggests that while large decant ponds were present in the historical development of the dam, they 
+were not present in the months immediately prior to the failure. Several images in Fig. 4 (see details in figure 
+caption) also indicate that tailings deposition was taking place predominantly, perhaps exclusively, from the 
+west wall of the dam. This is consistent with the pattern of deposition observed in the higher resolution images 
+(Figs. 2d–g and 3a).
+Figure 1.   The Jagersfontein dam and its surroundings 19 months before failure, created using QGIS software 
+version 3.26 (http://​www.​QGIS.​org).
+
+--- page 3 ---
+3
+Vol.:(0123456789)
+Scientific Reports |         (2023) 13:4953  | 
+https://doi.org/10.1038/s41598-023-31633-5
+www.nature.com/scientificreports/
+The immediate consequences of failure. 
+The dam failed close to its southeastern corner and also expe-
+rienced instability in its north perimeter wall (Figs. 5a–c and S2). The released tailings escaped primarily from 
+the original dam and the east expansion. Tailings in the west expansion above the internal wall may have also 
+escaped. Assuming that the level of tailings prior to failure was between 1435 and 1440 masl, we estimate the 
+Figure 2.   Historical imagery of the Jagersfontein dam. (a) Configuration prior to reprocessing of legacy 
+mine waste. (b) West expansion is visible by April 2013. (c) Deposition in the west expansion concurrent with 
+reworking of the original dam and activity in the east expansion. (d) Furrows are visible by July 2017. (e–g) 
+Eastward migration of tailings from the west expansion through a gap in the internal wall in 2019 and 2020. (h) 
+Internal wall is almost entirely buried. NB: Part (h) shows location of breaches A and B which developed during 
+failure (Fig. 5). Created using QGIS software version 3.26 (http://​www.​QGIS.​org).
+
+--- page 4 ---
+4
+Vol:.(1234567890)
+Scientific Reports |         (2023) 13:4953  | 
+https://doi.org/10.1038/s41598-023-31633-5
+www.nature.com/scientificreports/
+released volume of tailings to be between 4 and 6 million ­m3. This range agrees with an estimate of 5 million ­m3 
+based on stereoscopic analysis of satellite ­images17. The geometry of the tailings that remained inside the dam 
+suggests that most of the tailings deposited prior to 2010 were not mobilised by the failure (Fig. 5a). Two sepa-
+rate breaches A and B and two large erosion gullies developed during the failure (Fig. 5b). A supplementary file 
+(Video S1) contains an animation that further aids an understanding of the post-failure geometry of the dam.
+The mudflow travelled ~ 7 km over dry land before reaching the reservoir of the Wolwas dam (Fig. 5d). Tail-
+ings continued to flow along ~ 56 km of streams and rivers causing some of them to overflow and take on a pale 
+colour. Pre and post-failure natural colour images and sediment ­index19,20 renderings strongly suggest that the 
+tailings had reached the Kalkfontein dam reservoir by 12 September (Fig. 6).
+Discussion
+The discerned construction and operation history of the dam raises several concerns. For instance, Fig. 3e showed 
+a wet spot on the portion of the outer wall on which breach B eventually developed. This image was captured 
+on 9 February 2021 yet weather records do not show any significant rainfall events during the five preceding 
+days (Fig. S3a). This suggests that the wet spot in Fig. 3e was caused by impounded water seeping through the 
+perimeter wall and then cascading down the slope creating the erosion gullies. This is consistent with the large 
+decant pond present in the dam on the same day and the day before the wet spot was observed (Figs. 2h and 4f). 
+Large amounts of water in a tailings dam (Fig. 4) can initiate failure mechanisms, exacerbate the consequences 
+of failure by enhancing tailings mobility, or ­both9,10,21. Furthermore, the supernatant pond was on occasions 
+located against the perimeter wall (Fig. 4), whereas recommended practice in dams built progressively is to keep 
+a relatively small pond near the centre of the impoundment. This promotes safety by enabling the development 
+of long beaches between the pond and the perimeter ­wall9 which is particularly important when dams do not 
+have distinct core and filter zones. However, even in zoned dams, the absence of beaches can contribute to exac-
+erbate failure ­consequences21. Lastly, tailings deposition predominantly from the west end of the dam (Figs. 2, 3 
+and 4) contravenes best practice which calls for deposition to proceed sequentially from different points on the 
+Figure 3.   Details of the dam’s history. (a) Deposition into west expansion enlarged from Fig. 2d. (b) Furrows 
+in original dam enlarged from Fig. 2d. (c and d) Erosion gullies enlarged from Fig. 2e. (e) Wet spot and erosion 
+gullies enlarged from Fig. 2h with outline of breach B which developed during failure (Fig. 5). NB: Parts (c), (d) 
+and (e) share the same scale. Created using QGIS software version 3.26 (http://​www.​QGIS.​org).
+
+--- page 5 ---
+5
+Vol.:(0123456789)
+Scientific Reports |         (2023) 13:4953  | 
+https://doi.org/10.1038/s41598-023-31633-5
+www.nature.com/scientificreports/
+perimeter wall. This allows greater control over the position of the decant pond and enables tailings deposited 
+in one area to dry and strengthen while deposition proceeds in a different ­area9,10.
+Considering the geometry of the breached wall (Fig. 5b), our hypothesized general failure sequence is as 
+follows. Breach B developed first, possibly due to a runaway erosion gully that began as shown in Fig. 3e. The 
+fact that the wet spot in Fig. 3e coincides with the location of breach B supports this possibility. Furthermore, 
+the absence of heavy rainfall events in the weeks prior to failure (Fig. S3b), coupled with the absence of a decant 
+pond only five days before failure (Fig. 4h), suggests that it is unlikely that failure was triggered by an overtop-
+ping event. Similarly, there have been no reports of seismic events preceding the failure, suggesting that it was 
+not triggered by an earthquake. From the images presented herein, the postulated runaway erosion mechanism 
+(Fig. 3e) thus emerges as the most likely triggering event. The tailings released through breach B flooded the 
+adjacent water reservoir causing the erosion of its east wall which lies at the toe of breach A (Fig. 5a). Loss of 
+toe support then triggered further instability leading to breach A. Slurry flowing along the benches of the dam 
+that are close to breach A subsequently led to the development of the large erosion gullies (Fig. 5b). This last 
+observation is based on helicopter footage captured on the day of the ­failure22.
+Figure 4.   Natural colour and NDWI renderings of Sentinel-2 images captured from 2016 to 2022. Natural 
+colour renditions of parts (a) to (d) show eastward migration of tailings after initial deposition in the west 
+expansion. NDWI renditions of parts (b) to (d) show a large supernatant pond located against the perimeter 
+wall. Natural colour rendition of part (e) shows eastward migration of tailings after initial deposition in the west 
+expansion. NDWI renditions of parts (f) and (g) show a large supernatant pond located against the perimeter 
+wall. There is no discernible supernatant pond in part (h), captured 5 days before failure. NB: curved arrows 
+indicate the inferred eastward migration of tailings after deposition. Created using QGIS software version 3.26 
+(http://​www.​QGIS.​org).
+
+--- page 6 ---
+6
+Vol:.(1234567890)
+Scientific Reports |         (2023) 13:4953  | 
+https://doi.org/10.1038/s41598-023-31633-5
+www.nature.com/scientificreports/
+The preceding hypothetical failure sequence leads to the question of whether the initiating internal seepage 
+event could have occurred in the apparent absence of a large decant pond during the months prior to failure 
+(Fig. 4h). We believe that this is indeed possible because the low permeability of tailings resulting from diamond 
+mining can enable them to retain water for extended periods of ­time9. Perhaps more importantly, video footage 
+of the failure (e.g.22) and the mobility of the mudflow (Fig. 5) both indicate that, even if water was not ponded 
+atop the dam, there were large amounts of interstitial water in the dam at the time of the failure. Notwithstanding, 
+we acknowledge that validation of the proposed failure sequence requires an in situ geotechnical investigation.
+It is pertinent to also highlight the limitations of the approach adopted herein. For instance, temporal and 
+spatial resolutions are key considerations. The temporal resolution determines how often images are acquired. 
+The Sentinel-2 satellite mission has a nominal revisit time of five ­days23. The prevalence of clouds can further 
+increase the time interval between useful Sentinel-2 images. But even a temporal resolution of five days implies 
+that while the data can be used to assess adherence to some aspects of good engineering practices, it clearly 
+cannot be used to monitor against brittle failure mechanisms that develop over minutes or seconds (e.g.14,21). 
+The temporal resolution of the images obtained herein from the South African Chief Directorate of National 
+Geo-Spatial Information (NGI) and Google Earth Pro is even more limited and there can often be months or 
+years between consecutive images from these sources.
+As for the spatial resolution, it controls the level of detail that can be discerned from the images. The Senti-
+nel-2 satellites collect visible and near infrared light at a resolution of 10 m/pixel23. Only relatively coarse aspects 
+of a tailings dam operation can be discerned at this resolution. As illustrated herein, examples include changes 
+to the layout of the dam, broad deposition patterns and extent of the decant pond. Images from Google Earth 
+Pro and the NGI have higher spatial resolutions that can reveal smaller details such as furrows, seepage, and 
+location of construction equipment and of other mine infrastructure. However, one disadvantage of these last 
+Figure 4.   (continued)
+
+--- page 7 ---
+7
+Vol.:(0123456789)
+Scientific Reports |         (2023) 13:4953  | 
+https://doi.org/10.1038/s41598-023-31633-5
+www.nature.com/scientificreports/
+Figure 5.   The post-failure scenario. (a) Impact on the immediate surroundings. (b) Enlargement of breached 
+area. (c) Enlargement of collapsed northern wall. (d) Full extent of the tailings runout. NB: see also Fig. S2 for 
+expanded version of part (a). In part (d), words with the suffixes -spruit or -rivier refer to the names of rivers. 
+NB: Contour lines indicate metres above sea level. Created using QGIS software version 3.26 (http://​www.​QGIS.​
+org).
+
+--- page 8 ---
+8
+Vol:.(1234567890)
+Scientific Reports |         (2023) 13:4953  | 
+https://doi.org/10.1038/s41598-023-31633-5
+www.nature.com/scientificreports/
+two sources is that they do not provide a near infrared band which is useful in delineating the decant pond of 
+tailings ­dams12,24. Resort to commercial remotely sensed data can overcome some of the limitations in temporal 
+and spatial resolution of publicly available data.
+To provide a more complete context around the failure, it is useful to briefly touch on some aspects which fall 
+beyond the scope of our paper. For instance, analysis of radar satellite data indicates that the portion of the wall 
+that failed may have been bulging outward during the month preceding the ­failure16. An aquifer underlying the 
+tailings dam has also been flagged as an important contributing ­factor8.
+Other factors that we have not addressed go beyond the physical failure mechanism. These include regula-
+tory and organisational factors which also play an important role in these tragic ­events25. For example, since 
+at least 2012, Jagersfontein Developments unsuccessfully applied for permission to deposit tailings in the open 
+pit, visible in Fig. 126,27. The permit was ultimately issued a few days after the failure as a means of mitigating the 
+danger posed by the remnants of the ­dam28. Additionally, our introduction noted an ownership change a few 
+months before failure. Such changes pose challenges to ensuring continuity of good construction practices for 
+tailings ­dams29. Also, reports in the media indicate that high water levels in the dam led South African authorities 
+to order a shutdown in 2020 which lasted until June ­202130. Other reports suggest that the Jagersfontein dam 
+may have fallen in a regulatory loophole as it was not under the oversight of the South African Department of 
+Mineral Resources and Energy. The reasons for this relate to the fact that operations focused on the reprocessing 
+of legacy mine waste as opposed to extraction of ­ore31.
+As has been the case following other dam failures, the work of an officially appointed and independent 
+investigation team will be critical in understanding how these and other issues may have combined to create this 
+­catastrophe13,14,21. The findings of such investigation efforts help the tailings industry move closer to fulfilling the 
+"zero harm" aspiration of the Global Industry Standard for Tailings ­Management5.
+Concluding remarks
+We used publicly available remotely sensed data to investigate the construction and operation history of the 
+Jagersfontein dam and identify deviations from best practice. It is worth highlighting that we used the Google 
+Earth Pro and the EO Browser platforms to access, screen or analyse some of the satellite images (see “Methods” 
+section). These two platforms are free for non-commercial purposes and have intuitive interfaces that require 
+minimal training. Notwithstanding, and as shown herein, when coupled with an understanding of the behaviour 
+of tailings dams these platforms constitute useful starting points to empower stakeholders interested in proac-
+tively monitoring these structures. This is particularly relevant in jurisdictions with limited resources in which 
+Figure 6.   Pre and post-failure PlanetScope images of the upper part of the Kalkfontein dam. (a) and (b) Natural 
+colour renderings. (c) and (d) Sediment index rendering. NB: Parts (c) and (d) share the same Sediment Index 
+colour ramp. See greater context in Fig. 5d. Created using QGIS software version 3.26 (http://​www.​QGIS.​org).
+
+--- page 9 ---
+9
+Vol.:(0123456789)
+Scientific Reports |         (2023) 13:4953  | 
+https://doi.org/10.1038/s41598-023-31633-5
+www.nature.com/scientificreports/
+the vulnerability of communities may exacerbate the consequences of ­failure32. Furthermore, some investigations 
+in the field of surveillance cameras show that people exhibit better adherence to rules when they know they are 
+being ­observed33. We posit that greater awareness of the capabilities of publicly available remotely sensed data can 
+encourage adherence to good construction and operation practices. Considering the significant uncertainties that 
+remain in methods commonly used to assess the stability of tailings ­dams10, a robust monitoring strategy should 
+focus on their construction and ­operation34. That is, it is relatively easy to determine whether dam construction 
+is following best practices, yet difficult to determine whether an improperly constructed dam is about to fail.
+Methods
+The investigation required collecting optical remotely sensed data to assess (a) the construction history of the 
+dam and (b) the consequences of failure. We used only publicly available data to investigate the construction 
+history. In particular, our focus was on the identification of departure from good construction practices that can 
+contribute to failure. Accordingly, we sought relatively high resolution images, preferably ≤ 10 m/pixel, which 
+enabled the identification of aspects relevant to geotechnical stability. These aspects include the extent and loca-
+tion of the decant pond, tailings deposition patterns, integrity of the retaining wall, and seepage of water through 
+the ­wall9,10. Additionally, we collected rainfall data to provide context to the wet spot in Fig. 3e and assess the 
+likelihood of the failure being triggered by rain. Assessment of the consequences of failure relied on commercial 
+satellite imagery. In particular, to assess the post-failure geometry of the dam, we relied on a stereo pair image 
+that enabled the reconstruction of a digital elevation model (DEM). The following paragraphs describe how we 
+sourced and processed the data.
+To investigate the construction sequence of the dam (Fig. 2) we used the following open access sources: (a) 
+very high resolution (< 1 m/pixel) satellite images available via Google Earth Pro (http://​www.​google.​com/​earth/​
+downl​oad), (b) true colour renderings of data captured by the Landsat 8 satellite (sharpened to 15 m/pixel)35, and 
+(c) aerial imagery (< 0.5 m/pixel) available through the South African Chief Directorate of National Geo-Spatial 
+Information (NGI) website (http://​www.​cdngi​portal.​co.​za) and reproduced herein with permission. The images 
+from Google Earth Pro and the NGI have much higher spatial resolutions than Landsat 8 images. However, no 
+images from the first two sources were available for the period between May 2010 and August 2015. This results 
+in considerable uncertainty regarding the operation of the dam during this period. To reduce this uncertainty, 
+we used the first Landsat 8 image available for the site which was captured on 10 April 2013 (Fig. 2b). Despite its 
+lower resolution, the Landsat 8 image allows assessment of changes in the overall layout of the dam.
+We investigated the rainfall history of the site by accessing the ’hourlyPrecipRateGC’ band of the ’GSMaP 
+Operational: Global Satellite Mapping of Precipitation’ ­dataset36 via Google Earth Engine (GEE)37. The ’hour-
+lyPrecipRateGC’ band contains satellite-based estimates of rainfall corrected by rain gauge ­data38. We cross 
+checked the data against records from the closest functional weather station operated by the South African 
+Weather Service (SAWS). This weather station is in Fauresmith, located ~ 10 km to the west of Jagersfontein. 
+These records were provided by SAWS upon request.
+The historical behaviour of the pond of supernatant water that accumulates atop tailings dams is critical to 
+their ­stability9,14,21. To investigate this aspect of the Jagersfontein dam (Fig. 4), we used the normalised difference 
+water index (NDWI) and true colour ­renderings18,24 as computed using Sentinel-2 Level 1C data atmospherically 
+corrected to provide surface ­reflectance23. We used Eq. (1) to compute NDWI in QGIS software version 3.26 
+(http://​www.​QGIS.​org) using bands 3 and 8 of Sentinel-2 images, which correspond to green and near infrared 
+reflectance, respectively.
+We performed the atmospheric correction using the sensor-invariant atmospheric correction (SIAC) 
+­method39. We did not use Sentinel-2 Level 2A data (atmospherically corrected) because the availability of this 
+dataset for Jagersfontein only begins on December 2018 and we used Sentinel-2 images from before that date 
+(Fig. 4a–c). In order to maintain a uniform workflow, we also did not consider the Level 2A dataset for dates after 
+December 2018. Identification of the decant pond relied on inspection of the natural colour render of individual 
+satellite images, assessment of the evolution of apparent water bodies over time, and renders of the NDWI. NDWI 
+is particularly useful for the Jagersfontein dam because the supernatant water often exhibits a greyish tone, 
+possibly due to suspended solids, which is similar to the surrounding tailings (e.g. Fig. 1). Conversely, the high 
+values of NDWI that are characteristic of water facilitate identification of the supernatant pond. Notwithstand-
+ing, the lack of access to the site implies that some uncertainties may remain when relying on remotely sensed 
+data to identify free water bodies.
+We used the EO Browser platform (https://​apps.​senti​nel-​hub.​com/) to do initial screenings of Landsat 8 and 
+Sentinel-2 images. We used GEE to further process images of interest. In particular, we used GEE to: (1) Access 
+the Landsat 8, Collection 2, Tier 1 top-of-atmosphere reflectance dataset. Coverage for Jagersfontein begins in 
+April 2013. Previous Landsat missions did not include useful images of the site and were thus not used. (2) Access 
+the Sentinel-2 Level 1C dataset (orthorectified top-of-atmosphere reflectance). Coverage for Jagersfontein begins 
+in September 2015. (3) Implement panchromatic sharpening to 15 m/pixel of the Landsat 8 red, green, and blue 
+bands. (4) Produce true colour renderings of Landsat 8 and Sentinel-2 images. (5) Implement the SIAC algorithm 
+on the Sentinel-2 Level 1C data. (6) Access the ‘SRTM Digital Elevation Data Version 4’ dataset which provides 
+a global DEM based on the Shuttle Radar Topography Mission (SRTM)40.
+On the day of the failure of the Jagersfontein dam (i.e. 11 September 2022), we tasked a stereo pair image of 
+the site using the SkySat satellite constellation of Planet Labs (http://​www.​planet.​com). The stereo pair image 
+was acquired on 12 September at 08:04 local time by the satellite SSC16. The image presented in Figs. 5a and S2 
+(1)
+NDWI = Green −NIR
+Green + NIR
+
+--- page 10 ---
+10
+Vol:.(1234567890)
+Scientific Reports |         (2023) 13:4953  | 
+https://doi.org/10.1038/s41598-023-31633-5
+www.nature.com/scientificreports/
+has been orthorectified and panchromatically sharpened to 0.5 m/pixel. Both images were acquired with a sun 
+azimuth and sun elevation angle of 72° and 21°, respectively. The view angle of the first and second image were 
+17.0° and 15.3°, respectively. The satellite azimuth angle of the first and second image were 341.6° and 116.0°, 
+respectively.
+We computed a digital elevation model DEM from the stereo pair using the Agisoft Metashape Professional 
+software version 1.8.4 (http://​www.​agiso​ft.​com). To this end we used the unrectified panchromatic SkySat Scene 
+of the stereo pair imagery as supplied by Planet Labs. The rational polynomial coefficient files required by the 
+software to perform the orthorectification and photogrammetric calculations were used as supplied by Planet 
+Labs. We aligned the stereo pair DEM to the SRTM DEM using QGIS. The contour lines in Fig. 5a–c are based 
+on the DEM computed from the SkySat stereo pair image whereas the contour lines for the greater area shown 
+in Fig. 5d are based on the SRTM DEM. We also used the QGIS software to generate an animation that illustrates 
+the post-failure geometry of the dam and which is presented as a supplementary file (Video S1).
+Our estimations of released impounded tailings assumed a constant level of tailings in the dam prior to the 
+failure. Based on the post-failure geometry and imagery, we estimated that the pre-failure level of tailings was 
+between 1435 and 1440 masl. The released volume of tailings was then computed as the volume above the DEM 
+but below the assumed pre-failure level of tailings. The calculation domain was confined to the area of the dam 
+within the perimeter wall.
+To investigate the full extent of the tailings runout we accessed the PlanetScope catalogue of Planet Labs 
+(http://​www.​planet.​com). PlanetScope images have a spatial resolution of ~ 3 m/pixel. We inspected pre and 
+post-failure images captured on 8 and 12 September 2022, respectively, to assess the reach of the tailings runout 
+(Fig. 5d). Besides inspecting natural colour renderings of these images (Fig. 6a,b), we also inspected renderings 
+of the sediment index (SI) as defined in Eq. (2)19 to further assess whether tailings had reached the Kalkfontein 
+dam (Fig. 6c,d). The sediment index has been previously used to assess the pollution of fresh water bodies caused 
+by a tailings dam ­failure20.
+Data availability
+The GEE code and stereo pair DEM used and/or analysed during the current study are available from the corre-
+sponding author on reasonable request. The raw stereo pair images of the Jagersfontein dam failure are available 
+from Planet Labs (http://​www.​planet.​com).
+Received: 4 November 2022; Accepted: 15 March 2023
+References
+	 1.	 Eligon, J., Chutel, L. & Godfrey, I. The world got diamonds. A mining town got buried in sludge. http://​www.​nytim​es.​com/​2022/​
+09/​23/​us/​south-​africa-​diamo​nd-​mine-​colla​pse.​html (2022).
+	 2.	 Santamarina, J. C., Torres-Cruz, L. A. & Bachus, R. Why coal ash and tailings dam disasters occur. Science 364, 6640 (2019).
+	 3.	 Oberle, B., Mihaylova, A. & Hacket, A. Global tailings review at a glance: history and overview. In Towards Zero Harm—A Com-
+pendium of Papers Prepared for the Global Tailings Review (eds Oberle, B. et al.) https://​globa​ltail​ingsr​eview.​org/ (2020).
+	 4.	 UNEP. Joint statement on Jagersfontein tailings failure-ICMM, PRI and UNEP. https://​www.​unep.​org/​news-​and-​stori​es/​state​
+ments/​joint-​state​ment-​jager​sfont​ein-​taili​ngs-​failu​re-​icmm-​pri-​and-​unep (2022).
+	 5.	 ICMM, UNEP and PRI. Global Industry Standard on Tailings Management. https://​globa​ltail​ingsr​eview.​org/​wp-​conte​nt/​uploa​
+ds/​2020/​08/​global-​indus​try-​stand​ard_​EN.​pdf (2020).
+	 6.	 Philip, L. The historic built environment and a sense of place Jagersfontein: A mining town in the Free State, South Africa. Research 
+project for the degree of Master of Philosophy in conservation of the built environment. https://​open.​uct.​ac.​za/​handle/​11427/​13163 
+(University of Cape Town, 2014).
+	 7.	 Stargems buys diamond mines in South Africa. https://​www.​starg​emsgr​oup.​com/​news-1/​starg​ems-​buys-​diamo​
+nd-​mines-​in-​south-​africa.
+	 8.	 Motsau, B. & van Wyk, D. Report on the Jagersfontein tailings disaster. https://​www.​bench-​marks.​org.​za/​wp-​conte​nt/​uploa​ds/​
+2022/​10/​Jager​sfont​ein-​report.​pdf (Bench Marks Foundation, 2022).
+	 9.	 Blight, G. E. Geotechnical Engineering for Mine Waste Storage Facilities (CRC Press, 2010).
+	10.	 Fourie, A., Verdugo, R., Bjelkevik, A., Torres-Cruz, L. A. & Znidarcic, D. Geotechnics of mine tailings: a 2022 state of the art. In 
+Proceedings of “20th International Conference on Soil Mechanics and Geotechnical Engineering” (2022).
+	11.	 Franks, D. M. et al. Tailings facility disclosures reveal stability risks. Sci. Rep. 11, 5353 (2021).
+	12.	 Mitchell, G., Turner, J. & Engels, J. Satellite-based repeat surveying of tailings: A cost-effective alternative to aerial surveying. In 
+Proceedings of the 22nd International Conference on Tailings and Mine Waste, Keystone, Colorado, USA (2018).
+	13.	 Morgenstern, N. R., Vick, S. G., Viotti, C. B. & Watts, B. D. Report on the immediate causes of the failure of the Fundão Dam 
+(commissioned by BHP Billiton Brasil Ltda., Vale S.A., and Samarco Mineração S.A., 2016).
+	14.	 Robertson, P. K., de Melo, L., Williams, D. J. & Wilson, G. W. Report of the expert panel on the technical causes of the failure of 
+Feijão Dam I (commissioned by Vale S.A., 2019).
+	15.	 Hope, V. Preliminary studies. In ICE Manual of Geotechnical Engineeringhttps://​doi.​org/​10.​1680/​moge.​57074.​0577
+	16.	 Thomas, A., Edwards, S., Holley, R. & Magnall, N. Jagersfontein TSF failure: Preliminary satellite imagery & Insar review https://​
+satel​liteb​log.​cgg.​com/​jager​sfont​ein-​tsf-​failu​re-​preli​minary-​satel​lite-​image​ry/ (The Satellite Mapping Blog, 2022).
+	17.	 Rivet, S. Preliminary survey report for Jagersfontein-Orthophotos, Topographic Surveys (DEM), and Reconstructed Surfaces Produced 
+from Archive Satellite Imagery https://​marke​ting.​photo​sat.​ca/​MDC/​Artic​le/​Jager​fonte​in/​Feb (PhotoSat, 2023).
+	18.	 McFeeters, S. K. The use of the Normalized Difference Water Index (NDWI) in the delineation of open water features. Int. J. Remote 
+Sens. 17, 1425–1432 (1996).
+	19.	 Wang, X. et al. Information extraction for suspended sediment in Lake Chaohu and its distribution based on Landsat TM/ETM+ 
+data. J. Lake Sci. 19, 255–260 (2007).
+(2)
+SI = Green + Red
+Green/Red
+
+--- page 11 ---
+11
+Vol.:(0123456789)
+Scientific Reports |         (2023) 13:4953  | 
+https://doi.org/10.1038/s41598-023-31633-5
+www.nature.com/scientificreports/
+	20.	 Cheng, D., Cui, Y., Li, Z. & Iqbal, J. Watch out for the tailings pond, a sharp edge hanging over our heads: Lessons learned and 
+perceptions from the Brumadinho tailings dam failure disaster. Remote Sens. 13, 1775 (2021).
+	21.	 Morgenstern, N. R., Vick, S. G. & van Zyl, D. Report on Mount Polley tailings facility breach. Province of British Columbia (2015).
+	22.	 Pearse, D. Video footage available at: https://​www.​linke​din.​com/​feed/​update/​urn:​li:​activ​ity:​69749​78542​71543​7057 (2022).
+	23.	 European Space Agency. Sentinel User Handbook and Exploitation Tools (SUHET): Sentinel-2 User Handbook. European Com-
+mission. ESA Standard Document 24/07/2015 Issue 1 Rev. 2 (2015).
+	24.	 O’Donovan, C., Torres-Cruz, L. A. & Adam, E. Remote sensing of the decant pond of tailings dams: Insights from a South African 
+case study. J. South Afr. Inst. Min. Metall. 122(4), 167–172 (2022).
+	25.	 Hopkins, A. & Kemp, D. Credibility Crisis: Brumadinho and the Politics of Mining Industry Reform (Wolters Kluwer, 2021).
+	26.	 Galimberti, M. & Scheermeyer, C. Jagersfontein historical open-pit mine, Free State. https://​sahris.​sahra.​org.​za/​sites/​defau​lt/​files/​
+permi​ts/​Jager​sfont​ein_​permit_​0.​pdf (South African Heritage Resources Agency, 2013).
+	27.	 Redelstorff, R. & Hine, P. Rehabilitation of the Jagersfontein Pit Through Backfilling. https://​sahris.​sahra.​org.​za/​sites/​defau​lt/​files/​
+cased​ecisi​ons/​12155%​20int​erim_​comme​nt_​Jager​sfont​ein_​pit_​backf​illing.​pdf (South African Heritage Resources Agency, 2018).
+	28.	 Ngcatsha, S. & Hine, P. Rehabilitation of the historically mined Pit on Portion 15 of the farm Jagersfontein 14IS in the Fauresmith 
+District of the Free State though backfilling with coarse and fine tailings from the Jagersfontein Tailings Operation. https://​sahris.​
+sahra.​org.​za/​sites/​defau​lt/​files/​cased​ecisi​ons/​Final%​20Dec​ision%​20Case%​20ID%​20193​15.​pdf (South African Heritage Resources 
+Agency, 2022).
+	29.	 Brouwer, K. J. & Smyth, G. L. Mount Polley Tailings Dam Failure—More Lessons to Learn (CIM Convention, 2017).
+	30.	 Banya, N. Troubled South African tailings dam had history of high water levels. https://​www.​reute​rs.​com/​world/​africa/​troub​led-​
+south-​afric​an-​taili​ngs-​dam-​had-​histo​ry-​high-​water-​levels-​2022-​09-​12/ (2022).
+	31.	 Evans, J. & Dlangamandla, F. Mantashe says ‘dangerous’ high court judgment crippled his department’s jurisdiction over all tailings 
+dams. https://​www.​daily​maver​ick.​co.​za/​artic​le/​2022-​09-​14-​manta​she-​says-​dange​rous-​high-​court-​judgm​ent-​cripp​led-​his-​depar​
+tments-​juris​dicti​on-​over-​all-​taili​ngs-​dams/ (2022).
+	32.	 Owen, J. R., Kemp, D., Lèbre, E., Svobodova, K. & Pérez, M. G. Catastrophic tailings dam failures and disaster risk disclosure. Int. 
+J. Disaster Risk Reduct. 42, 101361 (2020).
+	33.	 Jansen, A. M., Giebels, E., van Rompay, T. J. L. & Junger, M. The influence of the presentation of camera surveillance on cheating 
+and pro-social behavior. Front. Psychol. 9, 1937 (2018).
+	34.	 Boswell, J. & Sobkowicz, J. Leading versus lagging indicators of tailings dam integrity. In Proceedings of Tailings and Mine Waste 
+’18 (2018).
+	35.	 United States Geological Survey. Landsat 8 (L8) Data Users Handbook. Department of the Interior U.S. Geological Survey. LSDS-
+1574, Version 5.0 (2019).
+	36.	 Okamoto, K., Iguchi, T., Takahashi, N., Iwanami, K. & Ushio, T. The global satellite mapping of precipitation (GSMaP) project. In 
+25th IGARSS Proceedings, 3414–3416 (2005).
+	37.	 Gorelick, N. et al. Google Earth Engine: Planetary-scale geospatial analysis for everyone. Remote Sens. Environ. 202, 18–27 (2017).
+	38.	 Japan Aerospace Exploration Agency. GSMaP Product Format. Version 2.0. https://​www.​eorc.​jaxa.​jp/​GPM/​doc/​produ​ct/​format/​
+en/​07.​GPM_​GSMaP_​Produ​ct_​Format_​V4_E.​pdf (2017).
+	39.	 Yin, F., Gómez-Dans, J., Lewis, P. & Wu, Q. A Sensor Invariant Atmospheric Correction: Sentinel-2/MSI and Landsat 8/OLI https://​
+doi.​org/​10.​31223/​osf.​io/​ps957 (2019).
+	40.	 Farr, T. G. et al. The shuttle radar topography mission. Rev. Geophys. 5(2), RG2004. https://​doi.​org/​10.​1029/​2005R​G0001​83 (2007).
+Acknowledgements
+We gratefully acknowledge: (a) support from the Education and Research Program of Planet Labs, (b) an MSc 
+scholarship for the second author from Fraser Alexander (Pty) Ltd, and (c) insightful discussions with Abideen 
+Owolabi, James Dutchman, John Wates and Yashay Narainsamy. An earlier version of Fig. S2 was shared in 
+LinkedIn on 12 September 2022 to assist the work of first responders.
+Author contributions
+L.A.T-C. conceptualised the investigation. L.A.T-C. and C.O. designed the structure of the paper. L.A.T-C. wrote 
+the first draft of the paper and C.O. undertook its revision. C.O. prepared all figures and L.A.T-C. undertook 
+their revision. C.O. tasked the post failure SkySat image of the Jagersfontein dam, prepared the DEM and wrote 
+the code for Google Earth Engine.
+Competing interests 
+The authors declare no competing interests.
+Additional information
+Supplementary Information The online version contains supplementary material available at https://​doi.​org/​
+10.​1038/​s41598-​023-​31633-5.
+Correspondence and requests for materials should be addressed to L.A.T.-C.
+Reprints and permissions information is available at www.nature.com/reprints.
+Publisher’s note  Springer Nature remains neutral with regard to jurisdictional claims in published maps and 
+institutional affiliations.
+Open Access   This article is licensed under a Creative Commons Attribution 4.0 International 
+License, which permits use, sharing, adaptation, distribution and reproduction in any medium or 
+format, as long as you give appropriate credit to the original author(s) and the source, provide a link to the 
+Creative Commons licence, and indicate if changes were made. The images or other third party material in this 
+article are included in the article’s Creative Commons licence, unless indicated otherwise in a credit line to the 
+material. If material is not included in the article’s Creative Commons licence and your intended use is not 
+permitted by statutory regulation or exceeds the permitted use, you will need to obtain permission directly from 
+the copyright holder. To view a copy of this licence, visit http://​creat​iveco​mmons.​org/​licen​ses/​by/4.​0/.
+© The Author(s) 2023

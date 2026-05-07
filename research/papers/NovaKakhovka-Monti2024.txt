@@ -1,0 +1,648 @@
+--- page 1 ---
+ADVANCES IN GEODESY AND GEOINFORMATION
+(formerly GEODESY AND CARTOGRAPHY)
+© Polish Academy of Sciences
+Vol. 73, no. 1, article no. e50, 2024
+https://doi.org/10.24425/agg.2023.146162
+Original paper
+The Nova Kakhovka dam collapse ﬂooding
+as seen from Sentinel-1 SAR satellite images
+Roberto Monti∗, Lorenzo Rossi, Mirko Reguzzoni
+Politecnico di Milano, Milan, Italy
+e-mail: roberto.monti@polimi.it; ORCID: http://orcid.org/0009-0006-1608-6648
+e-mail: lorenzo1.rossi@polimi.it; ORCID: http://orcid.org/0000-0001-6050-1972
+e-mail: mirko.reguzzoni@polimi.it; ORCID: http://orcid.org/0000-0002-4027-9347
+∗Corresponding author: Roberto Monti, e-mail: roberto.monti@polimi.it
+Received: 2023-10-18 / Accepted: 2024-04-12
+Abstract: The destruction of the Nova Kakhovka dam in Ukraine on June 6th, 2023, produced
+an enormous ﬂooding in the entire Kherson region. Thousands of people and agricultural
+ﬁelds were aﬀected, bringing down an economy already devastated by the ongoing war. In
+addition to that, in the months prior to the collapse, the water level in the reservoir has
+been ﬁrstly decreased to a minimum, before rising it to an all-time maximum. Both these
+two situations are studied by means of Sentinel-1 SAR images, using the so-called change
+detection technique, with the aim of identifying those areas that got covered by water due
+to the Lake Kakhovka level rise and due to the ﬂooding in the downstream region of the
+dam. The obtained results are then validated through comparison with optical images from
+Sentinel-2 and Landsat 9 satellites. The initial validation involves a visual assessment of
+both data types, followed by a more in-depth analysis that includes pixel classiﬁcation of
+the optical images. This ﬁnal step enables a precise quantiﬁcation and comparison of the
+extent of the damage. It is clear that the increase of the water level before the dam collapse
+has worsened the extension and eﬀect of the subsequent ﬂooding.
+Keywords: SAR, Sentinel-1, Change detection, Remote sensing, Nova Kakhovka dam
+1. Introduction
+The Nova Kakhovka Dam (Finnis, 2023), also known as Dniprohes, was a dam located on
+the Dnieper River in Ukraine. It was one of the largest hydroelectric dams in Europe and
+was situated near the city of Nova Kakhovka in the Kherson region. The dam was built
+between 1950 and 1956, with the goals of producing hydroelectric power, controlling the
+ﬂow of the Dnieper River, and storing water for irrigation of nearby agricultural lands. The
+0
+The Author(s). 2024 Open Access. This article is distributed under the terms of the Creative Commons Attribu-
+tion 4.0 International License (http://creativecommons.org/licenses/by/4.0/), which permits unrestricted use,
+distribution, and reproduction in any medium, provided you give appropriate credit to the original author(s)
+and the source, provide a link to the Creative Commons license, and indicate if changes were made.
+
+
+--- page 2 ---
+2
+Roberto Monti, Lorenzo Rossi, Mirko Reguzzoni
+dam was roughly 61 m tall and 1.5 km long. One of the biggest artiﬁcial lakes in Ukraine,
+Lake Kakhovka, was its reservoir, which had a surface area of about 2,155 km2. With its
+contributions in electricity production, control of the Dnieper River’s ﬂow for navigation
+and irrigation, and provision of recreational opportunities for locals and visitors, the Nova
+Kakhovka Dam and its hydroelectric power plant had a signiﬁcant and positive impact on
+the local economy and agriculture (Hoybye et al., 2002).
+In the aftermath of the Russian Federation’s invasion of Ukraine in February 2022,
+the southern bank of the river, including the Nova Kakhovka dam and the Zaporizhzhia
+nuclear power plant, came under the control of the occupiers (Yerushalmy, 2023). Despite
+the occupation, the production of hydroelectric power from the dam reservoir continued
+working without signiﬁcant alterations until a peculiar event occurred in January 2023.
+During this time, there was an unexpected drop in the water level of the reservoir, reducing
+it by more than two meters from the average. The exact cause of this decline is uncertain
+and would require more detailed information. However, it is important to note that factors
+such as changes in water management, altered river ﬂow patterns, or deliberate actions
+by the occupying forces could have contributed to this event. Subsequently, the water
+level began to rise again, reaching an all-time high in the ﬁrst days of June 2023 (USDA
+Foreign Agricultural Service, 2023). Again, without access to more detailed and accurate
+information, it is challenging to make deﬁnitive conclusions about the underlying reasons
+for the rise in water level.
+On June 6th, 2023, an underwater explosion destroyed part of the vertical facing
+of the dam, with the subsequent ﬂooding of both banks of the Dnieper River, aﬀecting
+agricultural ﬁelds as well as villages (and even the southern part of the city of Kherson),
+up to the Black Sea (Vyshnevskyi et al., 2023). It has been deﬁned as one of the biggest
+industrial and ecological disasters in Europe for decades (Kottasova and Mezzoﬁore,
+2023). This catastrophe destroyed entire villages, ﬂooded farmland, deprived tens of
+thousands of people of power and clean water and caused massive environmental damage
+(Gleick et al., 2023; Knight, 2023; Kuzova, 2023).
+In emergency situations, real-time access to accurate and reliable data is crucial for
+assessing the magnitude of a disaster and eﬀectively coordinating the initial response
+eﬀorts. Timely information allows emergency responders to understand the scope of
+the situation, prioritize their actions, and allocate resources eﬀectively (Krichen et al.,
+2024). In such scenarios, freely available real-time data can play a vital role. These
+data can include information from various sources, such as satellite imagery (Smith and
+Butterworth, 2023), remote sensors, social media, and other data streams (Columb et al.,
+2003; Blum et al., 2013). These sources can provide valuable insights into the extent of
+the disaster, including the aﬀected areas, population density, infrastructure damage, and
+potential hazards (Bullock et al., 2013; Reguzzoni et al., 2022). However, it is essential
+to verify and validate the obtained information, particularly in conﬂict zones or areas
+where on-site veriﬁcation may be limited or even impossible due to safety concerns.
+Cross-referencing and triangulating data from multiple sources can help to check accuracy
+and improve situational awareness (Skarpa et al., 2023).
+The Copernicus program (European Space Agency (2023b)), funded by the European
+Union (EU), is an invaluable resource for reliable and freely available Earth observation
+data. The program aims at providing accurate and up-to-date information for a variety of
+applications, including environmental monitoring, climate change analysis, emergency
+
+
+--- page 3 ---
+The Nova Kakhovka dam collapse ﬂooding as seen from Sentinel-1 SAR satellite images
+3
+management, and more. One of the main components of the Copernicus program is
+the Sentinel constellation of satellites. These satellites provide a wealth of data that are
+freely available to users around the world. The data cover land, atmosphere, sea, climate,
+and other domains. Sentinel data can be used in disaster management, environmental
+monitoring, urban planning, agriculture, and many other applications (DeVries et al.,
+2020; Malmgren-Hansen et al., 2020; Mitraka et al., 2020; Bitek and Erenoğlu, 2022;
+Tarpanelli et al., 2022). Access to reliable and free data through Copernicus greatly
+facilitates the work of researchers, policy makers and practitioners in various ﬁelds. It
+enables evidence-based decision-making, improves our understanding of Earth systems,
+and supports eﬀorts to address a variety of global challenges (Mateo-Garcia et al., 2021;
+Apicella et al., 2022; Vavassori et al., 2022).
+This work aims at investigating the repercussions associated with the destruction of
+the Nova Kakhovka dam. The primary objective of the proposed technique is to deliver
+a prompt and initial assessment of the ﬂooding through rapid mapping techniques, using
+the ﬁrst available satellite data. Speciﬁcally, a comparison of outcomes from optical
+and radar imagery will be conducted to comprehensively analyze the extent of the dam
+destruction. Additionally, any abnormal behaviors detected in the months leading up
+to the dam destruction will be explored. Therefore, this research contributes to a better
+understanding of the event and provides valuable insights for future preventive measures.
+This approach addresses not only the immediate impact of the dam destruction but also
+the methodological and technical aspects of remote sensing in disaster analysis. The paper
+is organized as follows: Section 2 provides an explanation of the satellite data used and the
+processing strategy employed. The outcomes of the conducted analysis are detailed in the
+“Results” section. Subsequently, in Section 4, a comparative analysis between radar and
+optical results is presented, encompassing both qualitative and quantitative assessments.
+The paper concludes with a summary of ﬁndings, as well as future perspectives.
+2. Data used and methods applied
+Sentinel images can be used to assess the extent of damage caused by natural disasters such
+as ﬂoods, earthquakes, ﬁres, or storms. By comparing images before and after the disaster,
+analysts can identify changes in land cover, damage to infrastructure and the overall impact
+on aﬀected regions. Sentinel-1 radar imagery (Torres et al., 2012) plays a crucial role
+in disaster management, providing timely and accurate information for monitoring and
+response eﬀorts. Its abilities to penetrate clouds, to operate in both day and night, and
+to provide detailed information on surface characteristics make it a valuable asset for
+various applications in Earth observation and environmental monitoring. The Sentinel-1
+satellite program (Fletcher, 2012), which, after the retirement of Sentinel-1B (European
+Space Agency, 2022a), includes the Sentinel-1A satellite only, provides signiﬁcant global
+coverage for monitoring and observing places all over the world. It operates in a near-
+polar orbit and collects data from the whole Earth. This extensive coverage allows for
+monitoring of both land and maritime areas. Sentinel-1A provides frequent revisits to
+speciﬁc locations, oﬀering continuous monitoring and the collection of time-series data.
+The precise revisit time is determined on the basis of the imaging mode and latitude of
+the target area. More generally, a location can be revisited as often as every twelve days.
+
+
+--- page 4 ---
+4
+Roberto Monti, Lorenzo Rossi, Mirko Reguzzoni
+Sentinel-1 carries a Synthetic Aperture Radar (SAR) instrument (Flores et al., 2019)
+that uses microwave frequencies to capture images of the Earth’s surface. SAR systems
+work as follows: the radar sends pulses of microwave signals from the satellite antenna
+toward the Earth’s surface. When the transmitted signal reaches the ground, it interacts
+with objects such as buildings, vegetation, and terrain. The signal is partially reﬂected to
+the radar system and partially scattered in all the other directions. SAR systems measure
+the intensity of the reﬂected signal, as well as the time it takes to travel to the target
+and back, thereby determining the range (or distance) to any point on the surface of the
+planet. By combining measurements of multiple radar pulses along a satellite ﬂight path
+(also known as orbit), the instrument creates a larger virtual antenna aperture through
+synthetic aperture processing. The obtained image represents radar backscatter, which
+reﬂects the properties of the illuminated objects. SAR images can be then analyzed to
+extract information about land cover, surface roughness, vegetation, water bodies and
+man-made structures. This technology oﬀers beneﬁts such as all-weather and day-night
+imaging capabilities, as it can penetrate clouds, smoke, and foliage, making it invaluable
+for a variety of applications (Vincent, 2003).
+Flood mapping using Sentinel-1 SAR data is based on the so-called change detection
+technique (Rignot and van Zyl, 1993), which compares pre- and post-ﬂood radar images
+to identify and delineate the extent of the ﬂooded areas (Stelmaszczuk-Gorska, 2020; Tay
+et al., 2020). First, the acquired SAR images undergo pre-processing steps to correct for
+radiometric and geometric distortions. These steps involve calibration, speckle ﬁltering
+to reduce noise, and orthorectiﬁcation, by the so-called terrain correction employing
+an available digital elevation model, e.g., the Copernicus one (European Space Agency
+and Airbus, 2022), to account for the Earth topography. Then, the two pre-processed
+images are geometrically aligned (coregistered) by means of a cross-correlation algorithm
+to ensure accurate pixel-to-pixel correspondence between them. This coregistration
+process compensates for any geometrical diﬀerences that may arise due to variations
+in sensor positioning or platform motion. The entire workﬂow was performed within
+SNAP (SeNtinel Application Platform) software (European Space Agency, 2023a), freely
+distributed by European Space Agency (ESA). Finally, the backscattered radar signal
+intensity before and after the crisis event is straightforwardly compared; regions exhibiting
+signiﬁcant changes are indicative of ﬂooded areas. To improve the readability of these
+data, a ﬂood extent map is produced, highlighting the aﬀected areas by using a false-color
+representation. More generally, the change detection technique can be also applied to
+investigate the presence or absence of water coverage on dry land, as in the case of the
+variation of the water level in a lake (Nasirzadehdizaji et al., 2019). So, using Sentinel-1
+SAR data, an analysis for both the water level change in the reservoir and the ﬂooding due
+to the collapse of the dam is here presented. For the study, the Ground Range Detected
+(GRD) products (European Space Agency, 2022b) are used. These products are images
+derived from the raw SAR data after radiometric and geometric distortions corrections.
+The vertical-to-vertical (VV) polarization is chosen because of its suitability in detecting
+changes in water surfaces. For the considered case study of Nova Kakhovka dam, a ground
+range image corresponding to a reference condition (low water level and not collapsed
+dam) and another one during the crisis scenario (high water level and collapsed dam) are
+selected. The chosen image epochs are reported in Table 1.
+
+
+--- page 5 ---
+The Nova Kakhovka dam collapse ﬂooding as seen from Sentinel-1 SAR satellite images
+5
+Table 1. Dates and resolutions of the used Sentinel-1A images. The pixel size refers to the processing
+resolution, while the acquisition one is 10 × 10 m for both events
+Event
+Reference
+Crisis
+Pixel size
+Flooding
+28/05/2023
+09/06/2023
+30 × 30 m
+Water level change
+28/05/2023
+09/02/2023
+10 × 10 m
+When analyzing the ﬂooding, it is important to note that the aﬀected area is quite large.
+A possibility to reduce the computational burden when analyzing the ﬂooding extent is to
+further process the SAR images with the so-called multi-looking technique (Vavriv and
+Bezvesilniy, 2013), averaging the radar data over a window of 3 pixels × 3 pixels to reduce
+the eﬀects of speckle noise. The SNAP built-in operator (Braun, 2018) was used for this
+purpose, although alternative ﬁltering methods (Mansourpour and Blais, 2006; Santoso et
+al., 2016; Yu et al., 2018) could be applied. However, given the expansive nature of the
+scenarios considered in this study, the chosen method proves satisfactory, as it will be
+shown in following Sections. Despite this, it is essential to recognize that the multi-looking
+process sacriﬁces the spatial resolution of the images, resulting in a coarser representation
+of the features on the ground, which is not a good option when analyzing the water level
+change. This is because variations in the coastal shape and the water level require a more
+detailed view to accurately assess them. Therefore, the images used for studying water
+level change may not undergo the multi-looking process, ensuring a higher resolution
+that captures the necessary details at the expense of the computational burden. In fact,
+maintaining a higher resolution for water level scenarios ensures that subtle changes in
+the coastal shape and water levels can be detected and analyzed eﬀectively. As for the
+ﬂooded area analysis, priority was given to the reduction of the speckle noise applying
+the multi-looking processing technique and allowing for a smoother representation of the
+aﬀected areas, while reducing the computational burden.
+Finally, to validate the accuracy and reliability of the obtained maps, a comparison
+with optical images will be presented. This validation process involved coregistration
+and comparison of the SAR-derived maps with medium-resolution optical images. There
+will be conducted two distinct comparisons: one qualitative and one quantitative. The
+qualitative assessment involves a visual comparison between radar and optical images,
+facilitating a quick evaluation of results over speciﬁc areas of interest. On the quantitative
+side, a numerical comparison between the datasets is performed through pixel classiﬁcation.
+The optical images were imported into ArcGIS Pro where a classiﬁcation algorithm was
+used to identify water areas and other relevant features. Following a meticulous selection
+of training samples for each class, the Support Vector Machine (SVM) algorithm (Kecman,
+2005) was performed. SVM provides strong classiﬁcation and regression capabilities for
+a wide range of applications, from text and image classiﬁcation to predictive modeling, by
+determining the ideal hyperplane that maximizes the margin between various classes. This
+global optimization property can lead to a better generalization (the ability of a model
+to perform well on unseen or new data, beyond the ones it was trained on), even when
+dealing with a small number of classes, as in the analyzed scenarios.
+
+
+--- page 6 ---
+6
+Roberto Monti, Lorenzo Rossi, Mirko Reguzzoni
+3. Results
+To ensure clarity and organization, the results pertaining to the ﬂooding event and water
+level monitoring scenario are presented below, in two separate subsections. This approach
+allows for focused interpretation and a comprehensive understanding of the observed
+changes in each speciﬁc case. In both cases, the wet areas during the crisis situation are
+visually represented by using the red color. This is achieved by creating a false-color RGB
+image, where the pre-event image is assigned to the red channel, while the post-event one
+is assigned to the blue and green channels.
+3.1. Water level monitoring
+High-resolution SAR images were employed to monitor variations in the coastal shape and
+water level. The ﬁner spatial resolution captured the intricacies of the coastal morphology,
+enabling accurate assessment of changes caused by ﬂuctuations in water level. This
+ﬁrst analysis focuses on the entire lake Kakhovka, encompassing its full extent. This
+comprehensive approach allows for a holistic assessment of the lake conditions and
+provides insights into the overall dynamics and changes occurring within the water body.
+In Figure 1, areas of particular interest (AOI) are identiﬁed and highlighted in yellow.
+These AOIs represent speciﬁc locations or regions within the lake that have caught the
+attention for further investigations, to gain deeper insights into the observed water level
+variations and their potential implications. In addition to the SAR false-color image
+depicting the water level variation of lake Kakhovka, a comparison between the two
+epochs is provided for each identiﬁed AOI. This comparison is conducted using Sentinel-2
+optical images. For accurate analysis and visualization, the selected Sentinel-2 images
+correspond as closely as possible to the dates of the SAR images, ensuring temporal
+consistency. By aligning the dates, it becomes easier to establish a direct comparison
+between the two conditions, facilitating the identiﬁcation of changes and assessing their
+magnitude. The Sentinel-2 images used for this comparison are carefully chosen to have
+minimal or no cloud cover over the identiﬁed AOIs.
+Fig. 1. SAR false-color image depicting the lake Kakhovka water level variation (see red pixels on the lake
+boundaries) between February 9th, 2023, and May 28th, 2023. Yellow borders identify some areas of interest
+(AOI), where additional studies are performed. A subset of the entire SAR image was created around the lake,
+only for computer memory issues
+
+
+--- page 7 ---
+The Nova Kakhovka dam collapse ﬂooding as seen from Sentinel-1 SAR satellite images
+7
+The ﬁrst area of interest is the dam and its surrounding neighborhood. The increase in
+water level following the February reduction led to the submergence of the sandy coasts
+(Fig. 2c) that were previously visible (Fig. 2b). This change is a direct consequence of the
+altered hydrological conditions, where the water level has encroached upon and covered
+the sandy areas exposed in February.
+(a)
+(b)
+(c)
+Fig. 2. Area of interest 1: Kakhovka dam. (a) SAR false-color image; (b) Sentinel-2 optical image, low water
+level situation; (c) Sentinel-2 optical image, high water level situation
+The second AOI that is considered corresponds to the southern part of the reservoir,
+where few rivers disentangle themselves from the shores of the lake. Similar as before,
+the coastline appears in red, indicating the variation of the water level. This observation is
+consistent with the ﬁndings from the optical images, as shown in Figure 3.
+(a)
+(b)
+(c)
+Fig. 3. Area of interest 2: Reservoir south. (a) SAR false-color image; (b) Sentinel-2 optical image, low water
+level situation; (c) Sentinel-2 optical image, high water level situation
+Figure 4 shows the third, and last, AOI, which refers to the northern portion of the
+lake, where a bend is present. In this speciﬁc AOI, the exposure of the coastline is even
+more evident, both in the SAR and optical images.
+
+
+--- page 8 ---
+8
+Roberto Monti, Lorenzo Rossi, Mirko Reguzzoni
+(a)
+(b)
+(c)
+Fig. 4. Area of interest 3: Reservoir north. (a) SAR false-color image; (b) Sentinel-2 optical image, low water
+level situation; (c) Sentinel-2 optical image, high water level situation
+3.2. Flooding
+By utilizing multi-looked SAR images with reduced speckle noise, the extent of the
+ﬂooded area was determined. The coarser resolution facilitated a smoother representation
+of the ﬂooded regions, allowing for a comprehensive assessment of the ﬂood extent. A
+straightforward comparison of pre- and post-ﬂood images revealed signiﬁcant changes in
+land cover within the aﬀected area. These changes included the emergence of new water
+bodies, alterations in vegetation patterns, and potential damage to infrastructure (Fig. 5).
+Fig. 5. SAR false-color image depicting in red the ﬂooded areas downstream of the dam, considering the ﬁrst
+available date after the dam collapse: June 9th, 2023. In yellow some areas of interest (AOI) are identiﬁed
+In the context of this ﬂooding analysis scenario, the red color in the imagery shows
+areas that were submerged by water as a result of the dam collapse. It is worth mentioning
+that reddish parcels north to the river represent areas that encountered water coverage,
+either partially or completely, during the second observation epoch. This occurrence
+is likely attributed to both agricultural activities and/or ﬂooded rivers. The focus is
+speciﬁcally on the downstream area of the dam, as it is the location where the disaster
+occurred. In this region, signiﬁcant ﬂooding and water inundation took place. It is
+important to note that, in contrast to the downstream area, the lake itself experienced
+a reduction in water level rather than signiﬁcant ﬂooding.
+
+
+--- page 9 ---
+The Nova Kakhovka dam collapse ﬂooding as seen from Sentinel-1 SAR satellite images
+9
+The ﬁrst area of interest is, as for the water level scenario, the dam and its surrounding
+neighborhood. The increase in water level in the Dnieper River following the event led
+to the submergence of the wetlands just after the Kakhovka dam (Fig. 6a) that were
+previously visible (Fig. 6b). This situation can be barely seen also in the optical Sentinel-2
+image (Fig. 6c) due to the unlucky cloud coverage; in addition to that, the coastline of the
+lake appeared, indicating the decrease of the water level in the basin due to the collapse of
+the vertical facing.
+(a)
+(b)
+(c)
+Fig. 6. Area of interest 1: Kakhovka dam. (a) SAR false-color image; (b) Sentinel-2 optical image, pre-ﬂooding;
+(c) Sentinel-2 optical image, post-ﬂooding
+The second AOI that is considered corresponds to the Inhulec River (Fig. 7), a tributary
+of the Dnieper River. Here, both the wetlands on the southern bank of the Dnieper and the
+Inhulec got covered by water. It is very clear from Figure 6a how the small river (black line
+in the s-shaped riverbed), became several times bigger due to the rise of water, passing
+(a)
+(b)
+(c)
+Fig. 7. Area of interest 2: Inhulec river. (a) SAR false-color image; (b) Sentinel-2 optical image, pre-ﬂooding;
+(c) Landsat 9 optical image, post-ﬂooding
+
+
+--- page 10 ---
+10
+Roberto Monti, Lorenzo Rossi, Mirko Reguzzoni
+from about 90 m to about 700 m width. This observation is consistent with the ﬁndings
+from the optical images. Note that the post-event optical image comes from Landsat 9
+(U.S. Geological Survey, 2019) as at the revisit time of Sentinel-2 there was too much
+cloud cover, thus limiting the view.
+The third, and ﬁnal, AOI refers to the city of Kherson and the estuary of the Dnieper
+River. As shown in Figure 8, the entire southern district of the city was ﬂooded as well as
+the agricultural ﬁelds and wetlands on the southern bank of the Dnieper, as conﬁrmed by
+the optical images.
+(a)
+(b)
+(c)
+Fig. 8. Area of interest 3: Kherson. (a) SAR false-color image; (b) Sentinel-2 optical image, pre-ﬂooding; (c)
+Landsat 9 optical image, post-ﬂooding
+4. Discussion
+Both the water level and ﬂooding analyses provided valuable insights into the evolving
+situation surrounding the Nova Kakhovka dam in Ukraine, over the past few months. The
+usage of the change detection SAR technique enabled the estimation of the areas involved
+by the variation of the water level in the reservoir and the extent of the ﬂooding that
+occurred following the collapse of the dam.
+Considering water level ﬂuctuations, two distinct classes, “water” and “land”, were
+selected due to their signiﬁcance. This selection is necessary for the comparative analysis
+of pre- and post-event classiﬁcations, leading to the retrieval of information regarding
+the extent of the emerged lake shores. Landsat 8 and 9 (U.S. Geological Survey, 2015)
+multispectral images are the chosen candidates. It is worth mentioning that ESA Sentinel-2
+images have partial cloud cover over of the ﬂooded area, making them unsuitable for this
+numerical validation process. Therefore, for consistency reasons, Landsat products are
+used also for the water level scenario. The two ﬁgures below show the multiband optical
+images (Fig. 9) and the classiﬁed ones (Fig. 10) for the water level variation scenario.
+Concerning the ﬂooding event, three distinct classes were designated for the classi-
+ﬁcation process: “water”, “buildings/villages”, and “ﬁelds”, encompassing everything
+not falling into the ﬁrst two categories. This approach enables the identiﬁcation and
+
+
+--- page 11 ---
+The Nova Kakhovka dam collapse ﬂooding as seen from Sentinel-1 SAR satellite images
+11
+Fig. 9. Landsat 9 optical images for the condition of lowest (left) and highest (right) water level in the reservoir
+Fig. 10. Landsat 9 classiﬁed images for the condition of lowest (left) and highest (right) water level in the
+reservoir. In red it is shown the emerged lakebed, while in light blue the area of the lake covered by water
+quantiﬁcation of the ﬂood extent while also providing insights into aﬀected human
+settlements, potentially highlighting areas where people’s lives may have been jeopardized.
+The two ﬁgures below show the multiband optical images (Fig. 11) and the classiﬁed ones
+(Fig. 12) for the ﬂooding scenario.
+Fig. 11. Landsat 8 and 9 optical images for the pre-ﬂooding (left) and post-ﬂooding (right) condition
+
+
+--- page 12 ---
+12
+Roberto Monti, Lorenzo Rossi, Mirko Reguzzoni
+Fig. 12. Landsat 8 and 9 classiﬁed images for the pre-ﬂooding (left) and post-ﬂooding (right) condition. In
+light blue the area of the region covered by water, in pink buildings/villages and in yellow the ﬁelds
+For both analyzed events, the submerged area due to the water level rise (event one)
+or ﬂooding (event two) was computed for both SAR and optical sensors; the results are
+reported in Table 2 (Sentinel-1 images) and Table 3 (Landsat).
+Table 2. Submerged areas derived from Sentinel-1 images
+Event
+Ground resolution (m)
+Submerged area (km2)
+Water level change
+10 × 10
+45.10
+Flooding
+30 × 30
+460.00
+Table 3. Submerged areas derived from Landsat images
+Event
+Ground resolution (m)
+Submerged area (km2)
+Water level change
+30 × 30
+50.00
+Flooding
+30 × 30
+490.00
+The similarity between the two datasets conﬁrmed the reliability of the SAR technique
+in accurately capturing the eﬀects of water level modiﬁcations and the subsequent ﬂooding.
+The integration of SAR and optical data, along with the validation process, enhances
+the robustness of the analysis and reinforces the conﬁdence in the ﬁndings. The small
+discrepancies (around 10%), however, are most likely due to the diﬀerent viewing geometry
+of the two instrumentations, their diﬀerent ground resolution, and the results of the pixels’
+classiﬁcation.
+In the analysis of the water level variation (Fig. 1), in addition to the prominent
+red coastlines indicating the rise of the reservoir water, there are also large areas that
+appear in cyan color. These cyan areas can be attributed to a thin layer of snow covering
+the agricultural ﬁelds visible in the February image. This observation suggests that the
+presence of snow on the ﬁelds is causing a distinct reﬂection intensity variation in the
+SAR imagery. In fact, cyan is associated to a dominant scattering eﬀect in the ﬁrst image
+(February), as it is the result of the combination of green and blue. Furthermore, it is
+
+
+--- page 13 ---
+The Nova Kakhovka dam collapse ﬂooding as seen from Sentinel-1 SAR satellite images
+13
+important to note that within the lake itself, some red pixels emerge from the water body:
+these red pixels are likely due to residual ice blocks ﬂoating over the surface of the basin
+and it is crucial to not confuse them with emerging lakebed.
+The variation in the water level of the lake can also be observed and corroborated
+through altimetry data (which provides measurements of the height or elevation of the
+Earth’s surface, including bodies of water like lakes) obtained from satellites (i.e., TOPEX,
+Poseidon, Jason, ERS, ENVISAT, SARAL, Sentinel-3) (USDA Foreign Agricultural
+Service, 2024). Furthermore, the ﬁndings regarding the water level variation were
+acknowledged and highlighted by the French company Theia, which is specialized in
+Earth observation and remote sensing applications (Theia, 2023). The time-series of water
+level variation, obtained from their website, conﬁrms that the detected sudden decrease
+and subsequent rise of the lake. Figure 13 shows these data, alongside an indication on
+their accuracy (represented in terms of standard deviation for each epoch by the red bars).
+Fig. 13. Water level time series from January 2016 to June 2023 for the Nova Kakhovka Lake, obtained from
+Theia website. Red bars represent the standard deviation of each observation
+On the other hand, regarding the ﬂooding event, it aﬀected an area distributed along
+almost 80 km, from the Nova Kakhovka dam to the Black Sea. Several newspapers and
+independent blogs compared the pre- and post-ﬂooding satellite optical images to provide
+a quick and understandable evaluation of the ongoing disaster. Most of them included
+Maxar (Maxar Technologies, 2024) high-resolution ground images to assess the damage
+magnitude and extent. Therefore, they can additionally support and conﬁrm the outcomes
+of the SAR-based maps presented in this work.
+5. Conclusions
+The SAR change detection method has proven to be reliable and of quick implementation
+in case of a variation in the water cover extent, allowing for a fast estimation of the
+consequences of such events. This is of fundamental importance when assessing damages
+aﬀecting thousands of people and hundreds of acres of agricultural ﬁelds, like it happened
+
+
+--- page 14 ---
+14
+Roberto Monti, Lorenzo Rossi, Mirko Reguzzoni
+in the case of the Nova Kakhovka dam collapse. It is clear that the increase of the
+water level in this reservoir dramatically increased the eﬀects of the ﬂooding, as a much
+larger volume of water (about 7.50 km3) was released in the Kherson region, submerging
+everything on its way. Regarding the consistency between SAR and optical data, they
+diﬀer by 10% in the estimation of the emerged lakebed and by 6% in the estimation
+of the ﬂooded area. The larger discrepancy for the former estimation is likely due to
+the geometric distortions of the SAR image’s viewing geometry compared to the nadir
+viewing geometry of the optical image, as well as the diﬀerent spatial resolutions of the
+two sensors. Drawing key takeaways from this work, it is evident that fast emergency
+mapping plays a pivotal role in coordinating ﬁrst response operations after a disaster.
+Both optical and radar datasets have proven their capability to accurately estimate the
+extent of damages. The choice between the two can be based solely on environmental
+and geometric conditions of the scenario, such as potential cloud cover, and the revisit
+date of the satellite. This validation underscores the importance of a versatile approach in
+leveraging the strengths of both optical and radar remote sensing technologies for eﬀective
+disaster management and response.
+Author contributions
+Conceptualization: R.M, L.R., M.R.; collection and assembly of data: R.M.; data analysis
+and interpretation: R.M., L.R.; article writing: R.M.; critical revision and ﬁnal approval
+of the article: L.R., M.R.
+Data availability statement
+Publicly available datasets were analyzed in this study. This data can be found here:
+https://dataspace.copernicus.eu/.
+Acknowledgements
+This research received no external funding.
+References
+Apicella, L., De Martino, M., and Quarati, A. (2022). Copernicus User Uptake: From Data to Applications.
+Int. J. Geoinf., 11, 121. DOI: 10.3390/ijgi11020121.
+Bitek, D., and Erenoğlu, R.C. (2022). Forest Fire Analysis with Sentinel-2 Satellite Imagery: The Case
+of Mati (Greece) in 2018. Acad. Platform J. Nat. Hazards and Disaster Managem., 3, 85-98. DOI:
+10.52114/apjhad.1211651.
+Blum, J., Eichhorn, A., Smith, S., et al. (2013). Real-time emergency response: Improved management
+of real-time information during crisis situations. J. Multimodal User Interfaces, 8, 161-173. DOI:
+10.1007/s12193-013-0139-7.
+Braun, A. (2018). How does multilooking work? Retrieved January, 2024 from https://forum.step.esa.int/t/
+how-does-multilooking-work/12497/2.
+
+
+--- page 15 ---
+The Nova Kakhovka dam collapse ﬂooding as seen from Sentinel-1 SAR satellite images
+15
+Bullock, J.A., Haddow, G.D., and Coppola, D.P. (2013). Mitigation, Prevention, and Preparedness.
+Introduction to Homeland Security, 435–494. DOI: 10.1016/B978-0-12-415802-3.00010-5.
+Columb, M.O., Haji-Michael, P., and Nightingale, P. (2003). Data collection in the emergency setting.
+J. Emerg. Med., 20, 459–463. DOI: 10.1136/emj.20.5.459.
+DeVries, B., Huang, C., Armston, J. et al. (2020). Rapid and robust monitoring of ﬂood events using
+Sentinel-1 and Landsat data on the Google Earth Engine. Rem. Sens. Environ., 240, 111664. DOI:
+10.1016/j.rse.2020.111664.
+European Space Agency (2022a). Sentinel-1B in-ﬂight anomaly summary report.
+European Space Agency (2022b). Ground Range Detected – Sentinel-1 SAR Technical Guide – Sentinel
+Online. Retrieved May, 2023 from https://sentinels.copernicus.eu/web/sentinel/technical-guides/
+sentinel-1-sar/products-algorithms/level-1-algorithms/ground-range-detected.
+European Space Agency (2023a). STEP – Science Toolbox Exploitation Platform. Retrieved January, 2024
+from https://step.esa.int/main/.
+European Space Agency (2023b). Copernicus Data Space Ecosystem / Europe’s eyes on Earth. Retrieved
+January, 2024 from https://dataspace.copernicus.eu/.
+European Space Agency and Airbus (2022). Copernicus DEM. DOI: 10.5270/ESA-c5d3d65.
+Finnis, A. (2023). Where Nova Kakhovka dam is and what we know about the explosion that breached it.
+Retrieved January, 2024 from https://inews.co.uk/news/world/nova-kakhovka-dam-where-importance-
+ukraine-reservoir-blown-up-attack-2389607.
+Fletcher, K. (2012). Sentinel-1: ESA’s radar observatory mission for GES operational services, ESA SP.
+ESA Communications, Noordwijk, The Netherlands.
+Flores, A., Herndon, K., Thapa, R. et al. (2019). Synthetic Aperture Radar (SAR) Handbook: Comprehensive
+Methodologies for Forest Monitoring and Biomass Estimation. DOI: 10.25966/NR2C-S697.
+Gleick, P., Vyshnevskyi, V., and Shevchuk, S. (2023). Rivers and Water Systems as Weapons and Casualties
+of the Russia-Ukraine War. Earth’s Future, 11, e2023EF003910. DOI: 10.1029/2023EF003910.
+Hoybye, J., Iritz, L., Zheleznyak, M. et al. (2002). Water quality modelling to support the operation of the
+Kakhovka Reservoir, Dnieper River, Ukraine.
+Kecman, V. (2005). Support Vector Machines – An Introduction, in: Wang, L. (Ed.), Support Vector
+Machines: Theory and Applications, Studies in Fuzziness and Soft Computing. Springer, Berlin,
+Heidelberg, pp. 1–47. DOI: 10.1007/10984697_1.
+Knight, M. (2023). Kakhovka dam collapse has made Black Sea a “garbage dump and animal ceme-
+tery,” Ukraine warns. Retrieved June, 2023 from https://edition.cnn.com/2023/06/11/europe/
+kakhovka-dam-collapse-swimming-banned-intl-hnk/index.html.
+Kottasova, I., and Mezzoﬁore, G. (2023). Nova Kakhovka dam: Here are the key theories on what caused
+Ukraine’s catastrophic dam collapse |CNN. Retrieved June, 2023 from https://edition.cnn.com/2023/
+06/08/europe/nova-kakhovka-destruction-theories-intl/index.html.
+Krichen, M., Abdalzaher, M.S., Elwekeil, M., et al. (2024). Managing natural disasters: An analysis of
+technological advancements, opportunities, and challenges. Internet of Things and Cyber-Physical
+Systems, 4, 99–109. DOI: 10.1016/j.iotcps.2023.09.002.
+Kuzova, N., (2023). The Tragedy of Kakhovka Reservoir. Retrieved January, 2024 from https://www.iwm.
+at/blog/the-tragedy-of-kakhovka-reservoir.
+Malmgren-Hansen, D., Sohnesen, T., Fisker, P. et al. (2020). Sentinel-1 Change Detection Analysis for Cy-
+clone Damage Assessment in Urban Environments. Rem. Sens., 12, 2409. DOI: 10.3390/rs12152409.
+Mansourpour, M., and Blais, R. (2006). Eﬀects and performance of speckle noise reduction ﬁlters on active
+radar and SAR images. Proc. ISPRS, 36, W41.
+Mateo-Garcia, G., Veitch-Michaelis, J., Smith, L. et al. (2021). Towards global ﬂood mapping onboard low
+cost satellites with machine learning. Sci. Rep. 11, 7249. DOI: 10.1038/s41598-021-86650-z.
+
+
+--- page 16 ---
+16
+Roberto Monti, Lorenzo Rossi, Mirko Reguzzoni
+Maxar Technologies (2024). Earth Intelligence & Space Infrastructure. Retrieved June, 2023 from
+https://www.maxar.com/.
+Mitraka, Z., Siachalou, S., Doxani, G. et al. (2020). Decision Support on Monitoring and Disaster
+Management in Agriculture with Copernicus Sentinel Applications. Sustainability, 12, 1–20. DOI:
+10.3390/su12031233.
+Nasirzadehdizaji, R., Akyuz, D.E., and Cakir, Z. (2019). Flood mapping and permanent water bodies change
+detection using sentinel SAR data. The International Archives of the Photogrammetry. Rem. Sens.
+Spatial Inf. Sci., XLII-4-W18, 797–801. DOI: 10.5194/isprs-archives-XLII-4-W18-797-2019.
+Reguzzoni, M., Rossi, L., De Gaetani, C.I., et al. (2022). GNSS-Based Dam Monitoring: The Application
+of a Statistical Approach for Time Series Analysis to a Case Study. Appl. Sci., 12, 9981. DOI:
+10.3390/app12199981.
+Rignot, E.J.M., and van Zyl, J.J. (1993). Change detection techniques for ERS-1 SAR data. IEEE Trans.
+Geosci. Rem. Sens., 31, 896–906. DOI: 10.1109/36.239913.
+Santoso, A.W., Bayuaji, L., Pebrianti, D. et al. (2016). A fuzzy approach for speckle noise reduction in SAR
+images. Int. J. Adv. Appl. Sci., 3(5), 33–38.
+Skarpa, P.E., Simoglou, K.B., and Garoufallou, E. (2023). Russo-Ukrainian War and Trust or Mistrust in
+Information: A Snapshot of Individuals’ Perceptions in Greece. Journalism and Media, 4, 835–852.
+DOI: 10.3390/journalmedia4030052.
+Smith, P., and Butterworth, M. (2023). Satellite images show the scale of the Ukraine dam destruction.
+Retrieved January, 2024 from https://www.nbcnews.com/news/world/satellite-images-show-ukraine-
+dam-destruction-rcna88299.
+Stelmaszczuk-Gorska, M. (2020). Flood mapping with synthetic aperture radar. EO4GEO. Retrieved June,
+2023 from http://www.eo4geo.eu/training/ﬂood-mapping-with-synthetic-aperture-radar/.
+Tarpanelli, A., Mondini, A.C., and Camici, S. (2022). Eﬀectiveness of Sentinel-1 and Sentinel-2 for ﬂood
+detection assessment in Europe. Nat. Hazards Earth Sys. Sci., 22, 2473–2489. DOI: 10.5194/nhess-
+22-2473-2022.
+Tay, C.W.J., Yun, S.-H., Chin, S.T. et al. (2020). Rapid ﬂood and damage mapping using synthetic aperture
+radar in response to Typhoon Hagibis. Japan. Sci. Data, 7, 100. DOI: 10.1038/s41597-020-0443-5.
+Theia (2023). What Hydroweb data shows about the Kakhovka dam failure – Theia. Retrieved June, 2023
+from https://www.theia-land.fr/en/what-hydroweb-data-shows-about-the-kakhovka-dam-failure/.
+Torres, R., Snoeij, P., Geudtner, D. et al. (2012). GMES Sentinel-1 mission. Rem. Sens. Environ., 120, 9–24.
+DOI: 10.1016/j.rse.2011.05.028.
+U.S. Geological Survey (2015). Landsat – Earth observation satellites (No. 2015–3081), Fact Sheet. U.S.
+Geological Survey. DOI: 10.3133/fs20153081.
+U.S. Geological Survey (2019). Landsat 9 (No. 2019–3008), Fact Sheet. U.S. Geological Survey. DOI:
+10.3133/fs20193008.
+USDA Foreign Agricultural Service (2023). Water level in the Kakhovka Reservoir in Ukraine from January
+6, 2020 to September 6, 2023, by satellite Retrieved January, 2024 from https://www.statista.com/
+statistics/1391641/kakhovka-reservoir-water-level/.
+USDA Foreign Agricultural Service (2024). G-REALM – Kakhovskoye. Retrieved June, 2023
+from https://ipad.fas.usda.gov/cropexplorer/global_reservoir/gr_regional_chart.aspx?regionid$=
+$up{&}reservoir_name$=$Kakhovskoye{&}lakeid$=$000873.
+Vavassori, A., Carrion, D., Zaragozi, B. et al. (2022). VGI and Satellite Imagery Integration for Crisis
+Mapping of Flood Events. ISPRS Int. J. Geoinf., 11, 611. DOI: 10.3390/ijgi11120611.
+Vavriv, D.M., and Bezvesilniy, O.O. (2013). Advantages of multi-look SAR processing, in: 2013 IX
+Internatioal Conference on Antenna Theory and Techniques. In the 2013 IX International Conference
+on Antenna Theory and Techniques, pp. 217–219, September, 16–20, Odessa, Ukraine. DOI:
+10.1109/ICATT.2013.6650730.
+
+
+--- page 17 ---
+The Nova Kakhovka dam collapse ﬂooding as seen from Sentinel-1 SAR satellite images
+17
+Vincent, R.K. (2003). RADAR / Synthetic Aperture Radar (Land Surface Applications). In Holton, J.R.
+(Ed.), Encyclopedia of Atmospheric Sciences. Academic Press, Oxford, pp. 1851–1859. DOI:
+10.1016/B0-12-227090-8/00331-6.
+Vyshnevskyi, V., Shevchuk, S., Komorin, V. et al. (2023). The destruction of the Kakhovka dam and its
+consequences. Water Int., 48, 631–647. DOI: 10.1080/02508060.2023.2247679.
+Yerushalmy, J. (2023). Nova Kakhovka dam: everything you need to know about Ukraine’s strategically
+important reservoir. The Guardian.
+Yu, Z., Wang, W., Li, C. et al. (2018). Speckle Noise Suppression in SAR Images Using a Three-Step
+Algorithm. Sensors, 18, 3643. DOI: 10.3390/s18113643.

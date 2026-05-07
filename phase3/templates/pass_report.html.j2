@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>SatDiff pass report — {{ asset_id }} {{ acquisition_date }}</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="page-header">
+    <div class="header-grid">
+      <div class="brand">
+        <div class="brand-name">SatDiff</div>
+        <div class="brand-sub">Tailings-storage-facility audit trail</div>
+      </div>
+      <div class="header-meta">
+        <div class="meta-row">
+          <div class="meta-cell"><span class="label">Asset</span><span class="val">{{ asset_id }}</span></div>
+          <div class="meta-cell"><span class="label">Acquisition</span><span class="val">{{ acquisition_date }}</span></div>
+          <div class="meta-cell"><span class="label">Source</span><span class="val">{{ sentinel_source }}</span></div>
+          <div class="meta-cell"><span class="label">Cloud</span><span class="val">{{ cloud_cover_pct }}</span></div>
+        </div>
+        <div class="meta-row">
+          <div class="meta-cell meta-cell-wide"><span class="label">Pass ID</span><span class="val mono">{{ pass_id }}</span></div>
+          <div class="meta-cell"><span class="label">Baseline</span><span class="val">{{ baseline_date }}</span></div>
+        </div>
+        <div class="meta-row">
+          <div class="meta-cell meta-cell-wide"><span class="label">Regulator</span><span class="val">{{ regulator }}</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="badges">
+      <div class="badge badge-overall" style="background-color: {{ overall_color }};">
+        Overall · {{ overall_status | upper }}
+      </div>
+      <div class="badge badge-downlink">
+        Downlink · {{ downlink_priority }}
+      </div>
+      {% if regulatory_escalation_flag %}
+      <div class="badge badge-escalation">
+        Regulatory escalation
+      </div>
+      {% endif %}
+    </div>
+  </header>
+
+  <section class="imagery">
+    <div class="imagery-grid">
+      <figure>
+        <img src="{{ baseline_rgb }}" alt="baseline RGB">
+        <figcaption>Baseline · {{ baseline_date }} · RGB (B4-B3-B2)</figcaption>
+      </figure>
+      <figure>
+        <img src="{{ baseline_nir }}" alt="baseline NIR">
+        <figcaption>Baseline · {{ baseline_date }} · NIR-false-colour</figcaption>
+      </figure>
+      <figure>
+        <img src="{{ current_rgb }}" alt="current RGB">
+        <figcaption>Current · {{ acquisition_date }} · RGB</figcaption>
+      </figure>
+      <figure>
+        <img src="{{ current_nir }}" alt="current NIR">
+        <figcaption>Current · {{ acquisition_date }} · NIR-false-colour</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="metrics">
+    <h2>Phase 1 physical-diff metrics</h2>
+    <div class="metric-grid">
+      <div class="metric"><div class="m-label">Deposition asymmetry</div><div class="m-val">{{ phase1_diff.deposition_asymmetry_index }}</div></div>
+      <div class="metric"><div class="m-label">Footprint change</div><div class="m-val">{{ phase1_diff.footprint_change_pct }}</div></div>
+      <div class="metric"><div class="m-label">Pond area</div><div class="m-val">{{ phase1_diff.pond_area_m2 }}</div></div>
+      <div class="metric"><div class="m-label">Pond area Δ vs baseline</div><div class="m-val">{{ phase1_diff.pond_area_change_pct }}</div></div>
+      <div class="metric"><div class="m-label">Pond–wall distance</div><div class="m-val">{{ phase1_diff.pond_to_wall_distance_m }}</div></div>
+      <div class="metric"><div class="m-label">Licence vol. exceedance</div><div class="m-val">{{ phase1_diff.licence_volume_exceedance_pct }}</div></div>
+      <div class="metric"><div class="m-label">NDWI max (pond)</div><div class="m-val">{{ phase1_diff.ndwi_max }}</div></div>
+      <div class="metric"><div class="m-label">B4/B3 turbidity</div><div class="m-val">{{ phase1_diff.b4_b3_turbidity_ratio }}</div></div>
+      <div class="metric"><div class="m-label">Gully count</div><div class="m-val">{{ phase1_diff.gully_count }}</div></div>
+      <div class="metric"><div class="m-label">Largest gully width</div><div class="m-val">{{ phase1_diff.largest_gully_width_m }}</div></div>
+      <div class="metric"><div class="m-label">NDMI wall face</div><div class="m-val">{{ phase1_diff.ndmi_wall_face }}</div></div>
+      <div class="metric"><div class="m-label">SWIR anomaly</div><div class="m-val">{{ phase1_diff.swir_anomaly_flag }}</div></div>
+    </div>
+  </section>
+
+  <section class="claims">
+    <h2>Per-claim assessment</h2>
+    {% for c in claims %}
+    <div class="claim-card" style="border-left-color: {{ c.color }};">
+      <div class="claim-head">
+        <div class="claim-id">Claim {{ c.id }}</div>
+        <div class="claim-name">{{ c.name }}</div>
+        <div class="claim-severity" style="background-color: {{ c.color }};">
+          {{ c.severity_level | upper }}
+        </div>
+      </div>
+      <div class="claim-meta">
+        <span class="trend">{{ c.trend_glyph }} {{ c.probability_trend }}</span>
+        <span class="action">→ {{ c.recommended_action | replace("_", " ") }}</span>
+      </div>
+      <div class="claim-evidence">{{ c.evidence }}</div>
+    </div>
+    {% endfor %}
+  </section>
+
+  <section class="narrative">
+    <h2>Stage A scene observations</h2>
+    <div class="narrative-text">{{ stage_a_text }}</div>
+  </section>
+
+  <footer class="page-footer">
+    <div class="footer-grid">
+      <div><span class="label">Pipeline</span> {{ pipeline_version }}</div>
+      <div><span class="label">Model</span> <span class="mono">{{ model_id }}</span></div>
+      <div><span class="label">Rendered</span> {{ rendered_at }}</div>
+      <div><span class="label">Stage A latency</span> {{ stage_a_latency_s }} s</div>
+      <div><span class="label">Stage B latency</span> {{ stage_b_latency_s }} s</div>
+      <div class="signature">
+        <div class="sig-label">Signed (placeholder)</div>
+        <div class="sig-line">_____________________________</div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

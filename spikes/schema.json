@@ -1,0 +1,46 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SatDiff Jagersfontein Pass Report",
+  "description": "Output schema for the Jagersfontein TSF monitoring contract — derived verbatim from research/contract-prompts/jagersfontein-contract.md (lines 132-148). The five claims are the source of truth for downstream phases.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "pass_id",
+    "acquisition_date",
+    "claims",
+    "overall_status",
+    "downlink_priority",
+    "regulatory_escalation_flag"
+  ],
+  "properties": {
+    "pass_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "acquisition_date": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+    },
+    "claims": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "name", "probability_trend", "severity_level", "evidence", "recommended_action"],
+        "properties": {
+          "id": {"type": "integer", "minimum": 1, "maximum": 5},
+          "name": {"type": "string", "minLength": 1},
+          "probability_trend": {"enum": ["increased", "decreased", "unchanged"]},
+          "severity_level": {"enum": ["nominal", "elevated", "urgent"]},
+          "evidence": {"type": "string", "minLength": 1, "maxLength": 800},
+          "recommended_action": {"enum": ["none", "flag_for_review", "urgent_inspection"]}
+        }
+      }
+    },
+    "overall_status": {"enum": ["nominal", "elevated", "urgent"]},
+    "downlink_priority": {"enum": ["routine", "priority", "immediate"]},
+    "regulatory_escalation_flag": {"type": "boolean"}
+  }
+}

@@ -1,0 +1,735 @@
+{
+  "n_probed": 22,
+  "n_available": 22,
+  "cloud_ceiling": 60.0,
+  "rows": [
+    {
+      "asset": "aswan",
+      "role": "baseline",
+      "target_date": "2018-01-15",
+      "image_available": true,
+      "cloud_cover": 9.678646,
+      "sentinel_datetime": "2018-01-11T08:25:33Z",
+      "sentinel_source": "sentinel-2b",
+      "footprint": [
+        32.82778958049399,
+        23.926033919704064,
+        32.92621041950601,
+        24.015966080295936
+      ],
+      "latency_seconds": 2.95
+    },
+    {
+      "asset": "aswan",
+      "role": "current",
+      "target_date": "2018-07-15",
+      "image_available": true,
+      "cloud_cover": 0.148497,
+      "sentinel_datetime": "2018-07-10T08:28:10Z",
+      "sentinel_source": "sentinel-2b",
+      "footprint": [
+        32.82778958049399,
+        23.926033919704064,
+        32.92621041950601,
+        24.015966080295936
+      ],
+      "latency_seconds": 2.09
+    },
+    {
+      "asset": "three_gorges",
+      "role": "baseline",
+      "target_date": "2021-01-15",
+      "image_available": true,
+      "cloud_cover": 0.227143,
+      "sentinel_datetime": "2021-01-15T03:29:24Z",
+      "sentinel_source": "sentinel-2b",
+      "footprint": [
+        110.9506380132077,
+        30.778033919704065,
+        111.0553619867923,
+        30.867966080295936
+      ],
+      "latency_seconds": 2.1
+    },
+    {
+      "asset": "three_gorges",
+      "role": "current",
+      "target_date": "2023-01-15",
+      "image_available": true,
+      "cloud_cover": 0.14556,
+      "sentinel_datetime": "2023-01-10T03:29:22Z",
+      "sentinel_source": "sentinel-2a",
+      "footprint": [
+        110.9506380132077,
+        30.778033919704065,
+        111.0553619867923,
+        30.867966080295936
+      ],
+      "latency_seconds": 2.33
+    },
+    {
+      "asset": "hoover_mead",
+      "role": "baseline",
+      "target_date": "2017-09-15",
+      "image_available": true,
+      "cloud_cover": 15.512137,
+      "sentinel_datetime": "2017-09-13T18:29:01Z",
+      "sentinel_source": "sentinel-2b",
+      "footprint": [
+        -114.82038861977179,
+        35.948550879556095,
+        -114.6536113802282,
+        36.0834491204439
+      ],
+      "latency_seconds": 1.29
+    },
+    {
+      "asset": "hoover_mead",
+      "role": "current",
+      "target_date": "2022-11-15",
+      "image_available": true,
+      "cloud_cover": 29.478997,
+      "sentinel_datetime": "2022-11-11T18:34:31Z",
+      "sentinel_source": "sentinel-2a",
+      "footprint": [
+        -114.82038861977179,
+        35.948550879556095,
+        -114.6536113802282,
+        36.0834491204439
+      ],
+      "latency_seconds": 3.07
+    },
+    {
+      "asset": "kariba",
+      "role": "baseline",
+      "target_date": "2018-10-15",
+      "image_available": true,
+      "cloud_cover": 0.328357,
+      "sentinel_datetime": "2018-10-12T08:13:07Z",
+      "sentinel_source": "sentinel-2b",
+      "footprint": [
+        28.69164600607156,
+        -16.589449120443902,
+        28.83235399392844,
+        -16.454550879556095
+      ],
+      "latency_seconds": 2.53
+    },
+    {
+      "asset": "kariba",
+      "role": "current",
+      "target_date": "2020-04-15",
+      "image_available": true,
+      "cloud_cover": 0.027266,
+      "sentinel_datetime": "2020-04-14T08:24:48Z",
+      "sentinel_source": "sentinel-2b",
+      "footprint": [
+        28.69164600607156,
+        -16.589449120443902,
+        28.83235399392844,
+        -16.454550879556095
+      ],
+      "latency_seconds": 2.86
+    },
+    {
+      "asset": "brumadinho",
+      "role": "baseline",
+      "target_date": "2019-01-15",
+      "image_available": true,
+      "cloud_cover": 22.712963,
+      "sentinel_datetime": "2019-01-12T13:17:47Z",
+      "sentinel_source": "sentinel-2a",
+      "footprint": [
+        -44.169888207278326,
+        -20.163966080295936,
+        -44.07411179272167,
+        -20.074033919704064
+      ],
+      "latency_seconds": 1.59
+    },
+    {
+      "asset": "brumadinho",
+      "role": "current",
+      "target_date": "2019-04-15",
+      "image_available": true,
+      "cloud_cover": 17.783986,
+      "sentinel_datetime": "2019-04-12T13:33:25Z",
+      "sentinel_source": "sentinel-2a",
+      "footprint": [
+        -44.169888207278326,
+        -20.163966080295936,
+        -44.07411179272167,
+        -20.074033919704064
+      ],
+      "latency_seconds": 1.84
+    },
+    {
+      "asset": "mariana_fundao",
+      "role": "baseline",
+      "target_date": "2017-07-15",
+      "image_available": true,
+      "cloud_cover": 24.998508,
+      "sentinel_datetime": "2017-07-03T13:02:46Z",
+      "sentinel_source": "sentinel-2b",
+      "footprint": [
+        -43.5169124529809,
+        -20.242966080295936,
+        -43.421087547019106,
+        -20.153033919704065
+      ],
+      "latency_seconds": 1.69
+    },
+    {
+      "asset": "mariana_fundao",
+      "role": "current",
+      "target_date": "2019-08-15",
+      "image_available": true,
+      "cloud_cover": 10.221081,
+      "sentinel_datetime": "2019-08-12T13:07:59Z",
+      "sentinel_source": "sentinel-2b",
+      "footprint": [
+        -43.5169124529809,
+        -20.242966080295936,
+        -43.421087547019106,
+        -20.153033919704065
+      ],
+      "latency_seconds": 2.22
+    },
+    {
+      "asset": "toddbrook",
+      "role": "baseline",
+      "target_date": "2019-05-15",
+      "image_available": true,
+      "cloud_cover": 25.403717,
+      "sentinel_datetime": "2019-05-12T11:16:26Z",
+      "sentinel_source": "sentinel-2a",
+      "footprint": [
+        -1.9990591890813452,
+        53.322006783940815,
+        -1.9689408109186548,
+        53.33999321605919
+      ],
+      "latency_seconds": 1.62
+    },
+    {
+      "asset": "toddbrook",
+      "role": "current",
+      "target_date": "2019-08-15",
+      "image_available": true,
+      "cloud_cover": 46.845511,
+      "sentinel_datetime": "2019-08-13T11:26:24Z",
+      "sentinel_source": "sentinel-2a",
+      "footprint": [
+        -1.9990591890813452,
+        53.322006783940815,
+        -1.9689408109186548,
+        53.33999321605919
+      ],
+      "latency_seconds": 1.78
+    },
+    {
+      "asset": "edenville",
+      "role": "baseline",
+      "target_date": "2019-10-15",
+      "image_available": true,
+      "cloud_cover": 56.407428,
+      "sentinel_datetime": "2019-10-10T16:41:24Z",
+      "sentinel_source": "sentinel-2b",
+      "footprint": [
+        -84.43515133241428,
+        43.77951695985203,
+        -84.37284866758571,
+        43.82448304014797
+      ],
+      "latency_seconds": 1.51
+    },
+    {
+      "asset": "edenville",
+      "role": "current",
+      "target_date": "2020-05-15",
+      "image_available": true,
+      "cloud_cover": 8.643813,
+      "sentinel_datetime": "2020-05-12T16:41:28Z",
+      "sentinel_source": "sentinel-2a",
+      "footprint": [
+        -84.43515133241428,
+        43.77951695985203,
+        -84.37284866758571,
+        43.82448304014797
+      ],
+      "latency_seconds": 1.74
+    },
+    {
+      "asset": "nova_kakhovka",
+      "role": "baseline",
+      "target_date": "2023-02-15",
+      "image_available": true,
+      "cloud_cover": 32.227412,
+      "sentinel_datetime": "2023-02-13T08:57:15Z",
+      "sentinel_source": "sentinel-2b",
+      "footprint": [
+        33.26850925058342,
+        46.710550879556095,
+        33.465490749416574,
+        46.8454491204439
+      ],
+      "latency_seconds": 3.14
+    },
+    {
+      "asset": "nova_kakhovka",
+      "role": "current",
+      "target_date": "2023-08-15",
+      "image_available": true,
+      "cloud_cover": 2.369535,
+      "sentinel_datetime": "2023-08-12T08:57:23Z",
+      "sentinel_source": "sentinel-2b",
+      "footprint": [
+        33.26850925058342,
+        46.710550879556095,
+        33.465490749416574,
+        46.8454491204439
+      ],
+      "latency_seconds": 2.02
+    },
+    {
+      "asset": "derna",
+      "role": "baseline",
+      "target_date": "2023-07-15",
+      "image_available": true,
+      "cloud_cover": 0.01065,
+      "sentinel_datetime": "2023-07-14T09:21:26Z",
+      "sentinel_source": "sentinel-2a",
+      "footprint": [
+        22.58452908022423,
+        32.71503391970406,
+        22.691470919775774,
+        32.804966080295934
+      ],
+      "latency_seconds": 1.82
+    },
+    {
+      "asset": "derna",
+      "role": "current",
+      "target_date": "2023-09-15",
+      "image_available": true,
+      "cloud_cover": 9.440854,
+      "sentinel_datetime": "2023-09-12T09:21:26Z",
+      "sentinel_source": "sentinel-2a",
+      "footprint": [
+        22.58452908022423,
+        32.71503391970406,
+        22.691470919775774,
+        32.804966080295934
+      ],
+      "latency_seconds": 1.77
+    },
+    {
+      "asset": "oroville",
+      "role": "baseline",
+      "target_date": "2018-10-15",
+      "image_available": true,
+      "cloud_cover": 0.105441,
+      "sentinel_datetime": "2018-10-12T18:58:10Z",
+      "sentinel_source": "sentinel-2a",
+      "footprint": [
+        -121.51415364328899,
+        39.516516959852034,
+        -121.455846356711,
+        39.56148304014797
+      ],
+      "latency_seconds": 1.5
+    },
+    {
+      "asset": "oroville",
+      "role": "current",
+      "target_date": "2019-07-15",
+      "image_available": true,
+      "cloud_cover": 0.000325,
+      "sentinel_datetime": "2019-07-14T19:03:46Z",
+      "sentinel_source": "sentinel-2b",
+      "footprint": [
+        -121.51415364328899,
+        39.516516959852034,
+        -121.455846356711,
+        39.56148304014797
+      ],
+      "latency_seconds": 2.55
+    }
+  ],
+  "by_asset": {
+    "aswan": {
+      "baseline": {
+        "asset": "aswan",
+        "role": "baseline",
+        "target_date": "2018-01-15",
+        "image_available": true,
+        "cloud_cover": 9.678646,
+        "sentinel_datetime": "2018-01-11T08:25:33Z",
+        "sentinel_source": "sentinel-2b",
+        "footprint": [
+          32.82778958049399,
+          23.926033919704064,
+          32.92621041950601,
+          24.015966080295936
+        ],
+        "latency_seconds": 2.95
+      },
+      "current": {
+        "asset": "aswan",
+        "role": "current",
+        "target_date": "2018-07-15",
+        "image_available": true,
+        "cloud_cover": 0.148497,
+        "sentinel_datetime": "2018-07-10T08:28:10Z",
+        "sentinel_source": "sentinel-2b",
+        "footprint": [
+          32.82778958049399,
+          23.926033919704064,
+          32.92621041950601,
+          24.015966080295936
+        ],
+        "latency_seconds": 2.09
+      }
+    },
+    "three_gorges": {
+      "baseline": {
+        "asset": "three_gorges",
+        "role": "baseline",
+        "target_date": "2021-01-15",
+        "image_available": true,
+        "cloud_cover": 0.227143,
+        "sentinel_datetime": "2021-01-15T03:29:24Z",
+        "sentinel_source": "sentinel-2b",
+        "footprint": [
+          110.9506380132077,
+          30.778033919704065,
+          111.0553619867923,
+          30.867966080295936
+        ],
+        "latency_seconds": 2.1
+      },
+      "current": {
+        "asset": "three_gorges",
+        "role": "current",
+        "target_date": "2023-01-15",
+        "image_available": true,
+        "cloud_cover": 0.14556,
+        "sentinel_datetime": "2023-01-10T03:29:22Z",
+        "sentinel_source": "sentinel-2a",
+        "footprint": [
+          110.9506380132077,
+          30.778033919704065,
+          111.0553619867923,
+          30.867966080295936
+        ],
+        "latency_seconds": 2.33
+      }
+    },
+    "hoover_mead": {
+      "baseline": {
+        "asset": "hoover_mead",
+        "role": "baseline",
+        "target_date": "2017-09-15",
+        "image_available": true,
+        "cloud_cover": 15.512137,
+        "sentinel_datetime": "2017-09-13T18:29:01Z",
+        "sentinel_source": "sentinel-2b",
+        "footprint": [
+          -114.82038861977179,
+          35.948550879556095,
+          -114.6536113802282,
+          36.0834491204439
+        ],
+        "latency_seconds": 1.29
+      },
+      "current": {
+        "asset": "hoover_mead",
+        "role": "current",
+        "target_date": "2022-11-15",
+        "image_available": true,
+        "cloud_cover": 29.478997,
+        "sentinel_datetime": "2022-11-11T18:34:31Z",
+        "sentinel_source": "sentinel-2a",
+        "footprint": [
+          -114.82038861977179,
+          35.948550879556095,
+          -114.6536113802282,
+          36.0834491204439
+        ],
+        "latency_seconds": 3.07
+      }
+    },
+    "kariba": {
+      "baseline": {
+        "asset": "kariba",
+        "role": "baseline",
+        "target_date": "2018-10-15",
+        "image_available": true,
+        "cloud_cover": 0.328357,
+        "sentinel_datetime": "2018-10-12T08:13:07Z",
+        "sentinel_source": "sentinel-2b",
+        "footprint": [
+          28.69164600607156,
+          -16.589449120443902,
+          28.83235399392844,
+          -16.454550879556095
+        ],
+        "latency_seconds": 2.53
+      },
+      "current": {
+        "asset": "kariba",
+        "role": "current",
+        "target_date": "2020-04-15",
+        "image_available": true,
+        "cloud_cover": 0.027266,
+        "sentinel_datetime": "2020-04-14T08:24:48Z",
+        "sentinel_source": "sentinel-2b",
+        "footprint": [
+          28.69164600607156,
+          -16.589449120443902,
+          28.83235399392844,
+          -16.454550879556095
+        ],
+        "latency_seconds": 2.86
+      }
+    },
+    "brumadinho": {
+      "baseline": {
+        "asset": "brumadinho",
+        "role": "baseline",
+        "target_date": "2019-01-15",
+        "image_available": true,
+        "cloud_cover": 22.712963,
+        "sentinel_datetime": "2019-01-12T13:17:47Z",
+        "sentinel_source": "sentinel-2a",
+        "footprint": [
+          -44.169888207278326,
+          -20.163966080295936,
+          -44.07411179272167,
+          -20.074033919704064
+        ],
+        "latency_seconds": 1.59
+      },
+      "current": {
+        "asset": "brumadinho",
+        "role": "current",
+        "target_date": "2019-04-15",
+        "image_available": true,
+        "cloud_cover": 17.783986,
+        "sentinel_datetime": "2019-04-12T13:33:25Z",
+        "sentinel_source": "sentinel-2a",
+        "footprint": [
+          -44.169888207278326,
+          -20.163966080295936,
+          -44.07411179272167,
+          -20.074033919704064
+        ],
+        "latency_seconds": 1.84
+      }
+    },
+    "mariana_fundao": {
+      "baseline": {
+        "asset": "mariana_fundao",
+        "role": "baseline",
+        "target_date": "2017-07-15",
+        "image_available": true,
+        "cloud_cover": 24.998508,
+        "sentinel_datetime": "2017-07-03T13:02:46Z",
+        "sentinel_source": "sentinel-2b",
+        "footprint": [
+          -43.5169124529809,
+          -20.242966080295936,
+          -43.421087547019106,
+          -20.153033919704065
+        ],
+        "latency_seconds": 1.69
+      },
+      "current": {
+        "asset": "mariana_fundao",
+        "role": "current",
+        "target_date": "2019-08-15",
+        "image_available": true,
+        "cloud_cover": 10.221081,
+        "sentinel_datetime": "2019-08-12T13:07:59Z",
+        "sentinel_source": "sentinel-2b",
+        "footprint": [
+          -43.5169124529809,
+          -20.242966080295936,
+          -43.421087547019106,
+          -20.153033919704065
+        ],
+        "latency_seconds": 2.22
+      }
+    },
+    "toddbrook": {
+      "baseline": {
+        "asset": "toddbrook",
+        "role": "baseline",
+        "target_date": "2019-05-15",
+        "image_available": true,
+        "cloud_cover": 25.403717,
+        "sentinel_datetime": "2019-05-12T11:16:26Z",
+        "sentinel_source": "sentinel-2a",
+        "footprint": [
+          -1.9990591890813452,
+          53.322006783940815,
+          -1.9689408109186548,
+          53.33999321605919
+        ],
+        "latency_seconds": 1.62
+      },
+      "current": {
+        "asset": "toddbrook",
+        "role": "current",
+        "target_date": "2019-08-15",
+        "image_available": true,
+        "cloud_cover": 46.845511,
+        "sentinel_datetime": "2019-08-13T11:26:24Z",
+        "sentinel_source": "sentinel-2a",
+        "footprint": [
+          -1.9990591890813452,
+          53.322006783940815,
+          -1.9689408109186548,
+          53.33999321605919
+        ],
+        "latency_seconds": 1.78
+      }
+    },
+    "edenville": {
+      "baseline": {
+        "asset": "edenville",
+        "role": "baseline",
+        "target_date": "2019-10-15",
+        "image_available": true,
+        "cloud_cover": 56.407428,
+        "sentinel_datetime": "2019-10-10T16:41:24Z",
+        "sentinel_source": "sentinel-2b",
+        "footprint": [
+          -84.43515133241428,
+          43.77951695985203,
+          -84.37284866758571,
+          43.82448304014797
+        ],
+        "latency_seconds": 1.51
+      },
+      "current": {
+        "asset": "edenville",
+        "role": "current",
+        "target_date": "2020-05-15",
+        "image_available": true,
+        "cloud_cover": 8.643813,
+        "sentinel_datetime": "2020-05-12T16:41:28Z",
+        "sentinel_source": "sentinel-2a",
+        "footprint": [
+          -84.43515133241428,
+          43.77951695985203,
+          -84.37284866758571,
+          43.82448304014797
+        ],
+        "latency_seconds": 1.74
+      }
+    },
+    "nova_kakhovka": {
+      "baseline": {
+        "asset": "nova_kakhovka",
+        "role": "baseline",
+        "target_date": "2023-02-15",
+        "image_available": true,
+        "cloud_cover": 32.227412,
+        "sentinel_datetime": "2023-02-13T08:57:15Z",
+        "sentinel_source": "sentinel-2b",
+        "footprint": [
+          33.26850925058342,
+          46.710550879556095,
+          33.465490749416574,
+          46.8454491204439
+        ],
+        "latency_seconds": 3.14
+      },
+      "current": {
+        "asset": "nova_kakhovka",
+        "role": "current",
+        "target_date": "2023-08-15",
+        "image_available": true,
+        "cloud_cover": 2.369535,
+        "sentinel_datetime": "2023-08-12T08:57:23Z",
+        "sentinel_source": "sentinel-2b",
+        "footprint": [
+          33.26850925058342,
+          46.710550879556095,
+          33.465490749416574,
+          46.8454491204439
+        ],
+        "latency_seconds": 2.02
+      }
+    },
+    "derna": {
+      "baseline": {
+        "asset": "derna",
+        "role": "baseline",
+        "target_date": "2023-07-15",
+        "image_available": true,
+        "cloud_cover": 0.01065,
+        "sentinel_datetime": "2023-07-14T09:21:26Z",
+        "sentinel_source": "sentinel-2a",
+        "footprint": [
+          22.58452908022423,
+          32.71503391970406,
+          22.691470919775774,
+          32.804966080295934
+        ],
+        "latency_seconds": 1.82
+      },
+      "current": {
+        "asset": "derna",
+        "role": "current",
+        "target_date": "2023-09-15",
+        "image_available": true,
+        "cloud_cover": 9.440854,
+        "sentinel_datetime": "2023-09-12T09:21:26Z",
+        "sentinel_source": "sentinel-2a",
+        "footprint": [
+          22.58452908022423,
+          32.71503391970406,
+          22.691470919775774,
+          32.804966080295934
+        ],
+        "latency_seconds": 1.77
+      }
+    },
+    "oroville": {
+      "baseline": {
+        "asset": "oroville",
+        "role": "baseline",
+        "target_date": "2018-10-15",
+        "image_available": true,
+        "cloud_cover": 0.105441,
+        "sentinel_datetime": "2018-10-12T18:58:10Z",
+        "sentinel_source": "sentinel-2a",
+        "footprint": [
+          -121.51415364328899,
+          39.516516959852034,
+          -121.455846356711,
+          39.56148304014797
+        ],
+        "latency_seconds": 1.5
+      },
+      "current": {
+        "asset": "oroville",
+        "role": "current",
+        "target_date": "2019-07-15",
+        "image_available": true,
+        "cloud_cover": 0.000325,
+        "sentinel_datetime": "2019-07-14T19:03:46Z",
+        "sentinel_source": "sentinel-2b",
+        "footprint": [
+          -121.51415364328899,
+          39.516516959852034,
+          -121.455846356711,
+          39.56148304014797
+        ],
+        "latency_seconds": 2.55
+      }
+    }
+  }
+}

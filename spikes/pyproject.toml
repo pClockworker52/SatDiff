@@ -1,0 +1,22 @@
+[project]
+name = "spikes"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = [
+    "accelerate>=1.13.0",
+    "h5netcdf>=1.8.1",
+    "h5py>=3.16.0",
+    "huggingface-hub>=1.12.0",
+    "jsonschema>=4.26.0",
+    "matplotlib>=3.10.9",
+    "numpy>=2.4.4",
+    "odc-stac>=0.5.2",
+    "pillow>=12.2.0",
+    "planetary-computer>=1.0.0",
+    "pymupdf>=1.27.2.3",
+    "pystac-client>=0.9.0",
+    "rasterio>=1.4.4",
+    "scipy>=1.17.1",
+    "torchvision>=0.26.0",
+    "transformers>=4.46",
+]

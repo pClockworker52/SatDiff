@@ -1,0 +1,110 @@
+{
+  "type": "FeatureCollection",
+  "name": "jagersfontein-tsf-masks",
+  "crs": {"type": "name", "properties": {"name": "urn:ogc:def:crs:OGC:1.3:CRS84"}},
+  "_meta": {
+    "_prompt_safety": "The free-text description fields below contain references to the 2022-09-11 collapse for human auditors. They are metadata only and MUST NOT be surfaced into any model prompt — phase1.masks.loader.load_masks loads only geometry. If you change that, audit the descriptions first.",
+    "asset": "jagersfontein",
+    "centre_lat": -29.756,
+    "centre_lon": 25.428,
+    "tile_size_km": 5.0,
+    "tile_bbox_wgs84_W_S_E_N": [25.402057, -29.778523, 25.453943, -29.733477],
+    "drawn_against": "spikes/data/png/pre_failure_pond_at_wall_2021_12_simsat.png (Sentinel-2B, 2021-12-25, 27.6% cloud)",
+    "cross_referenced_against": "Torres-Cruz & O'Donovan 2023, Scientific Reports, Figure 2 panel (h) 2021-02-09 (Google Earth Pro). DOI 10.1038/s41598-023-31633-5. The paper's panel shows a single connected TSF with breaches A and B labelled on the SE wall; the SimSat 2021-12 tile (10 months later) shows the same kidney shape with the pond pressed against that same SE/S wall. Polygon vertices traced from visible boundaries in the SimSat RGB and validated against the paper panel's outline.",
+    "drawn_at_pixel_resolution": "509x506 (pixel_lon=0.0001019 deg, pixel_lat=0.0000891 deg, ≈9.85 m/px lon, 9.90 m/px lat)",
+    "fidelity": "v1.1 — traced from observable feature boundaries with paper cross-reference, then refined to (a) constrict the impoundment's east edge so it no longer overlaps the town and (b) include the SE residential extension in the protected zone. Edge accuracy approximately ±20 m (2 pixels). Sufficient for trend analysis. Refine via QGIS digitisation against higher-resolution imagery for absolute-number reporting.",
+    "date_authored": "2026-04-25"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "mask_id": "impoundment",
+        "description": "Main Jagersfontein TSF — single connected kidney-shape impoundment as of late 2021. Includes pond, tailings beach, and retained slurry. The 2022-09-11 collapse occurred along this footprint's SE wall (breaches A and B in Torres-Cruz Fig 2h).",
+        "use_in_claims": [1, 2]
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [25.406644, -29.759294],
+          [25.415309, -29.758404],
+          [25.422444, -29.759739],
+          [25.427032, -29.764635],
+          [25.431619, -29.769977],
+          [25.436206, -29.773093],
+          [25.436716, -29.775318],
+          [25.432638, -29.776386],
+          [25.419386, -29.776654],
+          [25.408173, -29.775763],
+          [25.404096, -29.767306],
+          [25.406644, -29.759294]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "mask_id": "retaining_wall",
+        "description": "Southern perimeter dam wall — the failure side per Torres-Cruz Fig 2h (Breaches A and B labels on this segment). ~60 m wide strip along the impoundment's S boundary. Inner edge follows impoundment polygon; outer edge offset ~60 m south.",
+        "use_in_claims": [3, 4]
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [25.436716, -29.774428],
+          [25.432638, -29.776386],
+          [25.419386, -29.776654],
+          [25.408173, -29.775763],
+          [25.408173, -29.776297],
+          [25.419386, -29.777188],
+          [25.432638, -29.776921],
+          [25.436716, -29.774962],
+          [25.436716, -29.774428]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "mask_id": "downstream_slope",
+        "description": "Run-out wedge immediately south of the retaining wall. Where breach material flowed in 2022. Bounded north by the wall, south by the image edge. The 2022-09 mudflow extended further south than the 5 km tile captures — the downstream zone in this mask is the proximal portion only.",
+        "use_in_claims": [5]
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [25.406134, -29.776297],
+          [25.419386, -29.777188],
+          [25.432638, -29.776921],
+          [25.436716, -29.774962],
+          [25.441812, -29.774428],
+          [25.441812, -29.778523],
+          [25.406134, -29.778523],
+          [25.406134, -29.776297]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "mask_id": "kopanong_protected_zone",
+        "description": "Jagersfontein town centre and SE residential extension (Kopanong Local Municipality). Polygon carved on the southwest side to avoid overlapping the impoundment. The 2022-09-11 mudflow reached this zone via the receiving watercourse — protected-party polygon for Claim 5.",
+        "use_in_claims": [5]
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [25.423464, -29.754843],
+          [25.445890, -29.753952],
+          [25.450987, -29.764635],
+          [25.450987, -29.776208],
+          [25.441812, -29.776030],
+          [25.433658, -29.769977],
+          [25.427541, -29.765526],
+          [25.423464, -29.760629],
+          [25.423464, -29.754843]
+        ]]
+      }
+    }
+  ]
+}

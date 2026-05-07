@@ -1,0 +1,50 @@
+# Day 6 — Stage 2: SatDiff custom (contract-severity adherence).
+#
+# Continues from Stage 1 (VRSBench-mix LFM2.5-VL-450M LoRA checkpoint).
+# Goal: teach the model to apply the Jagersfontein contract's threshold
+# rules correctly, so the on-board pipeline can ship a canonical
+# contract output without the Python rules-engine overlay. Targets the
+# `severity_corrections` metric — currently 12/16×5 = 0.15 corr/claim
+# (Phase 2 baseline, no fine-tune).
+#
+# Dataset: /home/peter/datasets/satdiff_stage2/satdiff_stage2.jsonl
+# Built by: training/build_stage2_dataset.py — Phase 2 backtest passes
+#   with rules-engine-corrected JSON as the gold target, plus user-
+#   authored edge cases from training/stage2_handauthored/*.jsonl.
+#
+# Compute envelope: ~30 SatDiff examples × few epochs is short — likely
+# 10–30 min on RTX 4080. Smaller dataset → high LR risk; keep the LR
+# below Stage 1's and only run 3 epochs to avoid catastrophic forgetting
+# of the Stage 1 generic-EO grounding.
+
+project_name: "satdiff_stage2"
+# Resume from Stage 1's merged fp16 checkpoint. Update this path after the
+# Stage 1 run completes (the framework writes to outputs/satdiff_stage1/<job-tag>/...).
+model_name: "/home/peter/leap-finetune/outputs/satdiff_stage1/LFM2.5-VL-450M-vlm_sft-satdiff_st-all-lr1em05-w0p2-lora_a-20260426_221338/LFM2.5-VL-450M-vlm_sft-satdiff_st-all-lr1em05-w0p2-lora_m-20260426_221338"
+training_type: "vlm_sft"
+
+dataset:
+  # Train file with 11 held-out examples excluded (6 backtest passes + 5 hand-authored).
+  # See training/build_stage2_split.py for the held-out list — eval uses the
+  # complementary test JSONL so generalization is measured cleanly.
+  path: "/home/peter/datasets/satdiff_stage2/satdiff_stage2_train.jsonl"
+  type: "vlm_sft"
+  # Tiny in-training validation split for eval_loss tracking; the real
+  # held-out test happens externally via training/eval_finetuned.py.
+  test_size: 0.1
+
+training_config:
+  extends: "DEFAULT_VLM_SFT"
+  num_train_epochs: 3
+  per_device_train_batch_size: 1
+  gradient_accumulation_steps: 4
+  learning_rate: 5e-6
+  logging_steps: 5
+  save_strategy: "epoch"
+  eval_strategy: "epoch"
+  save_total_limit: 2
+  output_dir: "/home/peter/leap-finetune/outputs/satdiff_stage2"
+
+peft_config:
+  extends: "DEFAULT_VLM_LORA"
+  use_peft: true

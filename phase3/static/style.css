@@ -1,0 +1,338 @@
+/* SatDiff per-pass audit-trail PDF — corporate-audit aesthetic. */
+
+@page {
+    size: A4 portrait;
+    margin: 12mm 14mm 14mm 14mm;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    font-family: "Helvetica", "Arial", sans-serif;
+    font-size: 9pt;
+    line-height: 1.35;
+    color: #111827;
+    margin: 0;
+}
+
+.mono {
+    font-family: "Menlo", "Consolas", "Courier New", monospace;
+    font-size: 8.5pt;
+}
+
+/* ---------------- header ---------------- */
+
+.page-header {
+    border-bottom: 2pt solid #111827;
+    padding-bottom: 6mm;
+    margin-bottom: 5mm;
+}
+
+.header-grid {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 6mm;
+}
+
+.brand {
+    flex: 0 0 50mm;
+}
+
+.brand-name {
+    font-size: 22pt;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.0;
+}
+
+.brand-sub {
+    font-size: 8pt;
+    color: #6b7280;
+    margin-top: 1mm;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.header-meta {
+    flex: 1 1 auto;
+    font-size: 8.5pt;
+    display: flex;
+    flex-direction: column;
+    gap: 1.8mm;
+}
+
+.meta-row {
+    display: flex;
+    gap: 5mm;
+    flex-wrap: wrap;
+}
+
+.meta-cell {
+    display: flex;
+    gap: 2mm;
+    align-items: baseline;
+    flex: 1 1 auto;
+}
+
+.meta-cell-wide {
+    flex: 2 1 auto;
+}
+
+.header-meta .label {
+    color: #6b7280;
+    text-transform: uppercase;
+    font-size: 7pt;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+}
+
+.header-meta .val {
+    color: #111827;
+    font-weight: 600;
+}
+
+/* ---------------- badges ---------------- */
+
+.badges {
+    margin-top: 4mm;
+    display: flex;
+    gap: 3mm;
+    flex-wrap: wrap;
+}
+
+.badge {
+    padding: 2.2mm 4.5mm;
+    border-radius: 2.5mm;
+    color: white;
+    font-weight: 700;
+    font-size: 9pt;
+    letter-spacing: 0.03em;
+}
+
+.badge-downlink {
+    background-color: #1f2937;
+}
+
+.badge-escalation {
+    background-color: #fef3c7;
+    color: #92400e;
+    border: 1pt solid #f59e0b;
+}
+
+.badge-escalation::before {
+    content: "!";
+    display: inline-block;
+    width: 4mm;
+    height: 4mm;
+    line-height: 4mm;
+    text-align: center;
+    border-radius: 50%;
+    background: #92400e;
+    color: #fef3c7;
+    font-weight: 700;
+    margin-right: 2mm;
+    vertical-align: middle;
+}
+
+/* ---------------- imagery grid ---------------- */
+
+.imagery {
+    margin-bottom: 5mm;
+}
+
+.imagery-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3mm;
+}
+
+.imagery-grid figure {
+    margin: 0;
+    border: 0.5pt solid #e5e7eb;
+    border-radius: 1.5mm;
+    overflow: hidden;
+}
+
+.imagery-grid img {
+    width: 100%;
+    display: block;
+}
+
+.imagery-grid figcaption {
+    background: #f9fafb;
+    padding: 1.5mm 2.5mm;
+    font-size: 7.5pt;
+    color: #4b5563;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    border-top: 0.5pt solid #e5e7eb;
+}
+
+/* ---------------- section headers ---------------- */
+
+section h2 {
+    font-size: 9.5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #374151;
+    border-bottom: 0.5pt solid #d1d5db;
+    padding-bottom: 1mm;
+    margin: 4mm 0 2.5mm 0;
+}
+
+/* ---------------- metric grid ---------------- */
+
+.metric-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2mm;
+}
+
+.metric {
+    background: #f9fafb;
+    border: 0.5pt solid #e5e7eb;
+    border-radius: 1.5mm;
+    padding: 2mm 2.5mm;
+}
+
+.m-label {
+    font-size: 7pt;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.6mm;
+}
+
+.m-val {
+    font-size: 10pt;
+    font-weight: 700;
+    color: #111827;
+    font-feature-settings: "tnum";
+}
+
+/* ---------------- claims ---------------- */
+
+.claim-card {
+    background: white;
+    border: 0.5pt solid #e5e7eb;
+    border-left: 4pt solid #6b7280;
+    border-radius: 1.5mm;
+    padding: 2.5mm 3mm;
+    margin-bottom: 2mm;
+    page-break-inside: avoid;
+}
+
+.claim-head {
+    display: flex;
+    align-items: center;
+    gap: 3mm;
+    margin-bottom: 1.5mm;
+}
+
+.claim-id {
+    font-weight: 700;
+    color: #6b7280;
+    font-size: 8pt;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    min-width: 13mm;
+}
+
+.claim-name {
+    flex-grow: 1;
+    font-weight: 600;
+    color: #111827;
+}
+
+.claim-severity {
+    color: white;
+    padding: 1mm 3mm;
+    border-radius: 1.2mm;
+    font-size: 7.5pt;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+}
+
+.claim-meta {
+    color: #4b5563;
+    font-size: 8pt;
+    margin-bottom: 1.5mm;
+}
+
+.claim-meta .trend {
+    margin-right: 4mm;
+}
+
+.claim-meta .action {
+    color: #1f2937;
+    font-weight: 600;
+}
+
+.claim-evidence {
+    background: #f9fafb;
+    padding: 2mm 2.5mm;
+    border-left: 1.5pt solid #e5e7eb;
+    border-radius: 0 1.2mm 1.2mm 0;
+    font-size: 8pt;
+    color: #1f2937;
+}
+
+/* ---------------- narrative ---------------- */
+
+.narrative {
+    margin-top: 5mm;
+}
+
+.narrative-text {
+    background: #f9fafb;
+    padding: 3mm 4mm;
+    border-radius: 1.5mm;
+    color: #1f2937;
+    font-size: 8.5pt;
+    white-space: pre-wrap;
+}
+
+/* ---------------- footer ---------------- */
+
+.page-footer {
+    margin-top: 6mm;
+    padding-top: 3mm;
+    border-top: 0.5pt solid #d1d5db;
+    font-size: 7.5pt;
+    color: #6b7280;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5mm 6mm;
+}
+
+.footer-grid .label {
+    color: #9ca3af;
+    text-transform: uppercase;
+    font-size: 6.5pt;
+    letter-spacing: 0.05em;
+    margin-right: 2mm;
+}
+
+.signature {
+    grid-column: 1 / span 2;
+    margin-top: 4mm;
+}
+
+.sig-label {
+    color: #9ca3af;
+    text-transform: uppercase;
+    font-size: 6.5pt;
+    letter-spacing: 0.05em;
+    margin-bottom: 1mm;
+}
+
+.sig-line {
+    color: #d1d5db;
+    font-family: monospace;
+    font-size: 11pt;
+    letter-spacing: -0.05em;
+}

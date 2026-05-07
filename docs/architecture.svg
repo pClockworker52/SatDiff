@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  SatDiff architecture diagram — for the demo video's 1:20–2:30 segment.
+  Layered with semantic group IDs so an editor (DaVinci, Premiere, …) can
+  reveal one node at a time:
+
+    #node-simsat          → 1:20  reveal
+    #node-physical-diff   → 1:30
+    #node-gate            → 1:40
+    #node-lfm2vl          → 1:50  ("544 MB GGUF on-orbit" overlay fires here)
+    #node-rules-engine    → 2:00
+    #node-json            → 2:10  ("~2 KB JSON" overlay fires here)
+    #downlink-boundary    → 2:15
+    #node-supervisor      → 2:20
+    #node-pdf             → 2:25
+
+  Canvas 1920×1080 (16:9 demo standard). Colour palette matches
+  phase3/static/style.css for visual consistency between the diagram and
+  the audit-trail PDFs shown later in the video.
+-->
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 1920 1080"
+     width="1920" height="1080"
+     font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+
+  <!-- ============================ styles ============================ -->
+  <defs>
+    <style><![CDATA[
+      .bg              { fill: #f9fafb; }
+      .zone-orbit      { fill: #eff6ff; opacity: 0.7; }
+      .zone-ground     { fill: #fff7ed; opacity: 0.7; }
+      .zone-label      { fill: #6b7280; font-size: 22px; letter-spacing: 4px;
+                         text-transform: uppercase; }
+
+      .box             { fill: #ffffff; stroke: #d1d5db; stroke-width: 2; }
+      .box-strong      { fill: #ffffff; stroke: #4b5563; stroke-width: 3; }
+      .box-decision    { fill: #fffbeb; stroke: #d97706; stroke-width: 2; }
+
+      .label-primary   { fill: #111827; font-size: 26px; font-weight: 600; }
+      .label-mono      { fill: #111827; font-size: 22px;
+                         font-family: 'JetBrains Mono', 'Menlo', 'Consolas', monospace; }
+      .label-secondary { fill: #6b7280; font-size: 18px; }
+      .label-tag       { fill: #6b7280; font-size: 16px; letter-spacing: 1px;
+                         text-transform: uppercase; }
+
+      .arrow           { stroke: #6b7280; stroke-width: 3; fill: none; }
+      .arrow-decision  { stroke: #d97706; stroke-width: 3; fill: none;
+                         stroke-dasharray: 6 5; }
+
+      .downlink-line   { stroke: #dc2626; stroke-width: 4; stroke-dasharray: 14 8; }
+      .downlink-label  { fill: #dc2626; font-size: 26px; font-weight: 700;
+                         letter-spacing: 8px; }
+
+      .overlay-pill    { fill: #111827; }
+      .overlay-text    { fill: #ffffff; font-size: 18px; font-weight: 600;
+                         letter-spacing: 0.5px; }
+    ]]></style>
+
+    <!-- shared arrow head -->
+    <marker id="arrow-head" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#6b7280" />
+    </marker>
+    <marker id="arrow-head-decision" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#d97706" />
+    </marker>
+
+    <!-- soft drop shadow for boxes -->
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="3" flood-opacity="0.08" />
+    </filter>
+  </defs>
+
+  <!-- ============================ canvas ============================ -->
+  <rect class="bg" width="1920" height="1080" />
+
+  <!-- ============================ zones ============================= -->
+  <g id="zone-orbit-rect">
+    <rect class="zone-orbit" x="0" y="0" width="1920" height="720" />
+    <text class="zone-label" x="60" y="60">On-orbit</text>
+  </g>
+
+  <g id="zone-ground-rect">
+    <rect class="zone-ground" x="0" y="780" width="1920" height="300" />
+    <text class="zone-label" x="60" y="830">Ground</text>
+  </g>
+
+  <!-- =========== row 1: input chain (SimSat → diff → gate) ========== -->
+
+  <!-- SimSat -->
+  <g id="node-simsat" filter="url(#shadow)">
+    <rect class="box" x="120" y="160" width="320" height="140" rx="14" />
+    <text class="label-tag" x="280" y="195" text-anchor="middle">Input</text>
+    <text class="label-primary" x="280" y="235" text-anchor="middle">SimSat</text>
+    <text class="label-secondary" x="280" y="265" text-anchor="middle">Sentinel-2 multispectral</text>
+    <text class="label-secondary" x="280" y="288" text-anchor="middle">(red · green · blue · NIR · SWIR)</text>
+  </g>
+
+  <!-- Physical-diff -->
+  <g id="node-physical-diff" filter="url(#shadow)">
+    <rect class="box" x="540" y="160" width="380" height="140" rx="14" />
+    <text class="label-tag" x="730" y="195" text-anchor="middle">Phase 1</text>
+    <text class="label-primary" x="730" y="235" text-anchor="middle">Physical-diff module</text>
+    <text class="label-secondary" x="730" y="265" text-anchor="middle">NDWI · NDMI · gully count</text>
+    <text class="label-secondary" x="730" y="288" text-anchor="middle">deposition asymmetry · pond-to-wall</text>
+  </g>
+
+  <!-- Gate -->
+  <g id="node-gate" filter="url(#shadow)">
+    <rect class="box-decision" x="1020" y="160" width="320" height="140" rx="14" />
+    <text class="label-tag" x="1180" y="195" text-anchor="middle">Decision</text>
+    <text class="label-primary" x="1180" y="235" text-anchor="middle">Gate</text>
+    <text class="label-secondary" x="1180" y="265" text-anchor="middle">Φ-sat heritage</text>
+    <text class="label-secondary" x="1180" y="288" text-anchor="middle">cloud + interest filter</text>
+  </g>
+
+  <!-- arrows row 1 -->
+  <g id="arrows-row-1">
+    <path class="arrow" d="M 440 230 L 540 230" marker-end="url(#arrow-head)" />
+    <path class="arrow" d="M 920 230 L 1020 230" marker-end="url(#arrow-head)" />
+  </g>
+
+  <!-- ====== branch from gate (vertical chain into the model) ====== -->
+  <g id="arrow-gate-down">
+    <path class="arrow-decision" d="M 1180 300 L 1180 360 L 1180 360"
+          marker-end="url(#arrow-head-decision)" />
+    <text class="label-secondary" x="1200" y="335" fill="#d97706">if interesting</text>
+  </g>
+
+  <!-- LFM2.5-VL -->
+  <g id="node-lfm2vl" filter="url(#shadow)">
+    <rect class="box-strong" x="1000" y="370" width="380" height="140" rx="14" />
+    <text class="label-tag" x="1190" y="405" text-anchor="middle">Phase 2 model</text>
+    <text class="label-primary" x="1190" y="445" text-anchor="middle">LFM2.5-VL-450M</text>
+    <text class="label-mono" x="1190" y="478" text-anchor="middle">GGUF · llama-server</text>
+    <text class="label-secondary" x="1190" y="500" text-anchor="middle">prompted with contract + diff</text>
+  </g>
+
+  <!-- arrow LFM → rules -->
+  <path id="arrow-lfm-rules" class="arrow"
+        d="M 1190 510 L 1190 560" marker-end="url(#arrow-head)" />
+
+  <!-- Rules engine -->
+  <g id="node-rules-engine" filter="url(#shadow)">
+    <rect class="box" x="1000" y="570" width="380" height="120" rx="14" />
+    <text class="label-tag" x="1190" y="603" text-anchor="middle">Phase 2 deterministic</text>
+    <text class="label-primary" x="1190" y="640" text-anchor="middle">Rules engine</text>
+    <text class="label-secondary" x="1190" y="668" text-anchor="middle">severity · action · escalation</text>
+  </g>
+
+  <!-- arrow rules → JSON -->
+  <path id="arrow-rules-json" class="arrow"
+        d="M 1190 690 L 1190 740" marker-end="url(#arrow-head)" />
+
+  <!-- JSON output -->
+  <g id="node-json" filter="url(#shadow)">
+    <rect class="box-strong" x="1040" y="745" width="300" height="50" rx="10" />
+    <text class="label-mono" x="1190" y="778" text-anchor="middle">Structured JSON · ~2 KB</text>
+  </g>
+
+  <!-- ============================ downlink ========================== -->
+  <g id="downlink-boundary">
+    <line class="downlink-line" x1="60" y1="810" x2="1860" y2="810" />
+    <rect class="bg" x="880" y="790" width="220" height="40" />
+    <text class="downlink-label" x="990" y="819" text-anchor="middle">DOWNLINK</text>
+  </g>
+
+  <!-- ============================ ground row ======================== -->
+
+  <!-- Ground supervisor -->
+  <g id="node-supervisor" filter="url(#shadow)">
+    <rect class="box" x="540" y="880" width="500" height="140" rx="14" />
+    <text class="label-tag" x="790" y="915" text-anchor="middle">Ground supervisor</text>
+    <text class="label-primary" x="790" y="955" text-anchor="middle">Joins JSON to imagery</text>
+    <text class="label-secondary" x="790" y="983" text-anchor="middle">imagery already received via the</text>
+    <text class="label-secondary" x="790" y="1006" text-anchor="middle">standard EO ground channel — never re-downlinked</text>
+  </g>
+
+  <!-- arrow JSON → supervisor -->
+  <path id="arrow-json-supervisor" class="arrow"
+        d="M 1190 795 L 1190 840 L 1040 840 L 1040 880"
+        marker-end="url(#arrow-head)" />
+
+  <!-- PDF -->
+  <g id="node-pdf" filter="url(#shadow)">
+    <rect class="box-strong" x="1180" y="880" width="320" height="140" rx="14" />
+    <text class="label-tag" x="1340" y="915" text-anchor="middle">Auditor artefact</text>
+    <text class="label-primary" x="1340" y="955" text-anchor="middle">PDF report</text>
+    <text class="label-secondary" x="1340" y="983" text-anchor="middle">Jinja2 + WeasyPrint</text>
+    <text class="label-secondary" x="1340" y="1006" text-anchor="middle">one page per acquisition</text>
+  </g>
+
+  <!-- arrow supervisor → PDF -->
+  <path id="arrow-supervisor-pdf" class="arrow"
+        d="M 1040 950 L 1180 950" marker-end="url(#arrow-head)" />
+
+</svg>

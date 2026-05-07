@@ -1,0 +1,13 @@
+Forggensee Sentinel-2 acquisition: 2024-06-30
+Cloud cover: 8.7%
+Model: WobblyDopamine/SatDiff-LFM2.5-VL-450M-stage1-Q8_0 (via llama-server)
+Stage A latency: 8.51 s
+
+--- MODEL OUTPUT ---
+PARAGRAPH 1 — Image 1 RGB shows a large body of water with a distinct blue color, surrounded by green fields and a small lake. The tailings beach is visible along the edge of the water, and the retaining wall is present, separating the water from the fields. The surrounding landscape is predominantly green with some areas of water.
+
+PARAGRAPH 2 — Image 2 NIR shows a large body of water with a bright blue color, surrounded by red fields and green patches. The tailings beach is visible along the edge of the water, and the retaining wall is present, separating the water from the fields. The surrounding landscape is predominantly green with some areas of water.
+
+PARAGRAPH 3 — Image 3 RGB shows a large body of water with a blue color, surrounded by green fields and red patches. The tailings beach is visible along the edge of the water, and the retaining wall is present, separating the water from the fields. The surrounding landscape is predominantly green with some areas of water.
+
+PARAGRAPH 4 — Image 4 NIR shows a large body of water with a bright blue color, surrounded by red fields and dark patches. The tailings beach is visible along the edge of the water, and the retaining wall is present, separating the water from the fields. The surrounding landscape is predominantly red with some areas of water.

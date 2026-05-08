@@ -29,7 +29,22 @@ demo/captures/
 demo/_frames/
 demo/jagersfontein_timelapse.mp4
 demo/forggensee_*.png
+demo/finetune_slate.png
 demo/satdiff_demo_final.mp4
+demo/SatDiff_demo.mp4
+demo/Satdiff_demo.srt
+demo/subtitles.srt
+
+# DaVinci Resolve project artefacts (kept locally, never committed)
+demo/.gallery/
+demo/CacheClip/
+demo/Resolve Project Backups/
+
+# Recording session artefacts (top-level VO + screen captures, kept locally)
+/*.ogg
+/*.wav
+/Aufzeichnung*.mp4
+/Screenshot*.png
 
 # Forggensee opener source clip + cut (~64 MB each).
 PXL_*.mp4

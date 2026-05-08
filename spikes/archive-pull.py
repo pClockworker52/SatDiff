@@ -18,8 +18,6 @@ Outputs:
   spikes/data/png/<label>_simsat_rgb.png  rendered RGB tile (sim API output)
   spikes/data/png/pre_failure_simsat_ndwi.png   if step 5 ran
   spikes/out/simsat-archive-summary.json  full hit-rate table
-
-Decision artefact: research/spike-2-findings.md (written separately).
 """
 
 from __future__ import annotations

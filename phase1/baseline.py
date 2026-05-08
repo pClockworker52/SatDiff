@@ -6,7 +6,7 @@ Public surface:
     BASELINE_KEYS — the field names the physical-diff module will subtract from.
 
 The baseline is the ``[BASELINE]`` block the contract memo
-(`research/contract-prompts/jagersfontein-contract.md` lines 95-103)
+(`prompts/jagersfontein-contract.md` lines 95-103)
 expects in the VLM prompt:
 
     Masks: {impoundment, retaining_wall, downstream, protected_zone}
@@ -19,10 +19,10 @@ We compute four per-mask numbers and one impoundment-specific area:
     B4_B3_mean   red / green                            — turbidity proxy
     pond_area_m2  count(NDWI > 0 ∩ impoundment) × pixel_m²   — impoundment only
 
-Per ~/.claude/plans/phase-1-data-pipeline.md, the baseline date should be
-pre-2019-Feb (Torres-Cruz's earliest anomaly) and post-2017 (Element 84's
-``sentinel-2-l2a`` lacks pre-2017 T35JLH archive per Spike 2). 2017-10-15
-is the first try; the helper widens the search if SimSat returns no tile.
+The baseline date is constrained pre-2019-Feb (before Torres-Cruz's earliest
+anomaly) and post-2017 (Element 84's ``sentinel-2-l2a`` lacks pre-2017
+T35JLH archive). 2017-10-15 is the first try; the helper widens the search
+if SimSat returns no tile.
 """
 
 from __future__ import annotations

@@ -15,4 +15,4 @@ Outputs land in `out/` (gitignored). Cached Sentinel-2 tiles and rendered PNGs l
 
 ## What this is gating
 
-If the spike's verdict is *viable*, Phase 1 build can begin. If *problematic* or *rescope*, see `../research/spike-1-findings.md` for the path forward.
+The spike's verdict gates the Phase 1 build: *viable* unblocks the data + signal-extraction pipeline.

@@ -4,8 +4,6 @@ Pulls a known-signal Sentinel-2 L2A image pair for the Jagersfontein TSF
 (clean baseline 2016-09, pond-at-wall 2021-12), runs LFM2-VL with the
 contract prompt, and grades whether the base model can produce
 contract-schema JSON that names the right geographic features.
-
-Decision artefact: research/spike-1-findings.md (written separately).
 """
 
 from __future__ import annotations
@@ -64,7 +62,7 @@ SCHEMA_PATH = SPIKE_DIR / "schema.json"
 
 # ----------------------- contract prompt ----------------------- #
 
-# Lifted verbatim from research/contract-prompts/jagersfontein-contract.md
+# Lifted verbatim from prompts/jagersfontein-contract.md
 # lines 78-149 (system + contract + I/O structure). Physical-diff values are
 # placeholder for the spike — Phase 1 builds the diff module that fills these.
 

@@ -23,7 +23,7 @@ Existing footage. Verbatim transcript for reference, no re-recording needed:
 **Visual**: `demo/jagersfontein_timelapse.mp4` (full-screen, the pond grows then bursts in the final frame).
 **Overlays**: date stamp baked into video; subtle title card *"Jagersfontein, South Africa — 2021-06 → 2022-10"* fading in/out at 0:26.
 
-> *And yet — the signal was already there. These are seventeen monthly Sentinel-2 acquisitions of the Jagersfontein tailings dam in South Africa, the year before its September 2022 collapse. The pond grows. The wall thins. By the final frame, the failure has happened. Public imagery. Available to anybody who looked.*
+> *And yet — the signal was already there. These are seventeen monthly Sentinel-2 acquisitions of the Jagersfontein tailings dam in South Africa, leading up to and just after its September 2022 collapse. The pond grows. The wall thins. By the final frame, the failure has happened. Public imagery. Available to anybody who looked.*
 
 ---
 
@@ -31,10 +31,10 @@ Existing footage. Verbatim transcript for reference, no re-recording needed:
 
 **Visual**: PIP presenter (small webcam circle, lower-right) over a dark slate. Slate fades in two text lines as you say them.
 **Slate text appearing as you speak**:
-- line 1 at 0:55: **"GISTM Principle 7"**
-- line 2 at 1:05: **"Auditors today: physical inspections + ad-hoc public-imagery review"**
+- line 1 at 0:55: **"GISTM Principle 7 — Design, implement and operate monitoring systems for the full facility lifecycle"**
+- line 2 at 1:05: **"Today: humans on inspection schedules + ad-hoc public-imagery review"**
 
-> *International tailings facilities are now regulated under GISTM — the Global Industry Standard on Tailings Management. Principle 7 says operators must monitor, and regulators must audit. Today, that audit is humans on inspection schedules and ad-hoc review of public data. The Jagersfontein signal lived in nobody's review queue. SatDiff turns it into a per-pass artefact the regulator can sign and file.*
+> *International tailings facilities are now regulated under GISTM — the Global Industry Standard on Tailings Management. Principle 7 requires operators to design and operate monitoring systems across the full lifecycle of a tailings facility. Today, that monitoring is humans on inspection schedules and ad-hoc review of public data. The Jagersfontein signal lived in nobody's review queue. SatDiff turns it into a per-pass artefact the regulator can sign and file.*
 
 ---
 
@@ -55,24 +55,31 @@ Existing footage. Verbatim transcript for reference, no re-recording needed:
 - "544 MB GGUF on-orbit" near LFM2.5-VL at 1:50
 - "2.38 s per pass on RTX 4080 sm_89" at 2:10
 
-> *The pipeline is split across the orbit-to-ground boundary. On the satellite: Sentinel-2 imagery comes in. A Phase 1 physical-diff module computes the numbers an auditor cares about — pond area, deposition asymmetry, gully count, distance from the pond to the retaining wall. A Phi-sat-style gate decides whether the pass is worth thinking about. If yes, the on-orbit model — Liquid AI's LFM2.5 vision-language model, quantised to 544 megabytes — runs against the imagery and the diff. A deterministic rules engine in Python turns those numbers into severity, recommended action, and an escalation flag. The output is two kilobytes of JSON. That is the marginal-downlink-cost claim. The satellite never re-downlinks the imagery on SatDiff's budget. On the ground, a supervisor joins that JSON to the imagery the regulator's data infrastructure already has, and renders the per-pass PDF.*
+> *The pipeline splits across the orbit-to-ground boundary. Imagery arrives from Sentinel-2 — the public test corpus we backtest against. The architecture itself is built for smallsat constellations, where on-edge inference is what makes per-pass auditing economically viable. The DPhi platform is itself a smallsat. On orbit: a physical-diff module computes the numbers an auditor cares about — pond area, deposition asymmetry, gully count, distance from the pond to the retaining wall. A Phi-sat-style gate decides whether the pass is worth thinking about. If yes, the on-board model — Liquid AI's LFM2.5 vision-language model, quantised to 544 megabytes — runs against the imagery and the diff. A deterministic rules engine in Python turns those numbers into severity, recommended action, and an escalation flag. The output is two kilobytes of JSON. That is the budget that scales SatDiff from one Jagersfontein to a portfolio of dams. On the ground, a supervisor joins that JSON to imagery the regulator's data infrastructure has, when the JSON signals attention is necessary, and renders the per-pass PDF.*
 
 ---
 
 ## 2:30 – 3:30 — Live demo screen capture (VO) [60 s, ~165 w]
 
-**Visual**: pre-recorded OBS capture (`demo/captures/livedemo.mkv`):
+**Visual**: pre-recorded OBS capture (`Aufzeichnung 2026-05-08 102258.mp4`, 1:44 raw):
 - 0:00–0:08  `docker compose up -d` shows four services healthy
 - 0:08–0:25  `python -m phase2.cli --asset jagersfontein --date 2022-10-15 ...`
-- 0:25–0:40  JSON appearing field-by-field (tail-following the file)
+- 0:25–0:40  JSON appearing field-by-field (overlay reveals, not tail-follow)
 - 0:40–0:55  `python -m phase3 --asset jagersfontein --date 2022-10-15` writes the PDF
 - 0:55–1:00  page-flip through the hero PDF (`phase3/out/jagersfontein/2022-10-15.pdf`)
+
+**Editor's cuts to compress the 1:44 raw capture into the 60 s budget**:
+- Cut from *"[phase2] model ready."* directly to the *"schema_valid=True … overall='urgent' escalation=True"* line — the model-load wait is dead air. Saves ~25 s.
+- Speed-ramp the JSON-via-`more` scroll if needed; the hero frame is the audit-trail block (`severity_corrections`, `model_overall=elevated` vs `computed_overall=urgent`, `overall_corrected=true`) — that's the architecture-thesis visual evidence.
+- Phase 3 page-flip should rest 2 s on Page 2 (per-claim assessments — Claim 3 URGENT, Claim 4 NOMINAL "no SAR data", Claim 5 Kopanong URGENT). That's the artefact the entire pitch leads up to.
 
 **Overlays appearing as the JSON fields land**:
 - 2:50: ▸ `severity: urgent`
 - 2:55: ▸ `pond_to_wall_distance_m: 9.9`
-- 3:00: ▸ `Stage A 0.96 s | Stage B 1.43 s | total 2.38 s`
+- 3:00: ▸ `Latency:  Docker CPU 22 s/pass  ·  CUDA RTX 4080 2.4 s/pass`
 - 3:10: ▸ `regulatory_escalation_flag: true`
+
+The 3:00 overlay reconciles the visible terminal latency (CPU, Docker — rubric correctness path) with the VO claim (2.38 s on a laptop GPU). Same code, two transports — the architecture story made visible. The overlay should fade the *"Docker CPU 22 s/pass"* line in first, then the *"CUDA RTX 4080 2.4 s/pass"* line ~1 s later, so the comparison reads as a deliberate flex, not a contradiction.
 
 > *Here is the same pipeline running on the post-failure pass. Docker compose brings up SimSat, the llama-server with the Stage 1 weights pre-loaded, and the SatDiff renderer. Phase 2 issues a two-stage decode: first a free-text describe of what the model sees, then a contract JSON shaped to the auditor's schema. The rules engine grades severity from the physical-diff numbers — pond-to-wall distance is nine point nine metres, the engine returns urgent. Total time per pass: two point three eight seconds on a laptop GPU. The PDF is the human-readable artefact. One page per acquisition. Imagery, diff metrics, per-claim assessments, signed and time-stamped.*
 
@@ -100,7 +107,7 @@ evidence-correct  0/30    30/30
 
 **Overlay at 3:48**: ▸ *"Stage 2 (negative result, not shipped)"* in smaller grey text.
 
-> *Stage 1 was a five-thousand-sample LoRA fine-tune on VRSBench, the public remote-sensing benchmark. No SatDiff-specific examples. Evidence-correctness on held-out passes lifted from zero out of thirty to thirty out of thirty. Stage 2 tried to push severity reasoning into the model itself — it failed, and we did not ship it. That negative result is exactly why severity lives in deterministic Python, not in the weights.*
+> *Stage 1 was a five-thousand-sample LoRA fine-tune on VRSBench, the public remote-sensing benchmark — no SatDiff-specific examples. Evidence-correctness on held-out passes lifted from zero out of thirty to thirty out of thirty. Stage 2 tried to push severity reasoning into the model itself — it failed, and I did not ship it. That is exactly why severity lives in deterministic Python, not in the weights. What Stage 2 would need to absorb is on the roadmap, not in the submission.*
 
 ---
 
@@ -123,7 +130,7 @@ Code:     github.com/<your-handle>/SatDiff
 Run:      docker compose up
 ```
 
-> *SatDiff puts a per-claim, contract-framed audit artefact in front of the regulator at acquisition cadence. The primary buyer is the GISTM auditor; adjacent buyers are dam-safety regulators, insurance underwriters, and ESG screens. Weights are public. Code is reproducible from a fresh clone. One command — docker compose up. Thank you.*
+> *SatDiff puts a per-claim, contract-framed audit artefact in front of the regulator at acquisition cadence. The primary buyer is the GISTM auditor; adjacent buyers are dam-safety regulators, insurance underwriters, and ESG screens. The weights, the code, and the one-command demo are on the slate. An auditable artefact at every acquisition — for two kilobytes of downlink.*
 
 ---
 

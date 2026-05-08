@@ -6,7 +6,7 @@ Public surface (intentionally tiny):
 
 Polygons are stored in `phase1/masks/<asset_id>.geojson` in WGS84
 (CRS84, lon-lat). The contract memo
-`research/contract-prompts/jagersfontein-contract.md` is the source of
+`prompts/jagersfontein-contract.md` is the source of
 truth for the four mask ids: impoundment, retaining_wall,
 downstream_slope, and the protected-zone polygon (kopanong_*).
 """

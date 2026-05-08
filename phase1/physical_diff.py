@@ -4,7 +4,7 @@ Public surface:
     compute_diff(asset_id, date) -> dict   # the [CURRENT PASS] block
 
 Output shape matches the contract memo verbatim
-(`research/contract-prompts/jagersfontein-contract.md` lines 107-127):
+(`prompts/jagersfontein-contract.md` lines 107-127):
 
     {
       "impoundment": {

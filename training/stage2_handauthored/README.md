@@ -2,7 +2,7 @@
 
 This directory holds the manually-curated examples that teach the LFM2.5-VL-450M model the **multi-tier severity rules**, **routine-vs-distress discrimination across multiple assets**, and **catastrophic-failure recognition beyond Jagersfontein**. Stage 2 fine-tuning resumes from the Stage 1 (VRSBench-mix) checkpoint and trains over these JSONLs.
 
-The plan that produced this directory: `~/.claude/plans/let-s-start-with-research-polished-flame.md`. The literature anchor for cross-asset choices: `research/Satellite Dam Monitoring Data Request.txt`.
+Stage 2 was a methodologically clean **negative result** — see `WRITEUP.md` for why the Stage 1 checkpoint ships and Stage 2 does not.
 
 ## Three tiers, twelve assets
 
@@ -24,26 +24,26 @@ All authored against existing PNGs in `/home/peter/datasets/satdiff_stage2/image
 
 Routine operational change that should produce `overall_status="nominal"`. Direct counter to "everything is urgent." Four assets:
 
-| asset | grade | papers (research file lines) | scenario |
+| asset | grade | paper | scenario |
 |---|:-:|---|---|
-| aswan | A | Miky 2019 (199-213) | Seasonal cycle low↔high water. |
-| three_gorges | A | Wang 2011 (214-230) | Cyclic concrete-dam mm-scale routine. |
-| hoover_mead | A | Tseng 2016 (231-247) | Multi-decadal optical decline. |
-| kariba | **B** | (243-264) | Basin-wide LULC correlation (lower-density paper). |
+| aswan | A | Miky 2019 | Seasonal cycle low↔high water. |
+| three_gorges | A | Wang 2011 | Cyclic concrete-dam mm-scale routine. |
+| hoover_mead | A | Tseng 2016 | Multi-decadal optical decline. |
+| kariba | **B** | | Basin-wide LULC correlation (lower-density paper). |
 
 ### Tier 3 — cross-asset catastrophic / distress examples (~8-12 examples)
 
 Catastrophic / precursor signatures DIFFERENT from Jagersfontein. Seven assets:
 
-| asset | grade | papers (research file lines) | scenario |
+| asset | grade | paper | scenario |
 |---|:-:|---|---|
-| brumadinho | A | Syifa 2019 (57-72) | Sudden tailings runout into Paraopeba River. |
-| mariana_fundao | A | Da Silva Junior 2018 (40-56) | TSF historical precedent (vegetation displacement, sediment plume). |
-| toddbrook | A | Heidarzadeh 2022 (161-177) | Concrete spillway with vegetation → seepage. |
-| nova_kakhovka | A | Monti 2024 (5-22) | Reservoir destruction + 490 km² downstream flooding. |
-| derna | A | Shults 2025 (23-38) | Cascading embankment failure + 600+ buildings collapsed. |
-| edenville (optical-only) | **B** | Thomas 2024 (93-109) | SMI saturation precursor (drop the SAR side). |
-| oroville | **B** | Koskinas 2019 (144-160) | Concrete spillway hydraulic erosion. |
+| brumadinho | A | Syifa 2019 | Sudden tailings runout into Paraopeba River. |
+| mariana_fundao | A | Da Silva Junior 2018 | TSF historical precedent (vegetation displacement, sediment plume). |
+| toddbrook | A | Heidarzadeh 2022 | Concrete spillway with vegetation → seepage. |
+| nova_kakhovka | A | Monti 2024 | Reservoir destruction + 490 km² downstream flooding. |
+| derna | A | Shults 2025 | Cascading embankment failure + 600+ buildings collapsed. |
+| edenville (optical-only) | **B** | Thomas 2024 | SMI saturation precursor (drop the SAR side). |
+| oroville | **B** | Koskinas 2019 | Concrete spillway hydraulic erosion. |
 
 **Hard exclusions** — failed quality gate Q2 (SAR-only):
 - Mosul, Datengxia, Brumadinho-pre, Edenville-SAR-side. SatDiff is optical-only.

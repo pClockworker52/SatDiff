@@ -7,7 +7,7 @@ Public surface:
 
 Stage A produces grounded free text the model can later cite. Stage B
 populates the contract memo's prompt verbatim
-(`research/contract-prompts/jagersfontein-contract.md` lines 78-149)
+(`prompts/jagersfontein-contract.md` lines 78-149)
 with real numbers from `phase1.physical_diff.compute_diff` plus Stage
 A's text inlined as a new `[STAGE A OBSERVATIONS]` block.
 """
@@ -53,7 +53,7 @@ def build_stage_a_prompt(baseline_date: str, current_date: str) -> str:
 # ----------------------------- Stage B ----------------------------- #
 
 
-# Verbatim from research/contract-prompts/jagersfontein-contract.md lines 80-87
+# Verbatim from prompts/jagersfontein-contract.md lines 80-87
 # + 5 inlined claim definitions (lines 13-75 condensed). Same as Spike 1's
 # CONTRACT_PROMPT but with f-string slots for the populated [BASELINE] and
 # [CURRENT PASS] blocks Phase 1 supplies.

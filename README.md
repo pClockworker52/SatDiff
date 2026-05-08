@@ -104,18 +104,14 @@ SatDiff/
 │   └── llama-server.sh         # local-dev runner (auto-detects CUDA build)
 ├── phase1/                     # data loader + masks + physical-diff + gate
 ├── phase2/                     # VLM contract pipeline (transformers + llama-server transports)
-├── phase3/                     # PDF report renderer (workstream [1] in progress)
+├── phase3/                     # PDF report renderer
+├── prompts/                    # contract-prompt schema (jagersfontein-contract.md)
 ├── spikes/                     # contract schema + Spike 1 evaluation harness
 ├── training/                   # fine-tune dataset prep + eval (dev box only, not in Docker)
-├── research/                   # design memos + spike findings + decisions
 └── vendor/SimSat/              # SimSat snapshot — see vendor/SimSat/NOTICE.md
 ```
 
-For a deeper tour of the design, see `research/`:
-- `phase-1-findings.md`, `phase-2-findings.md` — what each phase actually does + measured numbers
-- `workstream-6-findings.md` — GGUF quantization + CUDA inference benchmarks
-- `phase-0-go-no-go.md` — the Path A primary-case decision (Jagersfontein) + allowed/forbidden pitch claims
-- `hackathon-rubric.md` — the verbatim Liquid-Track criteria
+For the design narrative, results, and rubric framing see `WRITEUP.md`.
 
 ## License
 
